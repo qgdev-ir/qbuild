@@ -1,0 +1,6 @@
+# Exculding dotfiles
+.*
+
+# Including dotfiles that should exists
+!.gitignore
+
