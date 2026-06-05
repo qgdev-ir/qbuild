@@ -4,6 +4,7 @@
 .SECONDARY:
 
 BUILD_DIR := build
+export LD_LIBRARY_PATH := $(BUILD_DIR)
 
 include qbuild/Makefile
 
@@ -16,4 +17,8 @@ build: $(BUILD_TARGETS)
 .PHONY: clean
 clean:
 	rm -fr build
+
+.PHONY: run
+run:
+	 $(BUILD_DIR)/qbuild
 
