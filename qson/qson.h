@@ -17,6 +17,16 @@ extern "C" {
 #define QSON_QUOTATION_MARK	'"'
 const char QSON_WHITESPACES[4] = {'\n', '\r', '\t', ' '};
 
+//
+// Check if given char is a white space in a JSON
+//
+bool qson_is_white_space(char chr);
+
+//
+// Skip charachters until reach a non white space char
+//
+void qson_skip_white_spaces(char *buffer, int *index);
+
 #ifdef __cplusplus
 }
 #endif
