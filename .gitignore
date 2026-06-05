@@ -1,5 +1,6 @@
 # Exculding dotfiles
 .*
+build/
 
 # Including dotfiles that should exists
 !.gitignore
