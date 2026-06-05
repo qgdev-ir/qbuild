@@ -6,6 +6,7 @@
 BUILD_DIR := build
 export LD_LIBRARY_PATH := $(BUILD_DIR)
 
+include qson/Makefile
 include qbuild/Makefile
 
 BUILD_TARGETS ?=
