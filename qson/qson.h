@@ -8,7 +8,14 @@
 extern "C" {
 #endif
 
-
+#define QSON_BEGIN_ARRAY	'['
+#define QSON_END_ARRAY		']'
+#define QSON_BEGIN_OBJECT	'{'
+#define QSON_END_OBJECT		'}'
+#define QSON_NAME_SEPARATOR	':'
+#define QSON_VALUE_SEPARATOR	','
+#define QSON_QUOTATION_MARK	'"'
+const char QSON_WHITESPACES[5] = {'\n', '\r', '\t', ' '};
 
 #ifdef __cplusplus
 }
