@@ -15,7 +15,7 @@ extern "C" {
 #define QSON_NAME_SEPARATOR	':'
 #define QSON_VALUE_SEPARATOR	','
 #define QSON_QUOTATION_MARK	'"'
-const char QSON_WHITESPACES[5] = {'\n', '\r', '\t', ' '};
+const char QSON_WHITESPACES[4] = {'\n', '\r', '\t', ' '};
 
 #ifdef __cplusplus
 }
