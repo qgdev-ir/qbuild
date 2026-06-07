@@ -21,6 +21,6 @@ clean:
 	rm -fr build
 
 .PHONY: run
-run:
+run: $(BUILD_DIR)/qbuild
 	 $(BUILD_DIR)/qbuild
 
