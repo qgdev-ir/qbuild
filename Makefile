@@ -5,7 +5,7 @@
 
 BUILD_DIR := build
 export LD_LIBRARY_PATH := $(BUILD_DIR)
-GCC_FLAGS := -O1 -fPIC -L$(BUILD_DIR)
+GCC_FLAGS := -O1 -fPIC -L$(BUILD_DIR) -I.
 
 include qson/Makefile
 include qbuild/Makefile
