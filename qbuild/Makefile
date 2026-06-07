@@ -7,7 +7,7 @@ $(BUILD_DIR)/obj/qbuild/%.c.o: qbuild/%.c
 
 $(BUILD_DIR)/qbuild: $(QBUILD_OBJECTS) | $(BUILD_DIR)/libqson.so
 	$(info > Linking $@)
-	gcc $(GCC_FLAGS) -lqson -pie $^ -o $@
+	gcc $(GCC_FLAGS) -pie $^ -o $@ -lqson
 
 BUILD_TARGETS += $(BUILD_DIR)/qbuild
 
