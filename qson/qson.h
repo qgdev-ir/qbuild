@@ -8,6 +8,8 @@
 extern "C" {
 #endif
 
+#include <stdbool.h>
+
 #define QSON_BEGIN_ARRAY	'['
 #define QSON_END_ARRAY		']'
 #define QSON_BEGIN_OBJECT	'{'
