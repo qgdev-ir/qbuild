@@ -9,6 +9,7 @@ GCC_FLAGS := -O1 -fPIC -L$(BUILD_DIR) -I.
 
 include qson/Makefile
 include qbuild/Makefile
+include test/Makefile
 
 BUILD_TARGETS ?=
 
@@ -23,4 +24,8 @@ clean:
 .PHONY: run
 run: $(BUILD_DIR)/qbuild
 	 $(BUILD_DIR)/qbuild
+
+.PHONY: test
+test: $(BUILD_DIR)/test
+	 $(BUILD_DIR)/test
 
