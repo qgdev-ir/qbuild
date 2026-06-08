@@ -14,6 +14,7 @@ qson_result qson_create_deserialize_ctx(qson_deserialize_ctx_t *ctx, char *buffe
 	ctx->buffer = buffer;
 	ctx->size = size;
 	ctx->index = 0;
+	ctx->state = NONE;
 	return OK;
 }
 
