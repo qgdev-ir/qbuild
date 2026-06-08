@@ -20,18 +20,27 @@ extern "C" {
 const char QSON_WHITESPACES[4] = {'\n', '\r', '\t', ' '};
 
 /*
+ * Current state of deserialization
+ */
+typedef enum {
+	NONE = 0,	// no specific deserialization is running
+} qson_deserialize_state;
+
+/*
  * Context for deserilizing a json
  */
 typedef struct {
 	char *buffer;	// Buffer which contains the json
 	int size;	// Size of the buffer
 	int index;	// Current index in buffer
+	qson_deserialize_state state;	// Current state of deserialization
 } qson_deserialize_ctx_t;
 
 typedef enum {
 	OK = 0,			// successfull
 	UNEXPECTED_EOF = 1,	// buffer ended where it shouldnt
 	INVALID_CHAR = 2,	// a char is where it shouldnt be
+	INVALID_STATE = 3,	// current state of context is invalid for this function
 } qson_result;
 
 /*
