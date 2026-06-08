@@ -42,6 +42,7 @@ bool qson_is_white_space(char chr);
 
 //
 // Skip charachters until reach a non white space char
+// Returns UNEXPECTED_EOF if no non-whitespace char is found before buffer end
 //
 qson_result qson_skip_white_spaces(qson_deserialize_ctx_t *ctx);
 

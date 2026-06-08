@@ -17,9 +17,22 @@ int test_qson_skip_white_spaces() {
 	return success;
 }
 
+int test_qson_skip_white_spacesـunexpected_eof() {
+	test_run_log("qson_skip_white_spaces");
+	char *buffer = "\t\n\r ";
+	qson_deserialize_ctx_t ctx;
+
+	bool success = 1;
+	success &= qson_create_deserialize_ctx(&ctx, buffer, sizeof(buffer)) == OK;
+	success &= qson_skip_white_spaces(&ctx) == UNEXPECTED_EOF;
+	test_result_log(success);
+	return success;
+}
+
 int main() {
 	bool success = 1;
 	success &= test_qson_skip_white_spaces();
+	success &= test_qson_skip_white_spacesـunexpected_eof();
 	return !success;
 }
 
