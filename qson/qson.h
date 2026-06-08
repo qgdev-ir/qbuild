@@ -29,8 +29,8 @@ typedef struct {
 } qson_deserialize_ctx_t;
 
 typedef enum {
-	OK = 0,
-	UNEXPECTED_EOF = 1
+	OK = 0,			// successfull
+	UNEXPECTED_EOF = 1,	// buffer ended where it shouldnt
 } qson_result;
 
 qson_result qson_create_deserialize_ctx(qson_deserialize_ctx_t *ctx, char *buffer, int size);
