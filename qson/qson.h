@@ -34,6 +34,9 @@ typedef enum {
 	INVALID_CHAR = 2,	// a char is where it shouldnt be
 } qson_result;
 
+/*
+ * Create a deserialize context for given byte buffer
+ */
 qson_result qson_create_deserialize_ctx(qson_deserialize_ctx_t *ctx, char *buffer, int size);
 
 //
