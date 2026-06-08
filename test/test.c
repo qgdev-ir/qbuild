@@ -4,7 +4,7 @@
 #define test_run_log(m) printf("[*] Running test %s: ", m)
 #define test_result_log(s) printf("%s\n", s ? "passed" : "failed")
 
-int test_qson_skip_white_spaces() {
+bool test_qson_skip_white_spaces() {
 	test_run_log("qson_skip_white_spaces");
 	char *buffer = "\t\n\r test";
 	qson_deserialize_ctx_t ctx;
@@ -17,7 +17,7 @@ int test_qson_skip_white_spaces() {
 	return success;
 }
 
-int test_qson_skip_white_spacesـunexpected_eof() {
+bool test_qson_skip_white_spacesـunexpected_eof() {
 	test_run_log("qson_skip_white_spaces");
 	char *buffer = "\t\n\r ";
 	qson_deserialize_ctx_t ctx;
