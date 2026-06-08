@@ -9,10 +9,10 @@ int test_qson_skip_white_spaces() {
 	char *buffer = "\t\n\r test";
 	qson_deserialize_ctx_t ctx;
 
-	qson_create_deserialize_ctx(&ctx, buffer, sizeof(buffer));
-	qson_skip_white_spaces(&ctx);
-
-	bool success = ctx.index == 4;
+	bool success = 1;
+	success &= qson_create_deserialize_ctx(&ctx, buffer, sizeof(buffer)) == OK;
+	success &= qson_skip_white_spaces(&ctx) == OK;
+	success &= ctx.index == 4;
 	test_result_log(success);
 	return success;
 }

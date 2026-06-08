@@ -1,14 +1,16 @@
 #include "qson.h"
 
-inline static void _qson_skip_white_spaces(qson_deserialize_ctx_t *ctx) {
+inline static qson_result _qson_skip_white_spaces(qson_deserialize_ctx_t *ctx) {
 	int *index = &ctx->index;
 	while (qson_is_white_space(ctx->buffer[*index])) (*index)++;
+	return OK;
 }
 
-void qson_create_deserialize_ctx(qson_deserialize_ctx_t *ctx, char *buffer, int size) {
+qson_result qson_create_deserialize_ctx(qson_deserialize_ctx_t *ctx, char *buffer, int size) {
 	ctx->buffer = buffer;
 	ctx->size = size;
 	ctx->index = 0;
+	return OK;
 }
 
 bool qson_is_white_space(char chr) {
@@ -19,7 +21,7 @@ bool qson_is_white_space(char chr) {
 	return false;
 }
 
-void qson_skip_white_spaces(qson_deserialize_ctx_t *ctx) {
-	_qson_skip_white_spaces(ctx);
+qson_result qson_skip_white_spaces(qson_deserialize_ctx_t *ctx) {
+	return _qson_skip_white_spaces(ctx);
 }
 

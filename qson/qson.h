@@ -28,7 +28,12 @@ typedef struct {
 	int index;	// Current index in buffer
 } qson_deserialize_ctx_t;
 
-void qson_create_deserialize_ctx(qson_deserialize_ctx_t *ctx, char *buffer, int size);
+typedef enum {
+	OK = 0,
+	UNEXPECTED_EOF = 1
+} qson_result;
+
+qson_result qson_create_deserialize_ctx(qson_deserialize_ctx_t *ctx, char *buffer, int size);
 
 //
 // Check if given char is a white space in a JSON
@@ -38,7 +43,7 @@ bool qson_is_white_space(char chr);
 //
 // Skip charachters until reach a non white space char
 //
-void qson_skip_white_spaces(qson_deserialize_ctx_t *ctx);
+qson_result qson_skip_white_spaces(qson_deserialize_ctx_t *ctx);
 
 #ifdef __cplusplus
 }
