@@ -14,7 +14,7 @@ bool test_qson_skip_white_spaces() {
 }
 
 bool test_qson_skip_white_spacesـunexpected_eof() {
-	test_run_log("qson_skip_white_spaces");
+	test_run_log("qson_skip_white_spaces_unexpected_eof");
 	char buffer[] = "\t\n\r ";
 	qson_deserialize_ctx_t ctx;
 
