@@ -17,6 +17,7 @@ extern "C" {
 #define QSON_NAME_SEPARATOR	':'
 #define QSON_VALUE_SEPARATOR	','
 #define QSON_QUOTATION_MARK	'"'
+#define QSON_STRING_ESCAPE_CHAR	'\\'
 
 /*
  * Current state of deserialization
@@ -40,6 +41,7 @@ typedef enum {
 	QSON_RESULT_UNEXPECTED_EOF = 1,		// buffer ended where it shouldnt
 	QSON_RESULT_INVALID_CHAR = 2,		// a char is where it shouldnt be
 	QSON_RESULT_INVALID_STATE = 3,		// current state of context is invalid for this function
+	QSON_RESULT_BUFFER_TOO_SMALL = 4,	// value dont fit in given buffer
 } qson_result;
 
 /*
@@ -57,6 +59,12 @@ bool qson_is_white_space(char chr);
 // Returns UNEXPECTED_EOF if no non-whitespace char is found before buffer end
 //
 qson_result qson_skip_white_spaces(qson_deserialize_ctx_t *ctx);
+
+/*
+ * Read a string in current context
+ * Ignores state
+ */
+qson_result qson_read_string(qson_deserialize_ctx_t *ctx, char *buffer, int *size);
 
 #ifdef __cplusplus
 }
