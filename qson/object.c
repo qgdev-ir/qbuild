@@ -38,6 +38,8 @@ qson_result qson_get_object_entry(qson_deserialize_ctx_t *ctx, char *key, int *k
 		default:
 			if (('0' <= chr && chr <= '9' ) || chr == '-' || chr == '+')
 				*type = QSON_TYPE_STRING;
+			else
+				return QSON_RESULT_INVALID_CHAR;
 		}
 	}
 
