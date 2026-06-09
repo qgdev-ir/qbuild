@@ -8,6 +8,8 @@
 extern "C" {
 #endif
 
+#define array_len(a) (sizeof(a) / sizeof(a[0]))
+
 inline qson_result _qson_skip_white_spaces(qson_deserialize_ctx_t *ctx) {
 	int *index = &ctx->index;
 	while (qson_is_white_space(ctx->buffer[*index])) {
