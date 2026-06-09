@@ -33,10 +33,37 @@ bool test_qson_get_object_entry() {
 	return success;
 }
 
+bool test_qson_get_object_entry_value_string() {
+	test_run_log("qson_get_object_entry_value_string");
+	char buffer[] = "{ \"key\" : \"string value\"  }";
+	qson_deserialize_ctx_t ctx;
+	char key[4];
+	int key_size = 4;
+	qson_type value_type = QSON_TYPE_AUTO;
+	char value[13];
+	int value_size = 13;
+	bool has_next;
+
+	bool success = 1;
+	success &= qson_create_deserialize_ctx(&ctx, buffer, array_len(buffer)) == QSON_RESULT_OK;
+	success &= qson_start_object(&ctx) == QSON_RESULT_OK;
+	success &= qson_get_object_entry(&ctx, key, &key_size, &value_type) == QSON_RESULT_OK;
+	success &= key_size == 4;
+	success &= strcmp(key, "key") == 0;
+	success &= value_type == QSON_TYPE_STRING;
+	success &= qson_get_object_entry_value_string(&ctx, value, &value_size, &has_next) == QSON_RESULT_OK;
+	success &= value_size == 13;
+	success &= strcmp(value, "string value") == 0;
+	success &= !has_next;
+	test_result_log(success);
+	return success;
+}
+
 bool test_object() {
 	bool success = 1;
 	success &= test_qson_start_object();
 	success &= test_qson_get_object_entry();
+	success &= test_qson_get_object_entry_value_string();
 	return success;
 }
 

@@ -16,6 +16,13 @@ qson_result qson_start_object(qson_deserialize_ctx_t *ctx);
  */
 qson_result qson_get_object_entry(qson_deserialize_ctx_t *ctx, char *key, int *key_length, qson_type *type);
 
+/*
+ * Read value of entry as a string
+ * set context state to OBJECT if has next entry and set to NONE if not
+ * Requires state OBJECT_VALUE
+ */
+qson_result qson_get_object_entry_value_string(qson_deserialize_ctx_t *ctx, char *value, int *value_length, bool *has_next);
+
 #ifdef __cplusplus
 }
 #endif
