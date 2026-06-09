@@ -44,6 +44,16 @@ typedef enum {
 	QSON_RESULT_BUFFER_TOO_SMALL = 4,	// value dont fit in given buffer
 } qson_result;
 
+typedef enum {
+	QSON_TYPE_AUTO = 0,		// Type should be auto detected
+	QSON_TYPE_STRING = 1,		// Type is a string
+	QSON_TYPE_NUMBER = 2,		// Type is a number (double)
+	QSON_TYPE_NULL = 3,		// Type is null
+	QSON_TYPE_BOOL = 4,		// Type is a boolean
+	QSON_TYPE_OBJECT = 5,		// Type is an object
+	QSON_TYPE_ARRAY = 6,		// Type is an array
+} qson_type;
+
 /*
  * Create a deserialize context for given byte buffer
  */
