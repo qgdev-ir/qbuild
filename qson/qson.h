@@ -4,11 +4,12 @@
 
 #ifndef _qson_qson_h_
 #define _qson_qson_h_
+
+#include <stdbool.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-#include <stdbool.h>
 
 #define QSON_BEGIN_ARRAY	'['
 #define QSON_END_ARRAY		']'

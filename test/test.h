@@ -1,12 +1,13 @@
 #ifndef _test_test_h_
 #define _test_test_h_
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 #include <stdio.h>
 #include <qson/qson.h>
 #include <qson/_qson.h>
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 #define test_run_log(m) printf("[*] Running test %s: ", m)
 #define test_result_log(s) printf("%s\n", s ? "passed" : "failed")
