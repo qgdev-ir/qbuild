@@ -22,7 +22,7 @@ extern "C" {
  * Current state of deserialization
  */
 typedef enum {
-	NONE = 0,	// no specific deserialization is running
+	QSON_DESERIALIZING_STATE_NONE = 0,		// no specific deserialization is running
 } qson_deserialize_state;
 
 /*
@@ -36,10 +36,10 @@ typedef struct {
 } qson_deserialize_ctx_t;
 
 typedef enum {
-	OK = 0,			// successfull
-	UNEXPECTED_EOF = 1,	// buffer ended where it shouldnt
-	INVALID_CHAR = 2,	// a char is where it shouldnt be
-	INVALID_STATE = 3,	// current state of context is invalid for this function
+	QSON_RESULT_OK = 0,			// successfull
+	QSON_RESULT_UNEXPECTED_EOF = 1,		// buffer ended where it shouldnt
+	QSON_RESULT_INVALID_CHAR = 2,		// a char is where it shouldnt be
+	QSON_RESULT_INVALID_STATE = 3,		// current state of context is invalid for this function
 } qson_result;
 
 /*

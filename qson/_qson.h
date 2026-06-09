@@ -13,9 +13,9 @@ inline qson_result _qson_skip_white_spaces(qson_deserialize_ctx_t *ctx) {
 	while (qson_is_white_space(ctx->buffer[*index])) {
 		(*index)++;
 		if (*index >= ctx->size || ctx->buffer[*index] == 0)
-			return UNEXPECTED_EOF;
+			return QSON_RESULT_UNEXPECTED_EOF;
 	}
-	return OK;
+	return QSON_RESULT_OK;
 }
 
 #ifdef __cplusplus
