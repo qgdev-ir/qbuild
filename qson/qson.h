@@ -24,6 +24,8 @@ extern "C" {
  */
 typedef enum {
 	QSON_DESERIALIZING_STATE_NONE = 0,		// no specific deserialization is running
+	QSON_DESERIALIZING_STATE_OBJECT = 1,		// deserializing an object
+	QSON_DESERIALIZING_STATE_OBJECT_VALUE = 2	// deserializing value of an object
 } qson_deserialize_state;
 
 /*
@@ -69,6 +71,18 @@ bool qson_is_white_space(char chr);
 // Returns UNEXPECTED_EOF if no non-whitespace char is found before buffer end
 //
 qson_result qson_skip_white_spaces(qson_deserialize_ctx_t *ctx);
+
+/*
+ * Start deserializing an object and set context state to OBJECT
+ * Requires state NONE
+ */
+qson_result qson_start_object(qson_deserialize_ctx_t *ctx);
+
+/*
+ * Start deserializing a entry of an object and set context state to OBJECT_VALUE
+ * Requires state OBJECT
+ */
+qson_result qson_get_object_entry(qson_deserialize_ctx_t *ctx, char *key, int *key_length, qson_type *type);
 
 /*
  * Read a string in current context
