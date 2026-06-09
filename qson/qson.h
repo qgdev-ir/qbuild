@@ -17,7 +17,6 @@ extern "C" {
 #define QSON_NAME_SEPARATOR	':'
 #define QSON_VALUE_SEPARATOR	','
 #define QSON_QUOTATION_MARK	'"'
-const char QSON_WHITESPACES[4] = {'\n', '\r', '\t', ' '};
 
 /*
  * Current state of deserialization

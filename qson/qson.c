@@ -1,5 +1,6 @@
 #include "qson.h"
 
+const char QSON_WHITESPACES[4] = {'\n', '\r', '\t', ' '};
 inline static qson_result _qson_skip_white_spaces(qson_deserialize_ctx_t *ctx) {
 	int *index = &ctx->index;
 	while (qson_is_white_space(ctx->buffer[*index])) {
