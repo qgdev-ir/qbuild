@@ -22,8 +22,7 @@ inline static qson_result set_has_next(qson_deserialize_ctx_t *ctx, bool *has_ne
 qson_result qson_start_object(qson_deserialize_ctx_t *ctx) {
 	if (ctx->state != QSON_DESERIALIZING_STATE_NONE) return QSON_RESULT_INVALID_STATE;
 
-	qson_result res = _qson_skip_white_spaces(ctx);
-	if (res != QSON_RESULT_OK) return res;
+	qson_run(_qson_skip_white_spaces(ctx));
 
 	if (ctx->buffer[ctx->index] != QSON_BEGIN_OBJECT) return QSON_RESULT_INVALID_CHAR;
 	ctx->state = QSON_DESERIALIZING_STATE_OBJECT;
@@ -34,22 +33,17 @@ qson_result qson_start_object(qson_deserialize_ctx_t *ctx) {
 qson_result qson_get_object_entry(qson_deserialize_ctx_t *ctx, char *key, int *key_length, qson_type *type) {
 	if (ctx->state != QSON_DESERIALIZING_STATE_OBJECT) return QSON_RESULT_INVALID_STATE;
 
-	qson_result res = _qson_skip_white_spaces(ctx);
-	if (res != QSON_RESULT_OK) return res;
+	qson_run(_qson_skip_white_spaces(ctx));
 
 	if (ctx->buffer[ctx->index] != QSON_QUOTATION_MARK) return QSON_RESULT_INVALID_CHAR;
 	ctx->state = QSON_DESERIALIZING_STATE_OBJECT_VALUE;
 
-	res = qson_read_string(ctx, key, key_length);
-	if (res != QSON_RESULT_OK) return res;
-
-	res = _qson_skip_white_spaces(ctx);
-	if (res != QSON_RESULT_OK) return res;
+	qson_run(qson_read_string(ctx, key, key_length));
+	qson_run(_qson_skip_white_spaces(ctx));
 
 	if (ctx->buffer[ctx->index++] != QSON_NAME_SEPARATOR) return QSON_RESULT_INVALID_CHAR;
 
-	res = _qson_skip_white_spaces(ctx);
-	if (res != QSON_RESULT_OK) return res;
+	qson_run(_qson_skip_white_spaces(ctx));
 
 	if (*type == QSON_TYPE_AUTO) {
 		char chr = ctx->buffer[ctx->index];
@@ -75,14 +69,9 @@ qson_result qson_get_object_entry_value_string(qson_deserialize_ctx_t *ctx, char
 	if (ctx->state != QSON_DESERIALIZING_STATE_OBJECT_VALUE) return QSON_RESULT_INVALID_STATE;
 	if (ctx->buffer[ctx->index] != QSON_QUOTATION_MARK) return QSON_RESULT_INVALID_CHAR;
 
-	qson_result res = qson_read_string(ctx, value, value_length);
-	if (res != QSON_RESULT_OK) return res;
-
-	res = _qson_skip_white_spaces(ctx);
-	if (res != QSON_RESULT_OK) return res;
-
-	res = set_has_next(ctx, has_next);
-	if (res != QSON_RESULT_OK) return res;
+	qson_run(qson_read_string(ctx, value, value_length));
+	qson_run(_qson_skip_white_spaces(ctx));
+	qson_run(set_has_next(ctx, has_next));
 
 	return QSON_RESULT_OK;
 }
@@ -90,14 +79,9 @@ qson_result qson_get_object_entry_value_string(qson_deserialize_ctx_t *ctx, char
 qson_result qson_get_object_entry_value_bool(qson_deserialize_ctx_t *ctx, bool *value, bool *has_next) {
 	if (ctx->state != QSON_DESERIALIZING_STATE_OBJECT_VALUE) return QSON_RESULT_INVALID_STATE;
 
-	qson_result res = qson_read_bool(ctx, value);
-	if (res != QSON_RESULT_OK) return res;
-
-	res = _qson_skip_white_spaces(ctx);
-	if (res != QSON_RESULT_OK) return res;
-
-	res = set_has_next(ctx, has_next);
-	if (res != QSON_RESULT_OK) return res;
+	qson_run(qson_read_bool(ctx, value));
+	qson_run(_qson_skip_white_spaces(ctx));
+	qson_run(set_has_next(ctx, has_next));
 
 	return QSON_RESULT_OK;
 }
