@@ -21,6 +21,7 @@ extern "C" {
 #define QSON_STRING_ESCAPE_CHAR	'\\'
 #define QSON_BOOL_TRUE		"true"
 #define QSON_BOOL_FALSE		"false"
+#define QSON_NULL		"null"
 
 /*
  * Current state of deserialization
@@ -86,6 +87,12 @@ qson_result qson_read_string(qson_deserialize_ctx_t *ctx, char *buffer, int *siz
  * Ignores state
  */
 qson_result qson_read_bool(qson_deserialize_ctx_t *ctx, bool *value);
+
+/*
+ * Skip null value
+ * Ignores state
+ */
+qson_result qson_skip_null(qson_deserialize_ctx_t *ctx);
 
 #ifdef __cplusplus
 }

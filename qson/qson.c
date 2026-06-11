@@ -44,3 +44,13 @@ qson_read_bool_exit:
 	return QSON_RESULT_OK;
 }
 
+qson_result qson_skip_null(qson_deserialize_ctx_t *ctx) {
+	for (int i = 0; i < array_len(QSON_NULL) - 1; i++) {
+		if (ctx->buffer[ctx->index] != QSON_NULL[i]) {
+			return QSON_RESULT_INVALID_CHAR;
+		}
+		ctx->index++;
+	}
+	return QSON_RESULT_OK;
+}
+
