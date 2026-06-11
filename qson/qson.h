@@ -19,6 +19,8 @@ extern "C" {
 #define QSON_VALUE_SEPARATOR	','
 #define QSON_QUOTATION_MARK	'"'
 #define QSON_STRING_ESCAPE_CHAR	'\\'
+#define QSON_BOOL_TRUE		"true"
+#define QSON_BOOL_FALSE		"false"
 
 /*
  * Current state of deserialization
@@ -78,6 +80,12 @@ qson_result qson_skip_white_spaces(qson_deserialize_ctx_t *ctx);
  * Ignores state
  */
 qson_result qson_read_string(qson_deserialize_ctx_t *ctx, char *buffer, int *size);
+
+/*
+ * Read a boolean value in current context
+ * Ignores state
+ */
+qson_result qson_read_bool(qson_deserialize_ctx_t *ctx, bool *value);
 
 #ifdef __cplusplus
 }

@@ -23,3 +23,25 @@ qson_result qson_skip_white_spaces(qson_deserialize_ctx_t *ctx) {
 	return _qson_skip_white_spaces(ctx);
 }
 
+qson_result qson_read_bool(qson_deserialize_ctx_t *ctx, bool *value) {
+	char chr = ctx->buffer[ctx->index];
+
+	int i;
+	for (i = 0; i < array_len(QSON_BOOL_TRUE) - 1; i++) {
+		if (ctx->buffer[ctx->index + i] != QSON_BOOL_TRUE[i]) {
+			for (i = 0; i < array_len(QSON_BOOL_FALSE) - 1; i++) {
+				if (ctx->buffer[ctx->index + i] != QSON_BOOL_FALSE[i]) {
+					ctx->index += i;
+					return QSON_RESULT_INVALID_CHAR;
+				}
+			}
+			*value = false;
+			goto qson_read_bool_exit;
+		}
+	}
+	*value = true;
+qson_read_bool_exit:
+	ctx->index += i;
+	return QSON_RESULT_OK;
+}
+
