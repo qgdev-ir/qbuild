@@ -1,6 +1,24 @@
 #include "qson.h"
 #include "_qson.h"
 
+inline static qson_result set_has_next(qson_deserialize_ctx_t *ctx, bool *has_next) {
+	char current_val = ctx->buffer[ctx->index];
+	switch (current_val) {
+	case QSON_VALUE_SEPARATOR:
+		ctx->state = QSON_DESERIALIZING_STATE_OBJECT;
+		*has_next = true;
+		break;
+	case QSON_END_OBJECT:
+		ctx->state = QSON_DESERIALIZING_STATE_NONE;
+		*has_next = false;
+		break;
+	default:
+		return QSON_RESULT_INVALID_CHAR;
+	}
+	ctx->index++;
+	return QSON_RESULT_OK;
+}
+
 qson_result qson_start_object(qson_deserialize_ctx_t *ctx) {
 	if (ctx->state != QSON_DESERIALIZING_STATE_NONE) return QSON_RESULT_INVALID_STATE;
 
@@ -53,20 +71,11 @@ qson_result qson_get_object_entry_value_string(qson_deserialize_ctx_t *ctx, char
 	qson_result res = qson_read_string(ctx, value, value_length);
 	if (res != QSON_RESULT_OK) return res;
 
-	qson_result ress = _qson_skip_white_spaces(ctx);
+	res = _qson_skip_white_spaces(ctx);
+	if (res != QSON_RESULT_OK) return res;
 
-	char current_val = ctx->buffer[ctx->index];
-	switch (current_val) {
-	case QSON_VALUE_SEPARATOR:
-		ctx->state = QSON_DESERIALIZING_STATE_OBJECT;
-		*has_next = true;
-		break;
-	case QSON_END_OBJECT:
-		ctx->state = QSON_DESERIALIZING_STATE_NONE;
-		*has_next = false;
-		break;
-	default:
-		return QSON_RESULT_INVALID_CHAR;
-	}
+	res = set_has_next(ctx, has_next);
+	if (res != QSON_RESULT_OK) return res;
+
 	return QSON_RESULT_OK;
 }
