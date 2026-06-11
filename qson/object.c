@@ -79,3 +79,19 @@ qson_result qson_get_object_entry_value_string(qson_deserialize_ctx_t *ctx, char
 
 	return QSON_RESULT_OK;
 }
+
+qson_result qson_get_object_entry_value_bool(qson_deserialize_ctx_t *ctx, bool *value, bool *has_next) {
+	if (ctx->state != QSON_DESERIALIZING_STATE_OBJECT_VALUE) return QSON_RESULT_INVALID_STATE;
+
+	qson_result res = qson_read_bool(ctx, value);
+	if (res != QSON_RESULT_OK) return res;
+
+	res = _qson_skip_white_spaces(ctx);
+	if (res != QSON_RESULT_OK) return res;
+
+	res = set_has_next(ctx, has_next);
+	if (res != QSON_RESULT_OK) return res;
+
+	return QSON_RESULT_OK;
+}
+

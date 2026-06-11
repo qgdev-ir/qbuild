@@ -23,6 +23,12 @@ qson_result qson_get_object_entry(qson_deserialize_ctx_t *ctx, char *key, int *k
  */
 qson_result qson_get_object_entry_value_string(qson_deserialize_ctx_t *ctx, char *value, int *value_length, bool *has_next);
 
+/*
+ * Read value of entry as boolean
+ * set context state to OBJECT if has next entry and set to NONE if not
+ */
+qson_result qson_get_object_entry_value_bool(qson_deserialize_ctx_t *ctx, bool *value, bool *has_next);
+
 #ifdef __cplusplus
 }
 #endif
