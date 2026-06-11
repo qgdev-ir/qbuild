@@ -12,8 +12,7 @@ qson_result qson_create_deserialize_ctx(qson_deserialize_ctx_t *ctx, char *buffe
 }
 
 bool qson_is_white_space(char chr) {
-	int array_length = array_len(QSON_WHITESPACES);
-	for (int i = 0; i < array_length; i++) {
+	for (int i = 0; i < array_len(QSON_WHITESPACES); i++) {
 		if (chr == QSON_WHITESPACES[i]) return true;
 	}
 	return false;
