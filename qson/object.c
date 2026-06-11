@@ -86,3 +86,10 @@ qson_result qson_get_object_entry_value_bool(qson_deserialize_ctx_t *ctx, bool *
 	return QSON_RESULT_OK;
 }
 
+qson_result qson_get_object_entry_value_null(qson_deserialize_ctx_t *ctx, bool *has_next) {
+	qson_run(qson_skip_null(ctx));
+	qson_run(_qson_skip_white_spaces(ctx));
+	qson_run(set_has_next(ctx, has_next));
+	return QSON_RESULT_OK;
+}
+

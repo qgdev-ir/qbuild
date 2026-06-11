@@ -30,6 +30,13 @@ qson_result qson_get_object_entry_value_string(qson_deserialize_ctx_t *ctx, char
  */
 qson_result qson_get_object_entry_value_bool(qson_deserialize_ctx_t *ctx, bool *value, bool *has_next);
 
+/*
+ * Just skip the null value
+ * set context state to OBJECT if has next entry and set to NONE if not
+ * Requires state OBJECT_VALUE
+ */
+qson_result qson_get_object_entry_value_null(qson_deserialize_ctx_t *ctx, bool *has_next);
+
 #ifdef __cplusplus
 }
 #endif
