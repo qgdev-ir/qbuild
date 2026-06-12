@@ -22,6 +22,7 @@ extern "C" {
 #define QSON_BOOL_TRUE		"true"
 #define QSON_BOOL_FALSE		"false"
 #define QSON_NULL		"null"
+#define QSON_WHITESPACES	"\n\r\t "
 
 /*
  * Current state of deserialization

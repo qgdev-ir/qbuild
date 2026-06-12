@@ -1,8 +1,6 @@
 #include "qson.h"
 #include "_qson.h"
 
-const char QSON_WHITESPACES[4] = {'\n', '\r', '\t', ' '};
-
 qson_result qson_create_deserialize_ctx(qson_deserialize_ctx_t *ctx, char *buffer, int size) {
 	ctx->buffer = buffer;
 	ctx->size = size;
@@ -12,7 +10,7 @@ qson_result qson_create_deserialize_ctx(qson_deserialize_ctx_t *ctx, char *buffe
 }
 
 bool qson_is_white_space(char chr) {
-	for (int i = 0; i < array_len(QSON_WHITESPACES); i++) {
+	for (int i = 0; i < array_len(QSON_WHITESPACES) - 1; i++) {
 		if (chr == QSON_WHITESPACES[i]) return true;
 	}
 	return false;
