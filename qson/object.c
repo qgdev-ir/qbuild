@@ -44,23 +44,7 @@ qson_result qson_get_object_entry(qson_deserialize_ctx_t *ctx, char *key, int *k
 	if (ctx->buffer[ctx->index++] != QSON_NAME_SEPARATOR) return QSON_RESULT_INVALID_CHAR;
 
 	qson_run(_qson_skip_white_spaces(ctx));
-
-	if (*type == QSON_TYPE_AUTO) {
-		char chr = ctx->buffer[ctx->index];
-		switch (chr) {
-		case QSON_QUOTATION_MARK: *type = QSON_TYPE_STRING; break;
-		case QSON_BEGIN_OBJECT: *type = QSON_TYPE_OBJECT; break;
-		case QSON_BEGIN_ARRAY: *type = QSON_TYPE_ARRAY; break;
-		case 't':
-		case 'f': *type = QSON_TYPE_BOOL; break;
-		case 'n': *type = QSON_TYPE_NULL; break;
-		default:
-			if (('0' <= chr && chr <= '9' ) || chr == '-')
-				*type = QSON_TYPE_NUMBER;
-			else
-				return QSON_RESULT_INVALID_CHAR;
-		}
-	}
+	qson_run(_qson_detect_type(ctx, type));
 
 	return QSON_RESULT_OK;
 }
