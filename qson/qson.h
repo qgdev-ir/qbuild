@@ -109,6 +109,7 @@ qson_result qson_read_number(qson_deserialize_ctx_t *ctx, double *value);
 #endif
 
 #include "object.h"
+#include "array.h"
 
 #endif
 
