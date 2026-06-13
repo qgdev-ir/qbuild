@@ -51,6 +51,7 @@ typedef enum {
 	QSON_RESULT_INVALID_CHAR = 2,		// a char is where it shouldnt be
 	QSON_RESULT_INVALID_STATE = 3,		// current state of context is invalid for this function
 	QSON_RESULT_BUFFER_TOO_SMALL = 4,	// value dont fit in given buffer
+	QSON_RESULT_INVALID_TYPE = 5,		// invalid qson type is given
 } qson_result;
 
 typedef enum {
