@@ -30,7 +30,9 @@ extern "C" {
 typedef enum {
 	QSON_DESERIALIZING_STATE_NONE = 0,		// no specific deserialization is running
 	QSON_DESERIALIZING_STATE_OBJECT = 1,		// deserializing an object
-	QSON_DESERIALIZING_STATE_OBJECT_VALUE = 2	// deserializing value of an object
+	QSON_DESERIALIZING_STATE_OBJECT_VALUE = 2,	// deserializing value of an object
+	QSON_DESERIALIZING_STATE_ARRAY = 3,		// deserializing an array
+	QSON_DESERIALIZING_STATE_ARRAY_VALUE = 4,	// deserializing memeber of an array
 } qson_deserialize_state;
 
 /*
