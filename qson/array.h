@@ -16,6 +16,13 @@ qson_result qson_start_array(qson_deserialize_ctx_t *ctx);
  */
 qson_result qson_get_array_entry(qson_deserialize_ctx_t *ctx, qson_type *type);
 
+/*
+ * Read value of entry as a string
+ * set context state to ARRAY if has next entry and set to NONE if not
+ * Requires state ARRAY_VALUE
+ */
+qson_result qson_get_array_entry_value_string(qson_deserialize_ctx_t *ctx, char *value, int *value_length, bool *has_next);
+
 #ifdef __cplusplus
 }
 #endif
