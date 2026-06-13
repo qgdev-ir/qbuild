@@ -117,6 +117,30 @@ bool test_qson_get_object_entry_value_null() {
 	return success;
 }
 
+bool test_qson_get_object_entry_value_number() {
+	test_run_log("qson_get_object_entry_value_number");
+	char buffer[] = "{ \"key\" : 1E+1  }";
+	qson_deserialize_ctx_t ctx;
+	char key[4];
+	int key_size = 4;
+	qson_type value_type = QSON_TYPE_AUTO;
+	double value;
+	bool has_next;
+
+	bool success = 1;
+	success &= qson_create_deserialize_ctx(&ctx, buffer, array_len(buffer)) == QSON_RESULT_OK;
+	success &= qson_start_object(&ctx) == QSON_RESULT_OK;
+	success &= qson_get_object_entry(&ctx, key, &key_size, &value_type) == QSON_RESULT_OK;
+	success &= key_size == 4;
+	success &= strcmp(key, "key") == 0;
+	success &= value_type == QSON_TYPE_NUMBER;
+	success &= qson_get_object_entry_value_number(&ctx, &value, &has_next) == QSON_RESULT_OK;
+	success &= value == 10;
+	success &= !has_next;
+	test_result_log(success);
+	return success;
+}
+
 bool test_object() {
 	bool success = 1;
 	success &= test_qson_start_object();
@@ -124,6 +148,7 @@ bool test_object() {
 	success &= test_qson_get_object_entry_value_string();
 	success &= test_qson_get_object_entry_value_bool();
 	success &= test_qson_get_object_entry_value_null();
+	success &= test_qson_get_object_entry_value_number();
 	return success;
 }
 
