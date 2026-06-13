@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include "qson.h"
-#include "qson.h"
+#include "_qson.h"
 
 inline static qson_result handle_escape(qson_deserialize_ctx_t *ctx, char *buffer, int *sizep, int *ip) {
 	int size = *sizep;
