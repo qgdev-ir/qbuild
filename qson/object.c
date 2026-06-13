@@ -87,6 +87,7 @@ qson_result qson_get_object_entry_value_bool(qson_deserialize_ctx_t *ctx, bool *
 }
 
 qson_result qson_get_object_entry_value_null(qson_deserialize_ctx_t *ctx, bool *has_next) {
+	if (ctx->state != QSON_DESERIALIZING_STATE_OBJECT_VALUE) return QSON_RESULT_INVALID_STATE;
 	qson_run(qson_skip_null(ctx));
 	qson_run(_qson_skip_white_spaces(ctx));
 	qson_run(set_has_next(ctx, has_next));
