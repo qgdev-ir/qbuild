@@ -11,3 +11,12 @@ qson_result qson_start_array(qson_deserialize_ctx_t *ctx) {
 	ctx->index++;
 	return QSON_RESULT_OK;
 }
+
+qson_result qson_get_array_entry(qson_deserialize_ctx_t *ctx, qson_type *type) {
+	if (ctx->state != QSON_DESERIALIZING_STATE_ARRAY) return QSON_RESULT_INVALID_STATE;
+	qson_run(_qson_skip_white_spaces(ctx));
+	qson_run(_qson_detect_type(ctx, type));
+	ctx->state = QSON_DESERIALIZING_STATE_ARRAY_VALUE;
+	return QSON_RESULT_OK;
+}
+
