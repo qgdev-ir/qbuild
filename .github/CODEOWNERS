@@ -1,0 +1,2 @@
+*.c	@qgdev-ir/qbuild-c-reviewers
+
