@@ -46,3 +46,12 @@ qson_result qson_get_array_entry_value_string(qson_deserialize_ctx_t *ctx, char 
 	qson_run(set_has_next(ctx, has_next));
 	return QSON_RESULT_OK;
 }
+
+qson_result qson_get_array_entry_value_bool(qson_deserialize_ctx_t *ctx, bool *value, bool *has_next) {
+	if (ctx->state != QSON_DESERIALIZING_STATE_ARRAY_VALUE) return QSON_RESULT_INVALID_STATE;
+	qson_run(_qson_skip_white_spaces(ctx));
+	qson_run(qson_read_bool(ctx, value));
+	qson_run(_qson_skip_white_spaces(ctx));
+	qson_run(set_has_next(ctx, has_next));
+	return QSON_RESULT_OK;
+}
