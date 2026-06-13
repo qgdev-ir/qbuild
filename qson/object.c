@@ -55,8 +55,8 @@ qson_result qson_get_object_entry(qson_deserialize_ctx_t *ctx, char *key, int *k
 		case 'f': *type = QSON_TYPE_BOOL; break;
 		case 'n': *type = QSON_TYPE_NULL; break;
 		default:
-			if (('0' <= chr && chr <= '9' ) || chr == '-' || chr == '+')
-				*type = QSON_TYPE_STRING;
+			if (('0' <= chr && chr <= '9' ) || chr == '-')
+				*type = QSON_TYPE_NUMBER;
 			else
 				return QSON_RESULT_INVALID_CHAR;
 		}
