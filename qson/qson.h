@@ -95,6 +95,13 @@ qson_result qson_read_bool(qson_deserialize_ctx_t *ctx, bool *value);
  */
 qson_result qson_skip_null(qson_deserialize_ctx_t *ctx);
 
+
+/*
+ * Read a number value in current context and return it as a signed double
+ * Ignores state
+ */
+qson_result qson_read_number(qson_deserialize_ctx_t *ctx, double *value);
+
 #ifdef __cplusplus
 }
 #endif

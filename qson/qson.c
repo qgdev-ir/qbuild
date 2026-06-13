@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include "qson.h"
 #include "_qson.h"
 
@@ -52,6 +53,21 @@ qson_result qson_skip_null(qson_deserialize_ctx_t *ctx) {
 		}
 		ctx->index++;
 	}
+	return QSON_RESULT_OK;
+}
+
+qson_result qson_read_number(qson_deserialize_ctx_t *ctx, double *value) {
+	switch (ctx->buffer[ctx->index]) {
+	case '0':
+		ctx->index++;
+		return QSON_RESULT_OK;
+	case '+':
+		return QSON_RESULT_INVALID_CHAR;
+	}
+
+	char *endptr;
+	*value = strtod(ctx->buffer + ctx->index, &endptr);
+	ctx->index = endptr - ctx->buffer;
 	return QSON_RESULT_OK;
 }
 
