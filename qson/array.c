@@ -1,6 +1,24 @@
 #include "qson.h"
 #include "_qson.h"
 
+inline static qson_result set_has_next(qson_deserialize_ctx_t *ctx, bool *has_next) {
+	char current_val = ctx->buffer[ctx->index];
+	switch (current_val) {
+	case QSON_VALUE_SEPARATOR:
+		ctx->state = QSON_DESERIALIZING_STATE_ARRAY;
+		*has_next = true;
+		break;
+	case QSON_END_ARRAY:
+		ctx->state = QSON_DESERIALIZING_STATE_NONE;
+		*has_next = false;
+		break;
+	default:
+		return QSON_RESULT_INVALID_CHAR;
+	}
+	ctx->index++;
+	return QSON_RESULT_OK;
+}
+
 qson_result qson_start_array(qson_deserialize_ctx_t *ctx) {
 	if (ctx->state != QSON_DESERIALIZING_STATE_NONE) return QSON_RESULT_INVALID_STATE;
 
