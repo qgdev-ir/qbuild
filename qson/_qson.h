@@ -14,6 +14,10 @@ extern "C" {
 		qson_result res = call; \
 		if (res != QSON_RESULT_OK) return res; \
 	} while (0)
+#define qson_ctx_size_check(ctx, required_size) \
+	do { \
+		if ((ctx->size - ctx->index) < required_size) return QSON_RESULT_UNEXPECTED_EOF; \
+	} while (0)
 
 inline qson_result _qson_skip_white_spaces(qson_deserialize_ctx_t *ctx) {
 	int *index = &ctx->index;

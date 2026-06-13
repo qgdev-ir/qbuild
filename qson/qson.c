@@ -24,8 +24,10 @@ qson_result qson_read_bool(qson_deserialize_ctx_t *ctx, bool *value) {
 	char chr = ctx->buffer[ctx->index];
 
 	int i;
+	qson_ctx_size_check(ctx, 4);
 	for (i = 0; i < array_len(QSON_BOOL_TRUE) - 1; i++) {
 		if (ctx->buffer[ctx->index + i] != QSON_BOOL_TRUE[i]) {
+			qson_ctx_size_check(ctx, 5);
 			for (i = 0; i < array_len(QSON_BOOL_FALSE) - 1; i++) {
 				if (ctx->buffer[ctx->index + i] != QSON_BOOL_FALSE[i]) {
 					ctx->index += i;
@@ -43,6 +45,7 @@ qson_read_bool_exit:
 }
 
 qson_result qson_skip_null(qson_deserialize_ctx_t *ctx) {
+	qson_ctx_size_check(ctx, 4);
 	for (int i = 0; i < array_len(QSON_NULL) - 1; i++) {
 		if (ctx->buffer[ctx->index] != QSON_NULL[i]) {
 			return QSON_RESULT_INVALID_CHAR;
