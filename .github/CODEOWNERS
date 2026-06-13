@@ -1,2 +1,4 @@
+*	@qgdev-ir/owner
+
 *.c	@qgdev-ir/qbuild-c-reviewers
 
