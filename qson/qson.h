@@ -30,7 +30,9 @@ extern "C" {
 typedef enum {
 	QSON_DESERIALIZING_STATE_NONE = 0,		// no specific deserialization is running
 	QSON_DESERIALIZING_STATE_OBJECT = 1,		// deserializing an object
-	QSON_DESERIALIZING_STATE_OBJECT_VALUE = 2	// deserializing value of an object
+	QSON_DESERIALIZING_STATE_OBJECT_VALUE = 2,	// deserializing value of an object
+	QSON_DESERIALIZING_STATE_ARRAY = 3,		// deserializing an array
+	QSON_DESERIALIZING_STATE_ARRAY_VALUE = 4,	// deserializing memeber of an array
 } qson_deserialize_state;
 
 /*
@@ -49,6 +51,7 @@ typedef enum {
 	QSON_RESULT_INVALID_CHAR = 2,		// a char is where it shouldnt be
 	QSON_RESULT_INVALID_STATE = 3,		// current state of context is invalid for this function
 	QSON_RESULT_BUFFER_TOO_SMALL = 4,	// value dont fit in given buffer
+	QSON_RESULT_INVALID_TYPE = 5,		// invalid qson type is given
 } qson_result;
 
 typedef enum {
@@ -107,6 +110,7 @@ qson_result qson_read_number(qson_deserialize_ctx_t *ctx, double *value);
 #endif
 
 #include "object.h"
+#include "array.h"
 
 #endif
 

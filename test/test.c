@@ -33,11 +33,13 @@ bool test() {
 }
 
 extern bool test_object();
+extern bool test_array();
 
 int main() {
 	bool success = 1;
 	success &= test();
 	success &= test_object();
+	success &= test_array();
 	return !success;
 }
 
