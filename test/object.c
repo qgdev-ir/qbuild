@@ -141,6 +141,59 @@ bool test_qson_get_object_entry_value_number() {
 	return success;
 }
 
+#include <stdio.h>
+bool test_qson_get_object_entry_value_sub_ctx() {
+	test_run_log("qson_get_object_entry_value_sub_ctx");
+	char buffer[] = "{ \"key\" : { \"sik\" : \"}\\\"}\", \"key\": { \"sik\": true } }  }";
+	qson_deserialize_ctx_t ctx;
+	char key[4];
+	int key_size = 4;
+	qson_type value_type = QSON_TYPE_OBJECT;
+	bool has_next;
+	qson_deserialize_ctx_t sub_ctx;
+	char value[4];
+	int value_size = 4;
+	qson_deserialize_ctx_t sub_ctx2;
+	bool bvalue;
+
+	bool success = 1;
+	success &= qson_create_deserialize_ctx(&ctx, buffer, array_len(buffer)) == QSON_RESULT_OK;
+	success &= qson_start_object(&ctx) == QSON_RESULT_OK;
+	success &= qson_get_object_entry(&ctx, key, &key_size, &value_type) == QSON_RESULT_OK;
+	success &= key_size == 4;
+	success &= strcmp(key, "key") == 0;
+	success &= qson_get_object_entry_value_sub_ctx(&ctx, &sub_ctx, &has_next) == QSON_RESULT_OK;
+	success &= !has_next;
+
+	success &= qson_start_object(&sub_ctx) == QSON_RESULT_OK;
+	value_type = QSON_TYPE_STRING;
+	success &= qson_get_object_entry(&sub_ctx, key, &key_size, &value_type) == QSON_RESULT_OK;
+	success &= key_size == 4;
+	success &= strcmp(key, "sik") == 0;
+	success &= qson_get_object_entry_value_string(&sub_ctx, value, &value_size, &has_next) == QSON_RESULT_OK;
+	success &= strcmp(value, "}\"}") == 0;
+	success &= value_size == 4;
+	success &= has_next;
+
+	value_type = QSON_TYPE_OBJECT;
+	success &= qson_get_object_entry(&sub_ctx, key, &key_size, &value_type) == QSON_RESULT_OK;
+	success &= key_size == 4;
+	success &= strcmp(key, "key") == 0;
+	success &= qson_get_object_entry_value_sub_ctx(&sub_ctx, &sub_ctx2, &has_next) == QSON_RESULT_OK;
+	success &= qson_start_object(&sub_ctx2) == QSON_RESULT_OK;
+	
+	value_type = QSON_TYPE_BOOL;
+	success &= qson_get_object_entry(&sub_ctx2, key, &key_size, &value_type) == QSON_RESULT_OK;
+	success &= key_size == 4;
+	success &= strcmp(key, "sik") == 0;
+	success &= qson_get_object_entry_value_bool(&sub_ctx2, &bvalue, &has_next) == QSON_RESULT_OK;
+	success &= bvalue;
+	success &= !has_next;
+
+	test_result_log(success);
+	return success;
+}
+
 bool test_object() {
 	bool success = 1;
 	success &= test_qson_start_object();
@@ -149,6 +202,7 @@ bool test_object() {
 	success &= test_qson_get_object_entry_value_bool();
 	success &= test_qson_get_object_entry_value_null();
 	success &= test_qson_get_object_entry_value_number();
+	success &= test_qson_get_object_entry_value_sub_ctx();
 	return success;
 }
 
