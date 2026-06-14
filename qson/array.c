@@ -55,3 +55,13 @@ qson_result qson_get_array_entry_value_bool(qson_deserialize_ctx_t *ctx, bool *v
 	qson_run(set_has_next(ctx, has_next));
 	return QSON_RESULT_OK;
 }
+
+qson_result qson_get_array_entry_value_null(qson_deserialize_ctx_t *ctx, bool *has_next) {
+	if (ctx->state != QSON_DESERIALIZING_STATE_ARRAY_VALUE) return QSON_RESULT_INVALID_STATE;
+	qson_run(_qson_skip_white_spaces(ctx));
+	qson_run(qson_skip_null(ctx));
+	qson_run(_qson_skip_white_spaces(ctx));
+	qson_run(set_has_next(ctx, has_next));
+	return QSON_RESULT_OK;
+}
+
