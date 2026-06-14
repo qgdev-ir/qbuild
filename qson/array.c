@@ -40,7 +40,6 @@ qson_result qson_get_array_entry(qson_deserialize_ctx_t *ctx, qson_type *type) {
 
 qson_result qson_get_array_entry_value_string(qson_deserialize_ctx_t *ctx, char *value, int *value_length, bool *has_next) {
 	if (ctx->state != QSON_DESERIALIZING_STATE_ARRAY_VALUE) return QSON_RESULT_INVALID_STATE;
-	qson_run(_qson_skip_white_spaces(ctx));
 	qson_run(qson_read_string(ctx, value, value_length));
 	qson_run(_qson_skip_white_spaces(ctx));
 	qson_run(set_has_next(ctx, has_next));
@@ -49,7 +48,6 @@ qson_result qson_get_array_entry_value_string(qson_deserialize_ctx_t *ctx, char 
 
 qson_result qson_get_array_entry_value_bool(qson_deserialize_ctx_t *ctx, bool *value, bool *has_next) {
 	if (ctx->state != QSON_DESERIALIZING_STATE_ARRAY_VALUE) return QSON_RESULT_INVALID_STATE;
-	qson_run(_qson_skip_white_spaces(ctx));
 	qson_run(qson_read_bool(ctx, value));
 	qson_run(_qson_skip_white_spaces(ctx));
 	qson_run(set_has_next(ctx, has_next));
@@ -58,7 +56,6 @@ qson_result qson_get_array_entry_value_bool(qson_deserialize_ctx_t *ctx, bool *v
 
 qson_result qson_get_array_entry_value_null(qson_deserialize_ctx_t *ctx, bool *has_next) {
 	if (ctx->state != QSON_DESERIALIZING_STATE_ARRAY_VALUE) return QSON_RESULT_INVALID_STATE;
-	qson_run(_qson_skip_white_spaces(ctx));
 	qson_run(qson_skip_null(ctx));
 	qson_run(_qson_skip_white_spaces(ctx));
 	qson_run(set_has_next(ctx, has_next));
