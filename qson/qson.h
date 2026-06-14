@@ -105,6 +105,12 @@ qson_result qson_skip_null(qson_deserialize_ctx_t *ctx);
  */
 qson_result qson_read_number(qson_deserialize_ctx_t *ctx, double *value);
 
+/*
+ * Create a deserialize context that deserialize an object or and array nested in current context
+ * Ignores state
+ */
+qson_result qson_create_sub_deserialize_ctx(qson_deserialize_ctx_t *ctx, qson_deserialize_ctx_t *sub_ctx);
+
 #ifdef __cplusplus
 }
 #endif
