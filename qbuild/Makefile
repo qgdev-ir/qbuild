@@ -1,4 +1,4 @@
-QBUILD_OBJECTS := $(patsubst qbuild/%,$(BUILD_DIR)/obj/qbuild/%.o,$(wildcard qbuild/*.c))
+QBUILD_OBJECTS := $(patsubst qbuild/%,$(BUILD_DIR)/obj/qbuild/%.o,$(call RESOLVE_SOURCES,qbuild,.c))
 
 $(BUILD_DIR)/obj/qbuild/%.c.o: qbuild/%.c
 	$(info > Compiling $@)

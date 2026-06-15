@@ -1,4 +1,4 @@
-QSON_OBJECTS := $(patsubst qson/%,$(BUILD_DIR)/obj/qson/%.o,$(wildcard qson/*.c))
+QSON_OBJECTS := $(patsubst qson/%,$(BUILD_DIR)/obj/qson/%.o,$(call RESOLVE_SOURCES,qson,.c))
 
 $(BUILD_DIR)/obj/qson/%.c.o: qson/%.c
 	$(info > Compiling $@)
