@@ -141,7 +141,6 @@ bool test_qson_get_object_entry_value_number() {
 	return success;
 }
 
-#include <stdio.h>
 bool test_qson_get_object_entry_value_sub_ctx() {
 	test_run_log("qson_get_object_entry_value_sub_ctx");
 	char buffer[] = "{ \"key\" : { \"sik\" : \"}\\\"}\", \"key\": { \"sik\": true } }  }";
