@@ -1,4 +1,4 @@
-TEST_OBJECTS := $(patsubst test/%,$(BUILD_DIR)/obj/test/%.o,$(wildcard test/*.c))
+TEST_OBJECTS := $(patsubst test/%,$(BUILD_DIR)/obj/test/%.o,$(call RESOLVE_SOURCES,test,.c))
 
 $(BUILD_DIR)/obj/test/%.c.o: test/%.c
 	$(info > Compiling $@)
