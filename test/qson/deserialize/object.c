@@ -1,5 +1,5 @@
 #include <string.h>
-#include "test.h"
+#include <test/test.h>
 
 bool test_qson_start_object() {
 	test_run_log("qson_start_object");
@@ -197,7 +197,7 @@ bool test_qson_get_object_entry_value_sub_ctx() {
 	return success;
 }
 
-bool test_object() {
+bool test_qson_deserialize_object() {
 	bool success = 1;
 	success &= test_qson_start_object();
 	success &= test_qson_get_object_entry();
