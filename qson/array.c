@@ -25,8 +25,18 @@ qson_result qson_start_array(qson_deserialize_ctx_t *ctx) {
 	qson_run(_qson_skip_white_spaces(ctx));
 
 	if (ctx->buffer[ctx->index] != QSON_BEGIN_ARRAY) return QSON_RESULT_INVALID_CHAR;
-	ctx->state = QSON_DESERIALIZING_STATE_ARRAY;
+	qson_ctx_size_check(ctx, 1);
 	ctx->index++;
+
+	qson_run(_qson_skip_white_spaces(ctx));
+	if (ctx->buffer[ctx->index] == QSON_END_ARRAY) {
+		ctx->state = QSON_DESERIALIZING_STATE_NONE;
+		qson_ctx_size_check(ctx, 1);
+		ctx->index++;
+	} else {
+		ctx->state = QSON_DESERIALIZING_STATE_ARRAY;
+	}
+
 	return QSON_RESULT_OK;
 }
 

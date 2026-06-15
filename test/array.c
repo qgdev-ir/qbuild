@@ -3,13 +3,17 @@
 
 bool test_qson_start_array() {
 	test_run_log("qson_start_array");
-	char buffer[] = "[";
+	char buffer[] = "[ null ]";
+	char buffer2[] = "[ ]";
 	qson_deserialize_ctx_t ctx;
 
 	bool success = 1;
 	success &= qson_create_deserialize_ctx(&ctx, buffer, array_len(buffer)) == QSON_RESULT_OK;
 	success &= qson_start_array(&ctx) == QSON_RESULT_OK;
 	success &= ctx.state == QSON_DESERIALIZING_STATE_ARRAY;
+	success &= qson_create_deserialize_ctx(&ctx, buffer2, array_len(buffer)) == QSON_RESULT_OK;
+	success &= qson_start_array(&ctx) == QSON_RESULT_OK;
+	success &= ctx.state == QSON_DESERIALIZING_STATE_NONE;
 	test_result_log(success);
 	return success;
 }

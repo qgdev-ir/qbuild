@@ -6,6 +6,7 @@ extern "C" {
 
 /*
  * Start deserializing an array and set context state to ARRAY
+ * set context state to ARRAY if has entry and set to NONE if not
  * Requires state NONE
  */
 qson_result qson_start_array(qson_deserialize_ctx_t *ctx);
