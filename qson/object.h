@@ -6,6 +6,7 @@ extern "C" {
 
 /*
  * Start deserializing an object and set context state to OBJECT
+ * set context state to OBJECT if has entry and set to NONE if not
  * Requires state NONE
  */
 qson_result qson_start_object(qson_deserialize_ctx_t *ctx);
