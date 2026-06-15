@@ -1,6 +1,6 @@
 #include <stdlib.h>
-#include "qson.h"
-#include "_qson.h"
+#include <qson/qson.h>
+#include "_deserialize.h"
 
 qson_result qson_create_deserialize_ctx(qson_deserialize_ctx_t *ctx, char *buffer, int size) {
 	ctx->buffer = buffer;

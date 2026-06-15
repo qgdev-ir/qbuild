@@ -1,5 +1,5 @@
-#include "qson.h"
-#include "_qson.h"
+#include <qson/qson.h>
+#include "_deserialize.h"
 
 inline static qson_result set_has_next(qson_deserialize_ctx_t *ctx, bool *has_next) {
 	char current_val = ctx->buffer[ctx->index];

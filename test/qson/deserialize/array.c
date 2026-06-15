@@ -1,5 +1,5 @@
 #include <string.h>
-#include "test.h"
+#include <test/test.h>
 
 bool test_qson_start_array() {
 	test_run_log("qson_start_array");
@@ -161,7 +161,7 @@ bool test_qson_get_array_entry_value_sub_ctx() {
 	return success;
 }
 
-bool test_array() {
+bool test_qson_deserialize_array() {
 	bool success = 1;
 	success &= test_qson_start_array();
 	success &= test_qson_get_array_entry();
