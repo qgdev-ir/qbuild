@@ -11,9 +11,11 @@
 extern "C" {
 #endif
 
+#define qson_ctx_has_size(ctx, required_size) (ctx->size - ctx->index - 1) < required_size || ctx->buffer[ctx->index + required_size] == '\0'
 #define qson_ctx_size_check(ctx, required_size) \
 	do { \
-		if ((ctx->size - ctx->index - 1) < required_size) return QSON_RESULT_UNEXPECTED_EOF; \
+		if (qson_ctx_has_size(ctx, required_size)) \
+			return QSON_RESULT_UNEXPECTED_EOF; \
 	} while (0)
 
 inline qson_result _qson_skip_white_spaces(qson_deserialize_ctx_t *ctx) {
