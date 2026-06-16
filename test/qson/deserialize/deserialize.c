@@ -25,6 +25,25 @@ bool test_qson_skip_white_spacesـunexpected_eof() {
 	return success;
 }
 
+static qson_result _test_qson_ctx_size_check(qson_deserialize_ctx_t *ctx) {
+	qson_ctx_size_check(ctx, 1);
+	return QSON_RESULT_OK;
+}
+
+bool test_qson_ctx_size_check() {
+	test_run_log("qson_ctx_size_check");
+	char buffer[] = "testing";
+	qson_deserialize_ctx_t ctx;
+
+	bool success = 1;
+	success &= qson_create_deserialize_ctx(&ctx, buffer, 4) == QSON_RESULT_OK;
+	ctx.index = 3;
+	success &= _test_qson_ctx_size_check(&ctx) == QSON_RESULT_UNEXPECTED_EOF;
+	test_result_log(success);
+	return success;
+
+}
+
 extern bool test_qson_deserialize_array();
 extern bool test_qson_deserialize_object();
 
