@@ -19,11 +19,39 @@ extern "C" {
 	} while (0)
 
 inline qson_result _qson_skip_white_spaces(qson_deserialize_ctx_t *ctx) {
-	int *index = &ctx->index;
-	while (qson_is_white_space(ctx->buffer[*index])) {
-		(*index)++;
-		if (*index >= ctx->size || ctx->buffer[*index] == 0)
-			return QSON_RESULT_UNEXPECTED_EOF;
+	char chr = ctx->buffer[ctx->index];
+	int comment_state = 0;	// 0: not in comment,
+				// 1: unknown comment (type must be detected by next char),
+				// 2: line comment "//",
+				// 3: area comment "/*"
+				// 3: possible area comment end "*/"
+	while (qson_is_white_space(chr) || comment_state != 0 || chr == QSON_COMMENT_PREFIX) {
+		switch (comment_state) {
+		case 0:
+			if (chr == QSON_COMMENT_PREFIX) comment_state = 1;
+			break;
+		case 1:
+			switch (chr) {
+			case QSON_COMMENT_LINE: comment_state = 2; break;
+			case QSON_COMMENT_AREA: comment_state = 3; break;
+			default: return QSON_RESULT_INVALID_CHAR;
+			}
+			break;
+		case 2:
+			if (chr == '\n') comment_state = 0;
+			break;
+		case 3:
+			if (chr == QSON_COMMENT_AREA) comment_state = 4;
+			break;
+		case 4:
+			switch (chr) {
+			case QSON_COMMENT_PREFIX: comment_state = 0; break;
+			default: comment_state = 3; break;
+			}
+			break;
+		}
+		qson_ctx_size_check(ctx, 1);
+		chr = ctx->buffer[++ctx->index];
 	}
 	return QSON_RESULT_OK;
 }
