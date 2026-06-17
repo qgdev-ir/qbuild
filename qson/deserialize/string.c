@@ -40,7 +40,7 @@ inline static qson_result handle_escape(qson_deserialize_ctx_t *ctx, char *buffe
 
 qson_result qson_read_string(qson_deserialize_ctx_t *ctx, char *buffer, int *sizep) {
 	if (ctx->buffer[ctx->index] != QSON_QUOTATION_MARK) return QSON_RESULT_INVALID_CHAR;
-	ctx->index++;
+	qson_ctx_skip(ctx, 1);
 
 	int size = *sizep;
 	int i = 0;
@@ -60,7 +60,7 @@ qson_result qson_read_string(qson_deserialize_ctx_t *ctx, char *buffer, int *siz
 			if (chr < 32 || 126 < chr) return QSON_RESULT_INVALID_CHAR;
 			buffer[i] = chr;
 		}
-		ctx->index++;
+		qson_ctx_skip(ctx, 1);
 		i++;
 	}
 	return QSON_RESULT_BUFFER_TOO_SMALL;
