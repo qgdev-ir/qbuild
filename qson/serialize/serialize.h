@@ -30,4 +30,7 @@ qson_result qson_create_serialize_ctx(qson_serialize_ctx_t *ctx, char *buffer, i
 #ifdef __cplusplus
 }
 #endif
+
+#include "object.h"
+
 #endif
