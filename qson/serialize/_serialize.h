@@ -17,6 +17,7 @@ extern "C" {
 		if (qson_ctx_has_size(ctx, required_size)) \
 			return QSON_RESULT_BUFFER_TOO_SMALL; \
 	} while (0)
+#define qson_ctx_write(ctx, chr) qson_ctx_size_check(ctx, 1); ctx->buffer[ctx->index++] = chr;
 
 #ifdef __cplusplus
 }
