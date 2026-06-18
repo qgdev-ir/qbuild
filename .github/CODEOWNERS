@@ -1,4 +1,5 @@
 *	@qgdev-ir/owner
 
 *.c	@qgdev-ir/qbuild-c-reviewers
+*.h	@qgdev-ir/qbuild-c-reviewers
 
