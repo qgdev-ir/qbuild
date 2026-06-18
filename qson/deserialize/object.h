@@ -1,5 +1,5 @@
-#ifndef _qson_object_h_
-#define _qson_object_h_
+#ifndef _qson_deserialize_object_h_
+#define _qson_deserialize_object_h_
 #ifdef __cplusplus
 extern "C" {
 #endif
