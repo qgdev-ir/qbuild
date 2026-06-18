@@ -17,6 +17,7 @@ extern "C" {
 		if (qson_ctx_has_size(ctx, required_size)) \
 			return QSON_RESULT_UNEXPECTED_EOF; \
 	} while (0)
+#define qson_ctx_skip(ctx, amount) qson_ctx_size_check(ctx, amount); ctx->index += amount;
 
 inline qson_result _qson_skip_white_spaces(qson_deserialize_ctx_t *ctx) {
 	char chr = ctx->buffer[ctx->index];

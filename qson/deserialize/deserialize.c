@@ -72,7 +72,7 @@ qson_result qson_read_number(qson_deserialize_ctx_t *ctx, double *value) {
 }
 
 static inline qson_result skip_string(qson_deserialize_ctx_t *ctx) {
-	ctx->index++;
+	qson_ctx_skip(ctx, 1);
 	while (ctx->buffer[ctx->index] != QSON_QUOTATION_MARK && ctx->index < ctx->size) {
 		int move = ctx->buffer[ctx->index] == '\\' ? 2 : 1;
 		qson_ctx_size_check(ctx, move);
