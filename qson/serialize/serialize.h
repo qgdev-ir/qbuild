@@ -22,6 +22,11 @@ typedef struct {
 	qson_serialize_state state;	// Current state of serialization
 } qson_serialize_ctx_t;
 
+/*
+ * Create a serialize context for given byte buffer
+ */
+qson_result qson_create_serialize_ctx(qson_serialize_ctx_t *ctx, char *buffer, int size);
+
 #ifdef __cplusplus
 }
 #endif
