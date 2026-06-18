@@ -11,7 +11,7 @@
 extern "C" {
 #endif
 
-
+#define qson_ctx_has_size(ctx, required_size) (ctx->size - ctx->index - 1) < required_size
 
 #ifdef __cplusplus
 }
