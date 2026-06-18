@@ -12,6 +12,11 @@ extern "C" {
 #endif
 
 #define qson_ctx_has_size(ctx, required_size) (ctx->size - ctx->index - 1) < required_size
+#define qson_ctx_size_check(ctx, required_size) \
+	do { \
+		if (qson_ctx_has_size(ctx, required_size)) \
+			return QSON_RESULT_BUFFER_TOO_SMALL; \
+	} while (0)
 
 #ifdef __cplusplus
 }
