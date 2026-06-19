@@ -10,6 +10,7 @@ extern "C" {
  */
 typedef enum {
 	QSON_SERIALIZE_STATE_NONE = 0,		// no specific serialization is running
+	QSON_SERIALIZE_STATE_OBJECT = 1,	// writing an object
 } qson_serialize_state;
 
 /*
