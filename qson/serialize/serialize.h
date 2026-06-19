@@ -34,6 +34,12 @@ qson_result qson_create_serialize_ctx(qson_serialize_ctx_t *ctx, char *buffer, i
  */
 qson_result qson_end_serialize_ctx(qson_serialize_ctx_t *ctx);
 
+/*
+ * Writes a string value with needed escapes and with qutations
+ * Ignores state
+ */
+qson_result qson_write_string(qson_serialize_ctx_t *ctx, char *value);
+
 #ifdef __cplusplus
 }
 #endif
