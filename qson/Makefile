@@ -5,9 +5,9 @@ $(BUILD_DIR)/obj/qson/%.c.o: qson/%.c
 	mkdir -p $(@D)
 	gcc $(GCC_FLAGS) -c $< -o $@
 
-$(BUILD_DIR)/libqson.so: $(QSON_OBJECTS)
+$(BUILD_DIR)/libqson.a: $(QSON_OBJECTS)
 	$(info > Linking $@)
-	gcc $(GCC_FLAGS) -shared $^ -o $@
+	ar rcs $@ $^
 
-BUILD_TARGETS += $(BUILD_DIR)/libqson.so
+BUILD_TARGETS += $(BUILD_DIR)/libqson.a
 
