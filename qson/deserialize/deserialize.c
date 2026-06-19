@@ -7,6 +7,7 @@ qson_result qson_create_deserialize_ctx(qson_deserialize_ctx_t *ctx, char *buffe
 	ctx->size = size;
 	ctx->index = 0;
 	ctx->state = QSON_DESERIALIZING_STATE_NONE;
+	ctx->flags = 0;
 	return QSON_RESULT_OK;
 }
 
