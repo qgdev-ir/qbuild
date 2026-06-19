@@ -73,9 +73,16 @@ qson_result qson_read_number(qson_deserialize_ctx_t *ctx, double *value);
 
 /*
  * Create a deserialize context that deserialize an object or and array nested in current context
+ * Sets state to SUBCTX
  * Ignores state
  */
 qson_result qson_create_sub_deserialize_ctx(qson_deserialize_ctx_t *ctx, qson_deserialize_ctx_t *sub_ctx);
+
+/*
+ * Add subctx index to ctx (changing state is caller responsibility)
+ * Requires state SUBCTX and state NONE in subctx
+ */
+qson_result qson_end_sub_deserialize_ctx(qson_deserialize_ctx_t *ctx, qson_deserialize_ctx_t *sub_ctx);
 
 #ifdef __cplusplus
 }
