@@ -14,6 +14,7 @@ typedef enum {
 	QSON_DESERIALIZING_STATE_OBJECT_VALUE = 2,	// deserializing value of an object
 	QSON_DESERIALIZING_STATE_ARRAY = 3,		// deserializing an array
 	QSON_DESERIALIZING_STATE_ARRAY_VALUE = 4,	// deserializing memeber of an array
+	QSON_DESERIALIZING_STATE_SUBCTX = 5,		// a sub ctx is active for this ctx
 } qson_deserialize_state;
 
 /*
@@ -24,7 +25,10 @@ typedef struct {
 	int size;	// Size of the buffer
 	int index;	// Current index in buffer
 	qson_deserialize_state state;	// Current state of deserialization
+	char flags;	// flags for current ctx
 } qson_deserialize_ctx_t;
+
+#define QSON_DESERIALIZE_CTX_FLAG_IS_SUBCTX	1	// Indicates current ctx is subctx of another ctx
 
 /*
  * Create a deserialize context for given byte buffer
@@ -69,9 +73,16 @@ qson_result qson_read_number(qson_deserialize_ctx_t *ctx, double *value);
 
 /*
  * Create a deserialize context that deserialize an object or and array nested in current context
+ * Sets state to SUBCTX
  * Ignores state
  */
 qson_result qson_create_sub_deserialize_ctx(qson_deserialize_ctx_t *ctx, qson_deserialize_ctx_t *sub_ctx);
+
+/*
+ * Add subctx index to ctx (changing state is caller responsibility)
+ * Requires state SUBCTX and state NONE in subctx
+ */
+qson_result qson_end_sub_deserialize_ctx(qson_deserialize_ctx_t *ctx, qson_deserialize_ctx_t *sub_ctx);
 
 #ifdef __cplusplus
 }

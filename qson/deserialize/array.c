@@ -78,9 +78,15 @@ qson_result qson_get_array_entry_value_number(qson_deserialize_ctx_t *ctx, doubl
 	return QSON_RESULT_OK;
 }
 
-qson_result qson_get_array_entry_value_sub_ctx(qson_deserialize_ctx_t *ctx, qson_deserialize_ctx_t *sub_ctx, bool *has_next) {
+qson_result qson_get_array_entry_value_sub_ctx(qson_deserialize_ctx_t *ctx, qson_deserialize_ctx_t *sub_ctx) {
 	if (ctx->state != QSON_DESERIALIZING_STATE_ARRAY_VALUE) return QSON_RESULT_INVALID_STATE;
 	qson_run(qson_create_sub_deserialize_ctx(ctx, sub_ctx));
+	return QSON_RESULT_OK;
+}
+
+qson_result qson_get_array_entry_value_sub_ctx_end(qson_deserialize_ctx_t *ctx, qson_deserialize_ctx_t *sub_ctx, bool *has_next) {
+	if (ctx->state != QSON_DESERIALIZING_STATE_SUBCTX) return QSON_RESULT_INVALID_STATE;
+	qson_run(qson_end_sub_deserialize_ctx(ctx, sub_ctx));
 	qson_run(_qson_skip_white_spaces(ctx));
 	qson_run(set_has_next(ctx, has_next));
 	return QSON_RESULT_OK;

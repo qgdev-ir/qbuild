@@ -165,8 +165,7 @@ bool test_qson_get_object_entry_value_sub_ctx() {
 	success &= qson_get_object_entry(&ctx, key, &key_size, &value_type) == QSON_RESULT_OK;
 	success &= key_size == 4;
 	success &= strcmp(key, "key") == 0;
-	success &= qson_get_object_entry_value_sub_ctx(&ctx, &sub_ctx, &has_next) == QSON_RESULT_OK;
-	success &= !has_next;
+	success &= qson_get_object_entry_value_sub_ctx(&ctx, &sub_ctx) == QSON_RESULT_OK;
 
 	success &= qson_start_object(&sub_ctx) == QSON_RESULT_OK;
 	value_type = QSON_TYPE_STRING;
@@ -182,7 +181,7 @@ bool test_qson_get_object_entry_value_sub_ctx() {
 	success &= qson_get_object_entry(&sub_ctx, key, &key_size, &value_type) == QSON_RESULT_OK;
 	success &= key_size == 4;
 	success &= strcmp(key, "key") == 0;
-	success &= qson_get_object_entry_value_sub_ctx(&sub_ctx, &sub_ctx2, &has_next) == QSON_RESULT_OK;
+	success &= qson_get_object_entry_value_sub_ctx(&sub_ctx, &sub_ctx2) == QSON_RESULT_OK;
 	success &= qson_start_object(&sub_ctx2) == QSON_RESULT_OK;
 	
 	value_type = QSON_TYPE_BOOL;
@@ -191,6 +190,10 @@ bool test_qson_get_object_entry_value_sub_ctx() {
 	success &= strcmp(key, "sik") == 0;
 	success &= qson_get_object_entry_value_bool(&sub_ctx2, &bvalue, &has_next) == QSON_RESULT_OK;
 	success &= bvalue;
+	success &= !has_next;
+	success &= qson_get_object_entry_value_sub_ctx_end(&sub_ctx, &sub_ctx2, &has_next) == QSON_RESULT_OK;
+	success &= !has_next;
+	success &= qson_get_object_entry_value_sub_ctx_end(&ctx, &sub_ctx, &has_next) == QSON_RESULT_OK;
 	success &= !has_next;
 
 	test_result_log(success);

@@ -34,6 +34,7 @@ typedef enum {
 	QSON_RESULT_INVALID_STATE = 3,		// current state of context is invalid for this function
 	QSON_RESULT_BUFFER_TOO_SMALL = 4,	// value dont fit in given buffer
 	QSON_RESULT_INVALID_TYPE = 5,		// invalid qson type is given
+	QSON_RESULT_INVALID_CONTEXT = 6,	// invalid context is given, returned when ctx has invalid flags or ...
 } qson_result;
 
 typedef enum {

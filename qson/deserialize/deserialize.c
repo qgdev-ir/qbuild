@@ -7,6 +7,7 @@ qson_result qson_create_deserialize_ctx(qson_deserialize_ctx_t *ctx, char *buffe
 	ctx->size = size;
 	ctx->index = 0;
 	ctx->state = QSON_DESERIALIZING_STATE_NONE;
+	ctx->flags = 0;
 	return QSON_RESULT_OK;
 }
 
@@ -82,36 +83,21 @@ static inline qson_result skip_string(qson_deserialize_ctx_t *ctx) {
 }
 
 qson_result qson_create_sub_deserialize_ctx(qson_deserialize_ctx_t *ctx, qson_deserialize_ctx_t *sub_ctx) {
-	char startChar = ctx->buffer[ctx->index];
-	char endChar;
-	switch(startChar) {
-	case QSON_BEGIN_OBJECT: endChar = QSON_END_OBJECT; break;
-	case QSON_BEGIN_ARRAY: endChar = QSON_END_ARRAY; break;
-	default: return QSON_RESULT_INVALID_CHAR;
-	}
-
 	sub_ctx->buffer = ctx->buffer + ctx->index;
 	sub_ctx->index = 0;
-	sub_ctx->size = 0;
-
-	int old_index = ctx->index++;
-	while(ctx->buffer[ctx->index] != endChar && ctx->index < ctx->size) {
-		char chr = ctx->buffer[ctx->index];
-		if (chr == QSON_QUOTATION_MARK) {
-			qson_run(skip_string(ctx));
-		} else if (chr == startChar) {
-			while (ctx->buffer[ctx->index] != endChar && ctx->index < ctx->size) {
-				if (ctx->buffer[ctx->index] == QSON_QUOTATION_MARK) qson_run(skip_string(ctx));
-				ctx->index++;
-			}
-			ctx->index++;
-		}
-		ctx->index++;
-	}
-	ctx->index++;
-	sub_ctx->size = ctx->index - old_index;
-	if (ctx->index >= ctx->size) return QSON_RESULT_UNEXPECTED_EOF;
+	sub_ctx->size = ctx->size - ctx->index;
+	sub_ctx->flags = QSON_DESERIALIZE_CTX_FLAG_IS_SUBCTX;
 	sub_ctx->state = QSON_DESERIALIZING_STATE_NONE;
+	ctx->state = QSON_DESERIALIZING_STATE_SUBCTX;
+
+	return QSON_RESULT_OK;
+}
+
+qson_result qson_end_sub_deserialize_ctx(qson_deserialize_ctx_t *ctx, qson_deserialize_ctx_t *sub_ctx) {
+	if (ctx->state != QSON_DESERIALIZING_STATE_SUBCTX) return QSON_RESULT_INVALID_STATE;
+	if (sub_ctx->state != QSON_DESERIALIZING_STATE_NONE) return QSON_RESULT_INVALID_STATE;
+	if (!(sub_ctx->flags & QSON_DESERIALIZE_CTX_FLAG_IS_SUBCTX)) return QSON_RESULT_INVALID_CONTEXT;
+	ctx->index += sub_ctx->index;
 	return QSON_RESULT_OK;
 }
 

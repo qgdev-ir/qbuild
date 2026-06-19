@@ -50,7 +50,14 @@ qson_result qson_get_array_entry_value_number(qson_deserialize_ctx_t *ctx, doubl
  * set context state to ARRAY if has next entry and set to NONE if not
  * Requires state ARRAY_VALUE
  */
-qson_result qson_get_array_entry_value_sub_ctx(qson_deserialize_ctx_t *ctx, qson_deserialize_ctx_t *sub_ctx, bool *has_next);
+qson_result qson_get_array_entry_value_sub_ctx(qson_deserialize_ctx_t *ctx, qson_deserialize_ctx_t *sub_ctx);
+
+/*
+ * End created subctx
+ * set context state to ARRAY if has next entry and set to NONE if not
+ * Requires state SUBCTX and state NONE in subctx
+ */
+qson_result qson_get_array_entry_value_sub_ctx_end(qson_deserialize_ctx_t *ctx, qson_deserialize_ctx_t *sub_ctx, bool *has_next);
 
 #ifdef __cplusplus
 }
