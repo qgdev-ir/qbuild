@@ -14,6 +14,7 @@ typedef enum {
 	QSON_DESERIALIZING_STATE_OBJECT_VALUE = 2,	// deserializing value of an object
 	QSON_DESERIALIZING_STATE_ARRAY = 3,		// deserializing an array
 	QSON_DESERIALIZING_STATE_ARRAY_VALUE = 4,	// deserializing memeber of an array
+	QSON_DESERIALIZING_STATE_SUBCTX = 5,		// a sub ctx is active for this ctx
 } qson_deserialize_state;
 
 /*
