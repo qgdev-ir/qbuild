@@ -27,6 +27,12 @@ typedef struct {
  */
 qson_result qson_create_serialize_ctx(qson_serialize_ctx_t *ctx, char *buffer, int size);
 
+/*
+ * Finish buffer with a null terminator
+ * Requires state NONE
+ */
+qson_result qson_end_serialize_ctx(qson_serialize_ctx_t *ctx);
+
 #ifdef __cplusplus
 }
 #endif
