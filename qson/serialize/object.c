@@ -23,3 +23,10 @@ qson_result qson_write_object(qson_serialize_ctx_t *ctx) {
 	return QSON_RESULT_OK;
 }
 
+qson_result qson_write_object_entry_string(qson_serialize_ctx_t *ctx, char *key, char *value, bool has_next) {
+	qson_run(_write_object_entry(ctx, key));
+	qson_run(qson_write_string(ctx, value));
+	qson_run(_handle_has_next(ctx, has_next));
+	return QSON_RESULT_OK;
+}
+
