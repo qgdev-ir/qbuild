@@ -18,6 +18,14 @@ qson_result qson_write_object(qson_serialize_ctx_t *ctx);
  */
 qson_result qson_write_object_entry_string(qson_serialize_ctx_t *ctx, char *key, char *value, bool has_next);
 
+/*
+ * Add an object entry with value type of null
+ * if "has_next" writes chars needed for next entry
+ * and if not writes chars needed for object end and sets state to NONE
+ * Requires state OBJECT
+ */
+qson_result qson_write_object_entry_null(qson_serialize_ctx_t *ctx, char *key, bool has_next);
+
 #ifdef __cplusplus
 }
 #endif
