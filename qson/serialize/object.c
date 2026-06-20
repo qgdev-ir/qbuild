@@ -40,3 +40,12 @@ qson_result qson_write_object_entry_null(qson_serialize_ctx_t *ctx, char *key, b
 	return QSON_RESULT_OK;
 }
 
+qson_result qson_write_object_entry_bool(qson_serialize_ctx_t *ctx, char *key, bool value, bool has_next) {
+	if (ctx->state != QSON_SERIALIZE_STATE_OBJECT) return QSON_RESULT_INVALID_STATE;
+	qson_run(_write_object_entry(ctx, key));
+	char *buffer = value ? QSON_BOOL_TRUE : QSON_BOOL_FALSE;
+	qson_ctx_write_buffer(ctx, buffer);
+	qson_run(_handle_has_next(ctx, has_next));
+	return QSON_RESULT_OK;
+}
+

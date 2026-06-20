@@ -50,11 +50,29 @@ bool test_qson_write_object_entry_null() {
 	return success;
 }
 
+bool test_qson_write_object_entry_bool() {
+	test_run_log("qson_write_object_entry_bool");
+	qson_serialize_ctx_t ctx;
+	char buffer[25];
+	char *key = "key";
+
+	bool success = 1;
+	success &= qson_create_serialize_ctx(&ctx, buffer, array_len(buffer)) == QSON_RESULT_OK;
+	success &= qson_write_object(&ctx) == QSON_RESULT_OK;
+	success &= qson_write_object_entry_bool(&ctx, key, true, true) == QSON_RESULT_OK;
+	success &= qson_write_object_entry_bool(&ctx, key, false, false) == QSON_RESULT_OK;
+	success &= qson_end_serialize_ctx(&ctx) == QSON_RESULT_OK;
+	success &= strcmp("{\"key\":true,\"key\":false}", buffer) == 0;
+	test_result_log(success);
+	return success;
+}
+
 bool test_qson_serialize_object() {
 	bool success = 1;
 	success &= test_qson_write_object();
 	success &= test_qson_write_object_entry_string();
 	success &= test_qson_write_object_entry_null();
+	success &= test_qson_write_object_entry_bool();
 	return success;
 }
 
