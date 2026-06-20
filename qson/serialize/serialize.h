@@ -40,6 +40,12 @@ qson_result qson_end_serialize_ctx(qson_serialize_ctx_t *ctx);
  */
 qson_result qson_write_string(qson_serialize_ctx_t *ctx, char *value);
 
+/*
+ * Writes a number value
+ * Ignores state
+ */
+qson_result qson_write_number(qson_serialize_ctx_t *ctx, double value);
+
 #ifdef __cplusplus
 }
 #endif

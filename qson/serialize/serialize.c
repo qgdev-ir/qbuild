@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include <qson/qson.h>
 #include "_serialize.h"
 
@@ -44,6 +45,14 @@ qson_result qson_write_string(qson_serialize_ctx_t *ctx, char *value) {
 		i++;
 	}
 	qson_ctx_write(ctx, QSON_QUOTATION_MARK);
+	return QSON_RESULT_OK;
+}
+
+qson_result qson_write_number(qson_serialize_ctx_t *ctx, double value) {
+	int size = snprintf(NULL, 0, "%f", value) + 1;
+	qson_ctx_size_check(ctx, size);
+	snprintf(ctx->buffer + ctx->index, size, "%f", value);
+	ctx->index += size - 1;
 	return QSON_RESULT_OK;
 }
 
