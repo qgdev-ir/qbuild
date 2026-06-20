@@ -51,5 +51,6 @@ qson_result qson_write_number(qson_serialize_ctx_t *ctx, double value);
 #endif
 
 #include "object.h"
+#include "array.h"
 
 #endif
