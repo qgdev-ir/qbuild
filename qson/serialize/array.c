@@ -25,3 +25,10 @@ qson_result qson_write_array_entry_string(qson_serialize_ctx_t *ctx, char *value
 	return QSON_RESULT_OK;
 }
 
+qson_result qson_write_array_entry_null(qson_serialize_ctx_t *ctx, bool has_next) {
+	if (ctx->state != QSON_SERIALIZE_STATE_ARRAY) return QSON_RESULT_INVALID_STATE;
+	qson_ctx_write_buffer(ctx, QSON_NULL);
+	qson_run(_handle_has_next(ctx, has_next));
+	return QSON_RESULT_OK;
+}
+
