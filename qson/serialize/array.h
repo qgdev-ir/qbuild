@@ -10,6 +10,14 @@ extern "C" {
  */
 qson_result qson_write_array(qson_serialize_ctx_t *ctx);
 
+/*
+ * Add an array entry with value type of string
+ * if "has_next" writes chars needed for next entry
+ * and if not writes chars needed for array end and sets state to NONE
+ * Requires state ARRAY
+ */
+qson_result qson_write_array_entry_string(qson_serialize_ctx_t *ctx, char *value, bool has_next);
+
 #ifdef __cplusplus
 }
 #endif
