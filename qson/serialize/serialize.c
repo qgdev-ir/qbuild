@@ -49,10 +49,10 @@ qson_result qson_write_string(qson_serialize_ctx_t *ctx, char *value) {
 }
 
 qson_result qson_write_number(qson_serialize_ctx_t *ctx, double value) {
-	int size = snprintf(NULL, 0, "%f", value) + 1;
-	qson_ctx_size_check(ctx, size);
-	snprintf(ctx->buffer + ctx->index, size, "%f", value);
-	ctx->index += size - 1;
+	int available_size = ctx->size - ctx->index;
+	int used_size = snprintf(ctx->buffer + ctx->index, available_size, "%f", value);
+	if (used_size > available_size) return QSON_RESULT_BUFFER_TOO_SMALL;
+	ctx->index += used_size;
 	return QSON_RESULT_OK;
 }
 
