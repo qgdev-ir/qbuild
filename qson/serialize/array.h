@@ -26,6 +26,14 @@ qson_result qson_write_array_entry_string(qson_serialize_ctx_t *ctx, char *value
  */
 qson_result qson_write_array_entry_null(qson_serialize_ctx_t *ctx, bool has_next);
 
+/*
+ * Add an array entry with value type of boolean
+ * if "has_next" writes chars needed for next entry
+ * and if not writes chars needed for object end and sets state to NONE
+ * Requires state ARRAY
+ */
+qson_result qson_write_array_entry_bool(qson_serialize_ctx_t *ctx, bool value, bool has_next);
+
 #ifdef __cplusplus
 }
 #endif
