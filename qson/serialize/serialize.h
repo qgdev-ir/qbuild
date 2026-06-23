@@ -25,6 +25,8 @@ typedef struct {
 	char flags;	// Flags for current ctx
 } qson_serialize_ctx_t;
 
+#define QSON_SERIALIZE_CTX_FLAG_IS_SUBCTX	1	// Indicates current ctx is subctx of another ctx
+
 /*
  * Create a serialize context for given byte buffer
  */
