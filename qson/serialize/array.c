@@ -40,3 +40,10 @@ qson_result qson_write_array_entry_bool(qson_serialize_ctx_t *ctx, bool value, b
 	return QSON_RESULT_OK;
 }
 
+qson_result qson_write_array_entry_number(qson_serialize_ctx_t *ctx, double value, bool has_next) {
+	if (ctx->state != QSON_SERIALIZE_STATE_ARRAY) return QSON_RESULT_INVALID_STATE;
+	qson_run(qson_write_number(ctx, value));
+	qson_run(_handle_has_next(ctx, has_next));
+	return QSON_RESULT_OK;
+}
+
