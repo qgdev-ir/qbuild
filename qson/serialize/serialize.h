@@ -22,6 +22,7 @@ typedef struct {
 	int size;	// Size of the buffer
 	int index;	// Current index in buffer
 	qson_serialize_state state;	// Current state of serialization
+	char flags;	// Flags for current ctx
 } qson_serialize_ctx_t;
 
 /*
