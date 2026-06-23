@@ -64,12 +64,28 @@ bool test_qson_write_array_entry_bool() {
 	return success;
 }
 
+bool test_qson_write_array_entry_number() {
+	test_run_log("qson_write_array_entry_number");
+	qson_serialize_ctx_t ctx;
+	char buffer[12];
+
+	bool success = 1;
+	success &= qson_create_serialize_ctx(&ctx, buffer, array_len(buffer)) == QSON_RESULT_OK;
+	success &= qson_write_array(&ctx) == QSON_RESULT_OK;
+	success &= qson_write_array_entry_number(&ctx, -1.23, false) == QSON_RESULT_OK;
+	success &= qson_end_serialize_ctx(&ctx) == QSON_RESULT_OK;
+	success &= strcmp("[-1.230000]", buffer) == 0;
+	test_result_log(success);
+	return success;
+}
+
 bool test_qson_serialize_array() {
 	bool success = 1;
 	success &= test_qson_write_array();
 	success &= test_qson_write_array_entry_string();
 	success &= test_qson_write_array_entry_null();
 	success &= test_qson_write_array_entry_bool();
+	success &= test_qson_write_array_entry_number();
 	return success;
 }
 
