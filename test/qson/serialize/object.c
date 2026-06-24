@@ -83,6 +83,29 @@ bool test_qson_write_object_entry_number() {
 	return success;
 }
 
+bool test_qson_write_object_entry_subctx() {
+	test_run_log("qson_write_object_entry_subctx");
+	qson_serialize_ctx_t ctx;
+	qson_serialize_ctx_t subctx;
+	char buffer[21];
+	char *key = "key";
+
+	bool success = 1;
+	success &= qson_create_serialize_ctx(&ctx, buffer, array_len(buffer)) == QSON_RESULT_OK;
+	success &= qson_write_object(&ctx) == QSON_RESULT_OK;
+
+	success &= qson_write_object_entry_subctx(&ctx, key, &subctx) == QSON_RESULT_OK;
+	success &= qson_write_object(&subctx) == QSON_RESULT_OK;
+	success &= qson_write_object_entry_bool(&subctx, key, true, false) == QSON_RESULT_OK;
+	success &= qson_end_serialize_ctx(&subctx) == QSON_RESULT_OK;
+	success &= qson_write_object_entry_subctx_end(&ctx, &subctx, false) == QSON_RESULT_OK;
+
+	success &= qson_end_serialize_ctx(&ctx) == QSON_RESULT_OK;
+	success &= strcmp(buffer, "{\"key\":{\"key\":true}}") == 0;
+	test_result_log(success);
+	return success;
+}
+
 bool test_qson_serialize_object() {
 	bool success = 1;
 	success &= test_qson_write_object();
@@ -90,6 +113,7 @@ bool test_qson_serialize_object() {
 	success &= test_qson_write_object_entry_null();
 	success &= test_qson_write_object_entry_bool();
 	success &= test_qson_write_object_entry_number();
+	success &= test_qson_write_object_entry_subctx();
 	return success;
 }
 
