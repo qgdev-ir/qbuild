@@ -52,5 +52,6 @@ typedef enum {
 #endif
 
 #include "deserialize/deserialize.h"
+#include "serialize/serialize.h"
 
 #endif
