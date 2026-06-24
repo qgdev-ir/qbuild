@@ -47,3 +47,9 @@ qson_result qson_write_array_entry_number(qson_serialize_ctx_t *ctx, double valu
 	return QSON_RESULT_OK;
 }
 
+qson_result qson_write_array_entry_subctx(qson_serialize_ctx_t *ctx, qson_serialize_ctx_t *sub_ctx) {
+	if (ctx->state != QSON_SERIALIZE_STATE_ARRAY) return QSON_RESULT_INVALID_STATE;
+	qson_run(qson_create_sub_serialize_ctx(ctx, sub_ctx));
+	return QSON_RESULT_OK;
+}
+
