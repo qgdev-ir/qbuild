@@ -3,7 +3,7 @@ This project is a WIP and is heavily under development the whole project might c
 Wait for first release before using it for real projects
 
 # QBuild
-This project is [qbuild](https://github.com/Mahisokhary/qbuild) but with C and JSON instead of makefiles
+This project is [qbuild](https://github.com/Mahisokhary/qbuild-og) but with C and JSON instead of makefiles
 
 ## Target
 for now this project is nothing, and it's so important to start it well \
