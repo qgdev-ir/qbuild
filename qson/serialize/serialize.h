@@ -51,6 +51,14 @@ qson_result qson_write_string(qson_serialize_ctx_t *ctx, char *value);
  */
 qson_result qson_write_number(qson_serialize_ctx_t *ctx, double value);
 
+/*
+ * Create a subctx for current ctx
+ * Subctx will contains ctx flags plus IS_CTX flag set
+ * Sets ctx state to SUBCTX
+ * Ignores state
+ */
+qson_result qson_create_sub_serialize_ctx(qson_serialize_ctx_t *ctx, qson_serialize_ctx_t *sub_ctx);
+
 #ifdef __cplusplus
 }
 #endif

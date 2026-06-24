@@ -58,3 +58,13 @@ qson_result qson_write_number(qson_serialize_ctx_t *ctx, double value) {
 	return QSON_RESULT_OK;
 }
 
+qson_result qson_create_sub_serialize_ctx(qson_serialize_ctx_t *ctx, qson_serialize_ctx_t *sub_ctx) {
+	ctx->state = QSON_SERIALIZE_STATE_SUBCTX;
+	sub_ctx->state = QSON_SERIALIZE_STATE_NONE;
+	sub_ctx->flags = ctx->flags | QSON_SERIALIZE_CTX_FLAG_IS_SUBCTX;
+	sub_ctx->index = ctx->index;
+	sub_ctx->buffer = ctx->buffer;
+	sub_ctx->size = ctx->size;
+	return QSON_RESULT_OK;
+}
+
