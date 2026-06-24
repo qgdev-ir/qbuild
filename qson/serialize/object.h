@@ -42,6 +42,14 @@ qson_result qson_write_object_entry_bool(qson_serialize_ctx_t *ctx, char *key, b
  */
 qson_result qson_write_object_entry_number(qson_serialize_ctx_t *ctx, char *key, double value, bool has_next);
 
+
+/*
+ * Create sub ctx to write an array or object
+ * Sets state SUBCTX
+ * Requires state OBJECT
+ */
+qson_result qson_write_object_entry_subctx(qson_serialize_ctx_t *ctx, char *key, qson_serialize_ctx_t *sub_ctx);
+
 #ifdef __cplusplus
 }
 #endif

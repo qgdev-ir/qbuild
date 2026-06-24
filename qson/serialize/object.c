@@ -57,3 +57,10 @@ qson_result qson_write_object_entry_number(qson_serialize_ctx_t *ctx, char *key,
 	return QSON_RESULT_OK;
 }
 
+qson_result qson_write_object_entry_subctx(qson_serialize_ctx_t *ctx, char *key, qson_serialize_ctx_t *sub_ctx) {
+	if (ctx->state != QSON_SERIALIZE_STATE_OBJECT) return QSON_RESULT_INVALID_STATE;
+	qson_run(_write_object_entry(ctx, key));
+	qson_run(qson_create_sub_serialize_ctx(ctx, sub_ctx));
+	return QSON_RESULT_OK;
+}
+
