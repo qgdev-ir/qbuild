@@ -50,6 +50,14 @@ qson_result qson_write_object_entry_number(qson_serialize_ctx_t *ctx, char *key,
  */
 qson_result qson_write_object_entry_subctx(qson_serialize_ctx_t *ctx, char *key, qson_serialize_ctx_t *sub_ctx);
 
+/*
+ * End created sub ctx
+ * if "has_next" writes chars needed for next entry
+ * and if not writes chars needed for object end and sets state to NONE
+ * Requires state SUBCTX on ctx and state NONE on sub ctx
+ */
+qson_result qson_write_object_entry_subctx_end(qson_serialize_ctx_t *ctx, qson_serialize_ctx_t *sub_ctx, bool has_next);
+
 #ifdef __cplusplus
 }
 #endif
