@@ -11,4 +11,4 @@ so these are steps:
 1. initialization
    - [x] select or create a basic build system to build this build system
 2. starting
-   - [ ] select or create a JSON processor
+   - [x] select or create a JSON processor (created module qson to serialize/deserialize json)
