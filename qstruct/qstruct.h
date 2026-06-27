@@ -18,4 +18,7 @@ typedef enum {
 #ifdef __cplusplus
 }
 #endif
+
+#include "arraylist.h"
+
 #endif
