@@ -4,6 +4,8 @@
 extern "C" {
 #endif
 
+#define QSTRUCT_ARRAYLIST_DEFAULT_INITIALIZE_CAPACITY	16
+
 /*
  * A pointer to actual arraylist
  */
