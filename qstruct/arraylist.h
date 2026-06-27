@@ -4,6 +4,10 @@
 extern "C" {
 #endif
 
+/*
+ * A pointer to actual arraylist
+ */
+typedef uint64_t qstruct_arraylist_t;
 
 #ifdef __cplusplus
 }
