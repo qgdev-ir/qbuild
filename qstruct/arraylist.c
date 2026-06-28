@@ -1,5 +1,6 @@
 #include <qstruct/qstruct.h>
 #include <stdlib.h>
+#include <string.h>
 
 struct arraylist {
 	size_t value_size;	// Size of each value
@@ -7,6 +8,23 @@ struct arraylist {
 	size_t length;		// How much is current array filled
 	void *array;		// Current array
 };
+
+/*
+ * Makes sure there is enough space for one more value
+ * Extends the size of array if needed
+ */
+inline static void _ensure_capacity(struct arraylist *al) {
+	if (al->capacity <= al->length) {
+		void *old_array = al->array;
+		size_t old_capacity = al->capacity;
+
+		al->capacity *= 2;	// Doubles size of array
+		al->array = malloc(al->capacity * al->value_size);
+
+		memcpy(al->array, old_array, old_capacity * al->value_size);
+		free(old_array);
+	}
+}
 
 qstruct_result_t qstruct_arraylist_create(qstruct_arraylist_t *arraylist, size_t value_size, size_t initialize_capacity) {
 	if (initialize_capacity == 0) initialize_capacity = QSTRUCT_ARRAYLIST_DEFAULT_INITIALIZE_CAPACITY;
