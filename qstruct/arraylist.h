@@ -34,6 +34,13 @@ qstruct_result_t qstruct_arraylist_add(qstruct_arraylist_t arraylist, void *valu
  */
 qstruct_result_t qstruct_arraylist_get(qstruct_arraylist_t arraylist, void *value, size_t index);
 
+/*
+ * Removes a value from arraylist
+ * index: index of the value
+ * Time complexity: O(n)
+ */
+qstruct_result_t qstruct_arraylist_remove(qstruct_arraylist_t arraylist, size_t index);
+
 #ifdef __cplusplus
 }
 #endif
