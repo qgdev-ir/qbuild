@@ -45,3 +45,10 @@ qstruct_result_t qstruct_arraylist_add(qstruct_arraylist_t arraylist, void *valu
 	return QSTRUCT_RESULT_OK;
 }
 
+qstruct_result_t qstruct_arraylist_get(qstruct_arraylist_t arraylist, void *value, size_t index) {
+	struct arraylist *al = (struct arraylist*) arraylist;
+	if (index >= al->length) return QSTRUCT_RESULT_INDEX_OUTOF_BOUND;
+	memcpy(value, al->array + index * al->value_size, al->value_size);
+	return QSTRUCT_RESULT_OK;
+}
+

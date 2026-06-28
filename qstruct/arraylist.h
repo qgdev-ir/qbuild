@@ -26,6 +26,14 @@ qstruct_result_t qstruct_arraylist_create(qstruct_arraylist_t *arraylist, size_t
  */
 qstruct_result_t qstruct_arraylist_add(qstruct_arraylist_t arraylist, void *value);
 
+/*
+ * Get a value from arraylist
+ * index: index of value
+ * value: value is copied to given pointer
+ * Time complexity: O(1)
+ */
+qstruct_result_t qstruct_arraylist_get(qstruct_arraylist_t arraylist, void *value, size_t index);
+
 #ifdef __cplusplus
 }
 #endif
