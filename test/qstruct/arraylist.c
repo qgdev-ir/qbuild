@@ -22,8 +22,31 @@ bool test_qstruct_arraylist_add_get() {
 	return success;
 }
 
+bool test_qstruct_arraylist_remove() {
+	test_run_log("qstruct_arraylist_remove");
+
+	qstruct_arraylist_t list;
+	int value = 858585;
+	int value2 = 696969;
+	int return_val;
+
+	bool success = 1;
+	success &= qstruct_arraylist_create(&list, sizeof(int), 1) == QSTRUCT_RESULT_OK;
+	success &= qstruct_arraylist_add(list, &value) == QSTRUCT_RESULT_OK;
+	success &= qstruct_arraylist_add(list, &value2) == QSTRUCT_RESULT_OK;
+	success &= qstruct_arraylist_get(list, &return_val, 0) == QSTRUCT_RESULT_OK;
+	success &= return_val == value;
+	success &= qstruct_arraylist_remove(list, 0) == QSTRUCT_RESULT_OK;
+	success &= qstruct_arraylist_get(list, &return_val, 0) == QSTRUCT_RESULT_OK;
+	success &= return_val == value2;
+	success &= qstruct_arraylist_get(list, &return_val, 1) == QSTRUCT_RESULT_INDEX_OUTOF_BOUND;
+	test_result_log(success);
+	return success;
+}
+
 bool test_qstruct_arraylist() {
 	bool success = 1;
 	success &= test_qstruct_arraylist_add_get();
+	success &= test_qstruct_arraylist_remove();
 	return success;
 }
