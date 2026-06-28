@@ -18,6 +18,14 @@ typedef uint64_t qstruct_arraylist_t;
  */
 qstruct_result_t qstruct_arraylist_create(qstruct_arraylist_t *arraylist, size_t value_size, size_t initialize_capacity);
 
+/*
+ * Adds a value to arraylist
+ * arraylist: the array you wanna add value to
+ * value: the value
+ * Time complexity: if enought capacity O(1) else O(n)
+ */
+qstruct_result_t qstruct_arraylist_add(qstruct_arraylist_t arraylist, void *value);
+
 #ifdef __cplusplus
 }
 #endif

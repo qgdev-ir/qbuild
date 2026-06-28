@@ -37,3 +37,11 @@ qstruct_result_t qstruct_arraylist_create(qstruct_arraylist_t *arraylist, size_t
 	return QSTRUCT_RESULT_OK;
 }
 
+qstruct_result_t qstruct_arraylist_add(qstruct_arraylist_t arraylist, void *value) {
+	struct arraylist *al = (struct arraylist*) arraylist;
+	_ensure_capacity(al);
+	void *dest = al->array + al->length++ * al ->value_size;
+	memcpy(dest, value, al->value_size);
+	return QSTRUCT_RESULT_OK;
+}
+
