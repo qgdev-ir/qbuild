@@ -52,6 +52,11 @@ size_t qstruct_arraylist_length(qstruct_arraylist_t arraylist);
  */
 qstruct_arraylist_t qstruct_arraylist_clear(qstruct_arraylist_t arraylist);
 
+/*
+ * Destroys arraylist and free used memory
+ */
+qstruct_arraylist_t qstruct_arraylist_destroy(qstruct_arraylist_t arraylist);
+
 #ifdef __cplusplus
 }
 #endif
