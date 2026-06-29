@@ -79,3 +79,10 @@ qstruct_arraylist_t qstruct_arraylist_destroy(qstruct_arraylist_t arraylist) {
 	return QSTRUCT_RESULT_OK;
 }
 
+qstruct_result_t qstruct_arraylist_set(qstruct_arraylist_t arraylist, void *value, size_t index) {
+	struct arraylist *al = (struct arraylist*) arraylist;
+	if (index >= al->length) return QSTRUCT_RESULT_INDEX_OUTOF_BOUND;
+	memcpy(al->array + index * al->value_size, value, al->value_size);
+	return QSTRUCT_RESULT_OK;
+}
+
