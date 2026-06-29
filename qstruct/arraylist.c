@@ -72,3 +72,10 @@ qstruct_arraylist_t qstruct_arraylist_clear(qstruct_arraylist_t arraylist) {
 	return QSTRUCT_RESULT_OK;
 }
 
+qstruct_arraylist_t qstruct_arraylist_destroy(qstruct_arraylist_t arraylist) {
+	struct arraylist *al = (struct arraylist*) arraylist;
+	free(al->array);
+	free(al);
+	return QSTRUCT_RESULT_OK;
+}
+
