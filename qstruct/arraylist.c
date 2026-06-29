@@ -86,3 +86,12 @@ qstruct_result_t qstruct_arraylist_set(qstruct_arraylist_t arraylist, void *valu
 	return QSTRUCT_RESULT_OK;
 }
 
+qstruct_arraylist_t qstruct_arraylist_insert(qstruct_arraylist_t arraylist, void *value, size_t index) {
+	struct arraylist *al = (struct arraylist*) arraylist;
+	_ensure_capacity(al);
+	memmove(al->array + (index + 1) * al->value_size, al->array + index * al->value_size, (al->length - index) * al->value_size);
+	memcpy(al->array + index * al->value_size, value, al->value_size);
+	al->length++;
+	return QSTRUCT_RESULT_OK;
+}
+
