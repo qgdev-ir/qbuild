@@ -48,6 +48,7 @@ size_t qstruct_arraylist_length(qstruct_arraylist_t arraylist);
 
 /*
  * Replace value at given index with given value
+ * Time complexity: O(1)
  */
 qstruct_result_t qstruct_arraylist_set(qstruct_arraylist_t arraylist, void *value, size_t index);
 
