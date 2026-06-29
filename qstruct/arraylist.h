@@ -41,6 +41,11 @@ qstruct_result_t qstruct_arraylist_get(qstruct_arraylist_t arraylist, void *valu
  */
 qstruct_result_t qstruct_arraylist_remove(qstruct_arraylist_t arraylist, size_t index);
 
+/*
+ * Returns length of the arraylist
+ */
+size_t qstruct_arraylist_length(qstruct_arraylist_t arraylist);
+
 #ifdef __cplusplus
 }
 #endif
