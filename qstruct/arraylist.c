@@ -66,3 +66,9 @@ size_t qstruct_arraylist_length(qstruct_arraylist_t arraylist) {
 	return al->length;
 }
 
+qstruct_arraylist_t qstruct_arraylist_clear(qstruct_arraylist_t arraylist) {
+	struct arraylist *al = (struct arraylist*) arraylist;
+	al->length = 0;
+	return QSTRUCT_RESULT_OK;
+}
+

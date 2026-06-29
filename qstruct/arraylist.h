@@ -46,6 +46,12 @@ qstruct_result_t qstruct_arraylist_remove(qstruct_arraylist_t arraylist, size_t 
  */
 size_t qstruct_arraylist_length(qstruct_arraylist_t arraylist);
 
+/*
+ * Clear the arraylist
+ * Time complexity: O(1)
+ */
+qstruct_arraylist_t qstruct_arraylist_clear(qstruct_arraylist_t arraylist);
+
 #ifdef __cplusplus
 }
 #endif
