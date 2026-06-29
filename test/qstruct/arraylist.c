@@ -66,7 +66,7 @@ bool test_qstruct_arraylist_length() {
 }
 
 bool test_qstruct_arraylist_clear() {
-	test_run_log("qstruct_arraylist_length");
+	test_run_log("qstruct_arraylist_clear");
 
 	qstruct_arraylist_t list;
 	int value = 858585;
