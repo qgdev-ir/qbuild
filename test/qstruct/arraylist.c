@@ -18,6 +18,7 @@ bool test_qstruct_arraylist_add_get() {
 	success &= qstruct_arraylist_get(list, &return_val, 1) == QSTRUCT_RESULT_OK;
 	success &= return_val == value2;
 	success &= qstruct_arraylist_get(list, &return_val, 2) == QSTRUCT_RESULT_INDEX_OUTOF_BOUND;
+	success &= qstruct_arraylist_destroy(list) == QSTRUCT_RESULT_OK;
 	test_result_log(success);
 	return success;
 }
@@ -40,6 +41,7 @@ bool test_qstruct_arraylist_remove() {
 	success &= qstruct_arraylist_get(list, &return_val, 0) == QSTRUCT_RESULT_OK;
 	success &= return_val == value2;
 	success &= qstruct_arraylist_get(list, &return_val, 1) == QSTRUCT_RESULT_INDEX_OUTOF_BOUND;
+	success &= qstruct_arraylist_destroy(list) == QSTRUCT_RESULT_OK;
 	test_result_log(success);
 	return success;
 }
@@ -58,6 +60,7 @@ bool test_qstruct_arraylist_length() {
 	success &= qstruct_arraylist_add(list, &value) == QSTRUCT_RESULT_OK;
 	success &= qstruct_arraylist_add(list, &value2) == QSTRUCT_RESULT_OK;
 	success &= qstruct_arraylist_length(list) == 2;
+	success &= qstruct_arraylist_destroy(list) == QSTRUCT_RESULT_OK;
 	test_result_log(success);
 	return success;
 }
@@ -76,6 +79,7 @@ bool test_qstruct_arraylist_clear() {
 	success &= qstruct_arraylist_add(list, &value2) == QSTRUCT_RESULT_OK;
 	success &= qstruct_arraylist_clear(list) == QSTRUCT_RESULT_OK;
 	success &= qstruct_arraylist_length(list) == 0;
+	success &= qstruct_arraylist_destroy(list) == QSTRUCT_RESULT_OK;
 	test_result_log(success);
 	return success;
 }
