@@ -21,5 +21,6 @@ typedef enum {
 #endif
 
 #include "arraylist.h"
+#include "linkedlist.h"
 
 #endif
