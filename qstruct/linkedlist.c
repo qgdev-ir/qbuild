@@ -12,10 +12,7 @@ struct linkedlist {
 struct entry {
 	struct entry *previous;	// Previous entry
 	struct entry *next;	// Next entry
-	/*
-	 * Value will be placed after this struct
-	 * And value size is the value_size in linkedlist struct
-	 */
+	uint8_t value[];	// Value of entry
 };
 
 qstruct_result_t qstruct_linkedlist_create(qstruct_linkedlist_t *list, size_t value_size) {
@@ -41,7 +38,7 @@ qstruct_result_t qstruct_linkedlist_add(qstruct_linkedlist_t list, void *value) 
 		ll->lentry->next = new_entry;
 	}
 	ll->lentry = new_entry;
-	memcpy(new_entry + sizeof(struct entry), value, ll->value_size);
+	memcpy(new_entry->value, value, ll->value_size);
 	ll->length++;
 	return QSTRUCT_RESULT_OK;
 }
@@ -67,7 +64,7 @@ qstruct_result_t qstruct_linkedlist_getp(qstruct_linkedlist_t list, size_t index
 			i++;
 		}
 	}
-	*value = entry + sizeof(struct entry);
+	*value = entry->value;
 	return QSTRUCT_RESULT_OK;
 }
 
