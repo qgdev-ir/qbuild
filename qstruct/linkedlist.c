@@ -21,6 +21,8 @@ qstruct_result_t qstruct_linkedlist_create(qstruct_linkedlist_t *list, size_t va
 	struct linkedlist *ll = malloc(sizeof(struct linkedlist));
 	ll->length = 0;
 	ll->value_size = value_size;
+	ll->entry = NULL;
+	ll->lentry = NULL;
 	*list = ll;
 	return QSTRUCT_RESULT_OK;
 }
