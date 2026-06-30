@@ -23,9 +23,26 @@ bool test_qstruct_linkedlist_add_get() {
 	return success;
 }
 
+bool test_qstruct_linkedlist_length() {
+	test_run_log("qstruct_linkedlist_length");
+
+	qstruct_linkedlist_t list;
+	int value = 858585;
+
+	bool success = 1;
+	success &= qstruct_linkedlist_create(&list, sizeof(int)) == QSTRUCT_RESULT_OK;
+	success &= qstruct_linkedlist_add(list, &value) == QSTRUCT_RESULT_OK;
+	success &= qstruct_linkedlist_add(list, &value) == QSTRUCT_RESULT_OK;
+	success &= qstruct_linkedlist_length(list) == 2;
+	success &= qstruct_linkedlist_destroy(list) == QSTRUCT_RESULT_OK;
+	test_result_log(success);
+	return success;
+}
+
 bool test_qstruct_linkedlist() {
 	bool success = 1;
 	success &= test_qstruct_linkedlist_add_get();
+	success &= test_qstruct_linkedlist_length();
 	return success;
 }
 
