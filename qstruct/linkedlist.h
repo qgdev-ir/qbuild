@@ -4,6 +4,11 @@
 extern "C" {
 #endif
 
+/*
+ * A pointer to actual linkedlist
+ */
+typedef void* qstruct_linkedlist_t;
+
 #ifdef __cplusplus
 }
 #endif
