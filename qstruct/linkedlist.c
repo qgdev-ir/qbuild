@@ -91,3 +91,8 @@ qstruct_result_t qstruct_linkedlist_destroy(qstruct_linkedlist_t list) {
 	return QSTRUCT_RESULT_OK;
 }
 
+size_t qstruct_linkedlist_length(qstruct_linkedlist_t list) {
+	struct linkedlist *ll = list;
+	return ll->length;
+}
+

@@ -38,6 +38,12 @@ qstruct_result_t qstruct_linkedlist_get(qstruct_linkedlist_t list, size_t index,
  */
 qstruct_result_t qstruct_linkedlist_destroy(qstruct_linkedlist_t list);
 
+/*
+ * Returns length of the list
+ * Time complexity: O(1)
+ */
+size_t qstruct_linkedlist_length(qstruct_linkedlist_t list);
+
 #ifdef __cplusplus
 }
 #endif
