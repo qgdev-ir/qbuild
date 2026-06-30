@@ -1,5 +1,6 @@
 #include <qstruct/qstruct.h>
 #include <stdlib.h>
+#include <string.h>
 
 struct linkedlist {
 	size_t length;		// length size
@@ -24,6 +25,24 @@ qstruct_result_t qstruct_linkedlist_create(qstruct_linkedlist_t *list, size_t va
 	ll->entry = NULL;
 	ll->lentry = NULL;
 	*list = ll;
+	return QSTRUCT_RESULT_OK;
+}
+
+qstruct_result_t qstruct_linkedlist_add(qstruct_linkedlist_t list, void *value) {
+	struct linkedlist *ll = list;
+	struct entry *new_entry = malloc(sizeof(struct entry) + ll->value_size);
+	if (ll->length == 0) {
+		new_entry->previous = NULL;
+		new_entry->next = NULL;
+		ll->entry = new_entry;
+	} else {
+		new_entry->previous = ll->lentry;
+		new_entry->next = NULL;
+		ll->lentry->next = new_entry;
+	}
+	ll->lentry = new_entry;
+	memcpy(new_entry + sizeof(struct entry), value, ll->value_size);
+	ll->length++;
 	return QSTRUCT_RESULT_OK;
 }
 

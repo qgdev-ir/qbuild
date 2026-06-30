@@ -14,6 +14,12 @@ typedef void* qstruct_linkedlist_t;
  */
 qstruct_result_t qstruct_linkedlist_create(qstruct_linkedlist_t *list, size_t value_size);
 
+/*
+ * Adds value to end of the list
+ * Time complexity: O(1)
+ */
+qstruct_result_t qstruct_linkedlist_add(qstruct_linkedlist_t list, void *value);
+
 #ifdef __cplusplus
 }
 #endif
