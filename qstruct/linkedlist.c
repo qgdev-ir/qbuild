@@ -1,5 +1,6 @@
 #include <qstruct/qstruct.h>
 #include <stdlib.h>
+#include <string.h>
 
 struct linkedlist {
 	size_t length;		// length size
@@ -11,10 +12,7 @@ struct linkedlist {
 struct entry {
 	struct entry *previous;	// Previous entry
 	struct entry *next;	// Next entry
-	/*
-	 * Value will be placed after this struct
-	 * And value size is the value_size in linkedlist struct
-	 */
+	uint8_t value[];	// Value of entry
 };
 
 qstruct_result_t qstruct_linkedlist_create(qstruct_linkedlist_t *list, size_t value_size) {
@@ -24,6 +22,60 @@ qstruct_result_t qstruct_linkedlist_create(qstruct_linkedlist_t *list, size_t va
 	ll->entry = NULL;
 	ll->lentry = NULL;
 	*list = ll;
+	return QSTRUCT_RESULT_OK;
+}
+
+qstruct_result_t qstruct_linkedlist_add(qstruct_linkedlist_t list, void *value) {
+	struct linkedlist *ll = list;
+	struct entry *new_entry = malloc(sizeof(struct entry) + ll->value_size);
+	if (ll->length == 0) {
+		new_entry->previous = NULL;
+		new_entry->next = NULL;
+		ll->entry = new_entry;
+	} else {
+		new_entry->previous = ll->lentry;
+		new_entry->next = NULL;
+		ll->lentry->next = new_entry;
+	}
+	ll->lentry = new_entry;
+	memcpy(new_entry->value, value, ll->value_size);
+	ll->length++;
+	return QSTRUCT_RESULT_OK;
+}
+
+qstruct_result_t qstruct_linkedlist_getp(qstruct_linkedlist_t list, size_t index, void **value) {
+	struct linkedlist *ll = list;
+	size_t length = ll->length;
+	if (length <= index) return QSTRUCT_RESULT_INDEX_OUTOF_BOUND;
+	int i;
+	struct entry *entry;
+	if (ll->length / 2 < index) {
+		i = length - 1;
+		entry = ll->lentry;
+		while (i != index) {
+			entry = entry->previous;
+			i--;
+		}
+	} else {
+		i = 0;
+		entry = ll->entry;
+		while (i != index) {
+			entry = entry->next;
+			i++;
+		}
+	}
+	*value = entry->value;
+	return QSTRUCT_RESULT_OK;
+}
+
+qstruct_result_t qstruct_linkedlist_get(qstruct_linkedlist_t list, size_t index, void *value) {
+	struct linkedlist *ll = list;
+	void *src;
+	qstruct_result_t res = qstruct_linkedlist_getp(list, index, &src);
+	if (res != QSTRUCT_RESULT_OK) {
+		return res;
+	}
+	memcpy(value, src, ll->value_size);
 	return QSTRUCT_RESULT_OK;
 }
 
