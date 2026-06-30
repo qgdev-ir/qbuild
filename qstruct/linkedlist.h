@@ -27,6 +27,12 @@ qstruct_result_t qstruct_linkedlist_add(qstruct_linkedlist_t list, void *value);
  */
 qstruct_result_t qstruct_linkedlist_getp(qstruct_linkedlist_t list, size_t index, void **value);
 
+/*
+ * Gets value at given index
+ * Time complexity: O(n) (in worst case n/2)
+ */
+qstruct_result_t qstruct_linkedlist_get(qstruct_linkedlist_t list, size_t index, void *value);
+
 #ifdef __cplusplus
 }
 #endif
