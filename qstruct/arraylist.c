@@ -33,7 +33,7 @@ qstruct_result_t qstruct_arraylist_create(qstruct_arraylist_t *arraylist, size_t
 	al->capacity = initialize_capacity;
 	al->array = malloc(initialize_capacity * value_size);
 	al->length = 0;
-	*arraylist = (qstruct_arraylist_t) al;
+	*arraylist = al;
 	return QSTRUCT_RESULT_OK;
 }
 
