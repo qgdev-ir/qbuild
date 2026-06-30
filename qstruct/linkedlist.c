@@ -79,3 +79,15 @@ qstruct_result_t qstruct_linkedlist_get(qstruct_linkedlist_t list, size_t index,
 	return QSTRUCT_RESULT_OK;
 }
 
+qstruct_result_t qstruct_linkedlist_destroy(qstruct_linkedlist_t list) {
+	struct linkedlist *ll = list;
+	struct entry *entry = ll->entry;
+	while (entry != NULL) {
+		struct entry *next_entry = entry->next;
+		free(entry);
+		entry = next_entry;
+	}
+	free(ll);
+	return QSTRUCT_RESULT_OK;
+}
+
