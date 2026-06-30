@@ -33,6 +33,11 @@ qstruct_result_t qstruct_linkedlist_getp(qstruct_linkedlist_t list, size_t index
  */
 qstruct_result_t qstruct_linkedlist_get(qstruct_linkedlist_t list, size_t index, void *value);
 
+/*
+ * Destroy the list and free used memory
+ */
+qstruct_result_t qstruct_linkedlist_destroy(qstruct_linkedlist_t list);
+
 #ifdef __cplusplus
 }
 #endif
