@@ -6,6 +6,8 @@
 #define _qstruct__qstruct_h_
 
 #include <qstruct/qstruct.h>
+#include <stdlib.h>
+#include <string.h>
 
 #ifdef __cplusplus
 extern "C" {
