@@ -123,3 +123,26 @@ size_t qstruct_linkedlist_length(qstruct_linkedlist_t list) {
 	return ll->length;
 }
 
+qstruct_result_t qstruct_linkedlist_remove(qstruct_linkedlist_t list, size_t index) {
+	struct linkedlist *ll = list;
+	struct entry *entry;
+	qstruct_result_t res = _ll_getp(ll, &entry, index);
+	if (res != QSTRUCT_RESULT_OK) return res;
+	struct entry *previous = entry->previous;
+	struct entry *next = entry->next;
+
+	if (previous == NULL) {
+		ll->entry = next;
+	} else {
+		previous->next = next;
+	}
+
+	if (next == NULL) {
+		ll->lentry = previous;
+	} else {
+		next->previous = previous;
+	}
+	ll->length--;
+	return QSTRUCT_RESULT_OK;
+}
+
