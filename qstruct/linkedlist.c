@@ -123,3 +123,17 @@ qstruct_result_t qstruct_linkedlist_remove(qstruct_linkedlist_t list, size_t ind
 	return QSTRUCT_RESULT_OK;
 }
 
+qstruct_result_t qstruct_linkedlist_clear(qstruct_linkedlist_t list) {
+	struct linkedlist *ll = list;
+	struct entry *entry = ll->entry;
+	while (entry != NULL) {
+		struct entry *next_entry = entry->next;
+		free(entry);
+		entry = next_entry;
+	}
+	ll->entry = NULL;
+	ll->lentry = NULL;
+	ll->length = 0;
+	return QSTRUCT_RESULT_OK;
+}
+
