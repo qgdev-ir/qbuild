@@ -118,6 +118,7 @@ qstruct_result_t qstruct_linkedlist_remove(qstruct_linkedlist_t list, size_t ind
 	} else {
 		next->previous = previous;
 	}
+	free(entry);
 	ll->length--;
 	return QSTRUCT_RESULT_OK;
 }
