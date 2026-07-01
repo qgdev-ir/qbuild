@@ -6,6 +6,7 @@ extern "C" {
 
 /*
  * A pointer to actual linkedlist
+ * This implemetation is a doubly linked list
  */
 typedef void* qstruct_linkedlist_t;
 
