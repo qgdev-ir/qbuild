@@ -1,6 +1,4 @@
-#include <qstruct/qstruct.h>
-#include <stdlib.h>
-#include <string.h>
+#include <qstruct/_qstruct.h>
 
 struct linkedlist {
 	size_t length;		// length size

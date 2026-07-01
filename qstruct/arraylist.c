@@ -1,6 +1,4 @@
-#include <qstruct/qstruct.h>
-#include <stdlib.h>
-#include <string.h>
+#include <qstruct/_qstruct.h>
 
 struct arraylist {
 	size_t value_size;	// Size of each value
