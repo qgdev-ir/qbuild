@@ -15,6 +15,33 @@ struct entry {
 	uint8_t value[];	// Value of entry
 };
 
+/*
+ * Gets pointer of entry at given index
+ */
+static inline qstruct_result_t _ll_getp(struct linkedlist *ll, struct entry **entry, size_t index) {
+	size_t length = ll->length;
+	if (length <= index) return QSTRUCT_RESULT_INDEX_OUTOF_BOUND;
+	int i;
+	struct entry *found_entry;
+	if (ll->length / 2 < index) {
+		i = length - 1;
+		found_entry = ll->lentry;
+		while (i != index) {
+			found_entry = found_entry->previous;
+			i--;
+		}
+	} else {
+		i = 0;
+		found_entry = ll->entry;
+		while (i != index) {
+			found_entry = found_entry->next;
+			i++;
+		}
+	}
+	*entry = found_entry;
+	return QSTRUCT_RESULT_OK;
+}
+
 qstruct_result_t qstruct_linkedlist_create(qstruct_linkedlist_t *list, size_t value_size) {
 	struct linkedlist *ll = malloc(sizeof(struct linkedlist));
 	ll->length = 0;
@@ -94,5 +121,28 @@ qstruct_result_t qstruct_linkedlist_destroy(qstruct_linkedlist_t list) {
 size_t qstruct_linkedlist_length(qstruct_linkedlist_t list) {
 	struct linkedlist *ll = list;
 	return ll->length;
+}
+
+qstruct_result_t qstruct_linkedlist_remove(qstruct_linkedlist_t list, size_t index) {
+	struct linkedlist *ll = list;
+	struct entry *entry;
+	qstruct_result_t res = _ll_getp(ll, &entry, index);
+	if (res != QSTRUCT_RESULT_OK) return res;
+	struct entry *previous = entry->previous;
+	struct entry *next = entry->next;
+
+	if (previous == NULL) {
+		ll->entry = next;
+	} else {
+		previous->next = next;
+	}
+
+	if (next == NULL) {
+		ll->lentry = previous;
+	} else {
+		next->previous = previous;
+	}
+	ll->length--;
+	return QSTRUCT_RESULT_OK;
 }
 
