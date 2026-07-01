@@ -70,8 +70,7 @@ qstruct_result_t qstruct_linkedlist_add(qstruct_linkedlist_t list, void *value) 
 
 qstruct_result_t qstruct_linkedlist_getp(qstruct_linkedlist_t list, size_t index, void **value) {
 	struct entry *entry;
-	qstruct_result_t res = _ll_getp(list, &entry, index);
-	if (res != QSTRUCT_RESULT_OK) return res;
+	qstruct_run(_ll_getp(list, &entry, index));
 	*value = entry->value;
 	return QSTRUCT_RESULT_OK;
 }
@@ -79,10 +78,7 @@ qstruct_result_t qstruct_linkedlist_getp(qstruct_linkedlist_t list, size_t index
 qstruct_result_t qstruct_linkedlist_get(qstruct_linkedlist_t list, size_t index, void *value) {
 	struct linkedlist *ll = list;
 	void *src;
-	qstruct_result_t res = qstruct_linkedlist_getp(list, index, &src);
-	if (res != QSTRUCT_RESULT_OK) {
-		return res;
-	}
+	qstruct_run(qstruct_linkedlist_getp(list, index, &src));
 	memcpy(value, src, ll->value_size);
 	return QSTRUCT_RESULT_OK;
 }
@@ -107,8 +103,7 @@ size_t qstruct_linkedlist_length(qstruct_linkedlist_t list) {
 qstruct_result_t qstruct_linkedlist_remove(qstruct_linkedlist_t list, size_t index) {
 	struct linkedlist *ll = list;
 	struct entry *entry;
-	qstruct_result_t res = _ll_getp(ll, &entry, index);
-	if (res != QSTRUCT_RESULT_OK) return res;
+	qstruct_run(_ll_getp(ll, &entry, index));
 	struct entry *previous = entry->previous;
 	struct entry *next = entry->next;
 
