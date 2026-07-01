@@ -71,26 +71,9 @@ qstruct_result_t qstruct_linkedlist_add(qstruct_linkedlist_t list, void *value) 
 }
 
 qstruct_result_t qstruct_linkedlist_getp(qstruct_linkedlist_t list, size_t index, void **value) {
-	struct linkedlist *ll = list;
-	size_t length = ll->length;
-	if (length <= index) return QSTRUCT_RESULT_INDEX_OUTOF_BOUND;
-	int i;
 	struct entry *entry;
-	if (ll->length / 2 < index) {
-		i = length - 1;
-		entry = ll->lentry;
-		while (i != index) {
-			entry = entry->previous;
-			i--;
-		}
-	} else {
-		i = 0;
-		entry = ll->entry;
-		while (i != index) {
-			entry = entry->next;
-			i++;
-		}
-	}
+	qstruct_result_t res = _ll_getp(list, &entry, index);
+	if (res != QSTRUCT_RESULT_OK) return res;
 	*value = entry->value;
 	return QSTRUCT_RESULT_OK;
 }
