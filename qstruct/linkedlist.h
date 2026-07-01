@@ -56,6 +56,12 @@ qstruct_result_t qstruct_linkedlist_remove(qstruct_linkedlist_t list, size_t ind
  */
 qstruct_result_t qstruct_linkedlist_clear(qstruct_linkedlist_t list);
 
+/*
+ * Replace value at given index with given value
+ * Time complexity: O(n)
+ */
+qstruct_result_t qstruct_linkedlist_replace(qstruct_linkedlist_t list, size_t index, void *value);
+
 #ifdef __cplusplus
 }
 #endif

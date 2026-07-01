@@ -132,3 +132,11 @@ qstruct_result_t qstruct_linkedlist_clear(qstruct_linkedlist_t list) {
 	return QSTRUCT_RESULT_OK;
 }
 
+qstruct_result_t qstruct_linkedlist_replace(qstruct_linkedlist_t list, size_t index, void *value) {
+	struct linkedlist *ll = list;
+	struct entry *entry;
+	qstruct_run(_ll_getp(ll, &entry, index));
+	memcpy(entry->value, value, ll->value_size);
+	return QSTRUCT_RESULT_OK;
+}
+
