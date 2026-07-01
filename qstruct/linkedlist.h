@@ -46,6 +46,7 @@ size_t qstruct_linkedlist_length(qstruct_linkedlist_t list);
 
 /*
  * Removes item at given index
+ * Time complexity: O(n)
  */
 qstruct_result_t qstruct_linkedlist_remove(qstruct_linkedlist_t list, size_t index);
 
