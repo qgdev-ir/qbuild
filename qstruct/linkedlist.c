@@ -140,3 +140,17 @@ qstruct_result_t qstruct_linkedlist_replace(qstruct_linkedlist_t list, size_t in
 	return QSTRUCT_RESULT_OK;
 }
 
+qstruct_result_t qstruct_linkedlist_insert(qstruct_linkedlist_t list, size_t index, void *value) {
+	struct linkedlist *ll = list;
+	struct entry *entry;
+	qstruct_run(_ll_getp(ll, &entry, index));
+	struct entry *previous_entry = entry->previous;
+	struct entry *new_entry = malloc(sizeof(struct entry) + ll->value_size);
+	memcpy(new_entry->value, value, ll->value_size);
+	previous_entry->next = new_entry;
+	new_entry->next = entry;
+	entry->previous = new_entry;
+	ll->length++;
+	return QSTRUCT_RESULT_OK;
+}
+
