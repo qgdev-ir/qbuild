@@ -7,7 +7,7 @@ $(BUILD_DIR)/obj/test/%.c.o: test/%.c
 
 $(BUILD_DIR)/test: $(TEST_OBJECTS) | $(BUILD_DIR)/libqson.a
 	$(info > Linking $@)
-	gcc $(GCC_FLAGS) -pie $^ -o $@ -lqson
+	gcc $(GCC_FLAGS) -pie $^ -o $@ -lqson -lqstruct
 
 BUILD_TARGETS += $(BUILD_DIR)/test
 
