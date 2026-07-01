@@ -13,6 +13,12 @@
 extern "C" {
 #endif
 
+#define qstruct_run(call) \
+	do { \
+		qstruct_result_t res = call; \
+		if (res != QSTRUCT_RESULT_OK) return res; \
+	} while (0);
+
 #ifdef __cplusplus
 }
 #endif
