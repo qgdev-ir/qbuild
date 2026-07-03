@@ -17,6 +17,11 @@ typedef void* qstruct_rbtree_t;
  */
 typedef int8_t (*qstruct_rbtree_comparator_t)(char *x, char *y);
 
+/*
+ * Creates a red-black tree
+ */
+qstruct_result_t qstruct_rbtree_create(qstruct_rbtree_t *tree, qstruct_rbtree_comparator_t comparator);
+
 #ifdef __cplusplus
 }
 #endif
