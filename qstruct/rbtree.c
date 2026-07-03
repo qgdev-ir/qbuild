@@ -1,2 +1,2 @@
-#include <qstruct/qstruct.h>
+#include <qstruct/_qstruct.h>
 
