@@ -1,6 +1,8 @@
 #include <qstruct/_qstruct.h>
 #include <stdbool.h>
 
+#define IS_RED(n) (n != NULL && n->red)
+
 struct rbtree {
 	qstruct_rbtree_comparator_t comparator;
 	struct node *root;
