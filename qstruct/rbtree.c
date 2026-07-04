@@ -18,6 +18,7 @@ qstruct_result_t qstruct_rbtree_create(qstruct_rbtree_t *tree, qstruct_rbtree_co
 	struct rbtree *t = malloc(sizeof(struct rbtree));
 	t->comparator = comparator;
 	t->root = NULL;
+	*tree = t;
 	return QSTRUCT_RESULT_OK;
 }
 
