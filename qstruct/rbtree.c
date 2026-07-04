@@ -164,3 +164,21 @@ qstruct_result_t qstruct_rbtree_add(qstruct_rbtree_t tree, void *value, size_t v
 	return QSTRUCT_RESULT_OK;
 }
 
+qstruct_result_t qstruct_rbtree_get(qstruct_rbtree_t tree, void *value, size_t *value_size) {
+	struct rbtree *t = tree;
+	qstruct_rbtree_comparator_t comparator = t->comparator;
+
+	struct node *n = t->root;
+	while (n != NULL) {
+		int8_t cres = comparator(value, n->value);
+		if (cres == 0) break;
+		else if (cres < 0) n = n->right;
+		else n = n->left;
+	}
+
+	if (n == NULL) return QSTRUCT_RESULT_VALUE_NOT_FOUND;
+	if (*value_size == 0) *value_size = n->value_size;
+	if (value != NULL) memcpy(value, n->value, *value_size);
+	return QSTRUCT_RESULT_OK;
+}
+

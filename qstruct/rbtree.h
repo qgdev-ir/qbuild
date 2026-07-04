@@ -28,6 +28,15 @@ qstruct_result_t qstruct_rbtree_create(qstruct_rbtree_t *tree, qstruct_rbtree_co
  */
 qstruct_result_t qstruct_rbtree_add(qstruct_rbtree_t tree, void *value, size_t value_size);
 
+/*
+ * Gets value in of node in tree
+ * if value is a null pointer only value_size is set
+ * function will use value_size as size of value pointer given
+ * if value_size is zero function will set it automatically
+ * value must contains fields needed by comparator
+ */
+qstruct_result_t qstruct_rbtree_get(qstruct_rbtree_t tree, void *value, size_t *value_size);
+
 #ifdef __cplusplus
 }
 #endif
