@@ -41,6 +41,30 @@ static inline void _rbt_right_rotate(struct rbtree *t, struct node *n) {
 	n->parent = l;
 }
 
+/*
+ * Performes a left rotate
+ */
+static inline void _rbt_left_rotate(struct rbtree *t, struct node *n) {
+	struct node *l = n->right;
+
+	n->right = l->left;
+	if (l->left != NULL) {
+		l->left->parent = n;
+	}
+
+	l->parent = n->parent;
+	if (n->parent == NULL) {
+		t->root = l;
+	} else if (n->parent->right == n) {
+		n->parent->right = l;
+	} else {
+		n->parent->left = l;
+	}
+
+	l->left = n;
+	n->parent = l;
+}
+
 qstruct_result_t qstruct_rbtree_create(qstruct_rbtree_t *tree, qstruct_rbtree_comparator_t comparator) {
 	struct rbtree *t = malloc(sizeof(struct rbtree));
 	t->comparator = comparator;
