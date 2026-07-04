@@ -22,6 +22,12 @@ typedef int8_t (*qstruct_rbtree_comparator_t)(char *x, char *y);
  */
 qstruct_result_t qstruct_rbtree_create(qstruct_rbtree_t *tree, qstruct_rbtree_comparator_t comparator);
 
+/*
+ * Adds given value to the tree
+ * Time complexity: O(log n)
+ */
+qstruct_result_t qstruct_rbtree_add(qstruct_rbtree_t tree, void *value, size_t value_size);
+
 #ifdef __cplusplus
 }
 #endif

@@ -123,3 +123,44 @@ qstruct_result_t qstruct_rbtree_create(qstruct_rbtree_t *tree, qstruct_rbtree_co
 	return QSTRUCT_RESULT_OK;
 }
 
+qstruct_result_t qstruct_rbtree_add(qstruct_rbtree_t tree, void *value, size_t value_size) {
+	struct rbtree *t = tree;
+	qstruct_rbtree_comparator_t comparator = t->comparator;
+
+	struct node *current = t->root;
+	struct node *parent = current;
+	bool bigchild;
+	while (current != NULL) {
+		parent = current;
+		int8_t cres = comparator(value, current->value);
+		bigchild = cres > 0;
+		if (cres == 0) {
+			memcpy(current->value, value, value_size);
+			return QSTRUCT_RESULT_OK;
+		} else if (cres < 0) {
+			current = current->right;
+		} else {
+			current = current->left;
+		}
+	}
+
+	struct node *new_node = malloc(sizeof(struct node) + value_size);
+	new_node->red = true;
+	new_node->parent = parent;
+	new_node->left = NULL;
+	new_node->right = NULL;
+	new_node->value_size = value_size;
+	memcpy(new_node->value, value, value_size);
+
+	if (parent == NULL) {
+		t->root = new_node;
+	} else if (bigchild) {
+		parent->left = new_node;
+	} else {
+		parent->right = new_node;
+	}
+
+	_rbt_fix_add(t, new_node);
+	return QSTRUCT_RESULT_OK;
+}
+
