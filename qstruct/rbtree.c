@@ -13,6 +13,7 @@ struct node {
 	struct node *right;
 	struct node *left;
 	bool red;
+	size_t value_size;
 	char value[];
 };
 
