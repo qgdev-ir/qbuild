@@ -65,6 +65,56 @@ static inline void _rbt_left_rotate(struct rbtree *t, struct node *n) {
 	n->parent = l;
 }
 
+/*
+ * Fix tree after add action
+ */
+static inline void _rbt_fix_add(struct rbtree *t, struct node *n) {
+	while (IS_RED(n->parent)) {
+		struct node *p = n->parent;
+		struct node *g = p->parent;
+		struct node *u;
+		if (g->left == p) {
+			u = g->right;
+			if (IS_RED(u)) {
+				goto _rbt_fix_add_recolor;
+			} else {
+				if (n == p->right) {
+					n = p;
+					p = n->parent;
+					g = p->parent;
+					_rbt_left_rotate(t, n);
+				}
+				p->red = false;
+				g->red = true;
+				_rbt_right_rotate(t, g);
+			}
+		} else {
+			u = g->left;
+			if (IS_RED(u)) {
+				goto _rbt_fix_add_recolor;
+			} else {
+				if (n == p->left) {
+					n = p;
+					p = n->parent;
+					g = p->parent;
+					_rbt_right_rotate(t, n);
+				}
+				p->red = false;
+				g->red = true;
+				_rbt_left_rotate(t, g);
+			}
+		}
+		continue;
+_rbt_fix_add_recolor:
+		p->red = false;
+		u->red = false;
+		g->red = true;
+		n = g;
+		continue;
+	}
+	t->root->red = false;
+}
+
 qstruct_result_t qstruct_rbtree_create(qstruct_rbtree_t *tree, qstruct_rbtree_comparator_t comparator) {
 	struct rbtree *t = malloc(sizeof(struct rbtree));
 	t->comparator = comparator;
