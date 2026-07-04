@@ -1,4 +1,5 @@
 #include <qstruct/_qstruct.h>
+#include <stdbool.h>
 
 struct rbtree {
 	qstruct_rbtree_comparator_t comparator;
