@@ -6,6 +6,9 @@ extern "C" {
 
 /*
  * Pointer to actual red-black tree
+ * In this implementation we assume given value is a struct
+ * and the comparator will compare a specific field in the struct
+ * but non-struct types like integers can also be used as value
  */
 typedef void* qstruct_rbtree_t;
 
