@@ -14,6 +14,7 @@ extern "C" {
 typedef enum {
 	QSTRUCT_RESULT_OK = 0,		// successful
 	QSTRUCT_RESULT_INDEX_OUTOF_BOUND = 1, // no value is stored in given index
+	QSTRUCT_RESULT_VALUE_NOT_FOUND = 2,	// requested value not found
 } qstruct_result_t;
 
 #ifdef __cplusplus
