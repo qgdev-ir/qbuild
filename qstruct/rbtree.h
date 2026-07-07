@@ -49,6 +49,11 @@ qstruct_result_t qstruct_rbtree_get(qstruct_rbtree_t tree, void *value, size_t *
  */
 qstruct_result_t qstruct_rbtree_getp(qstruct_rbtree_t tree, void **value, size_t *value_size);
 
+/*
+ * Checks if the value exists in tree
+ */
+bool qstruct_rbtree_has(qstruct_rbtree_t tree, void *value);
+
 #ifdef __cplusplus
 }
 #endif

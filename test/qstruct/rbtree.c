@@ -30,9 +30,25 @@ bool test_qstruct_rbtree_add_get() {
 	return success;
 }
 
+bool test_qstruct_rbtree_has() {
+	test_run_log("qstruct_rbtree_has");
+	qstruct_rbtree_t tree;
+	int value = 1;
+	size_t value_size = sizeof(int);
+
+	bool success = 1;
+	success &= qstruct_rbtree_create(&tree, &_int32_comparator) == QSTRUCT_RESULT_OK;
+	success &= !qstruct_rbtree_has(tree, &value);
+	success &= qstruct_rbtree_add(tree, &value, value_size) == QSTRUCT_RESULT_OK;
+	success &= qstruct_rbtree_has(tree, &value);
+	test_result_log(success);
+	return success;
+}
+
 bool test_qstruct_rbtree() {
 	bool success = 1;
 	success &= test_qstruct_rbtree_add_get();
+	success &= test_qstruct_rbtree_has();
 	return success;
 }
 

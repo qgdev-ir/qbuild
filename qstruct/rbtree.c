@@ -190,3 +190,17 @@ qstruct_result_t qstruct_rbtree_getp(qstruct_rbtree_t tree, void **value, size_t
 	return QSTRUCT_RESULT_OK;
 }
 
+bool qstruct_rbtree_has(qstruct_rbtree_t tree, void *value) {
+	struct rbtree *t = tree;
+	qstruct_rbtree_comparator_t comparator = t->comparator;
+
+	struct node *n = t->root;
+	while (n != NULL) {
+		int8_t cres = comparator(value, n->value);
+		if (cres == 0) break;
+		else if (cres < 0) n = n->right;
+		else n = n->left;
+	}
+	return n != NULL;
+}
+
