@@ -105,3 +105,7 @@ int qson_deserialize_ctx_index(qson_deserialize_ctx_t ctx) {
 	return ((struct qson_deserialize_ctx *) ctx)->index;
 }
 
+qson_deserialize_state qson_deserialize_ctx_state(qson_deserialize_ctx_t ctx) {
+	return ((struct qson_deserialize_ctx *) ctx)->state;
+}
+

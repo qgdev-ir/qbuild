@@ -89,6 +89,11 @@ qson_result qson_end_sub_deserialize_ctx(qson_deserialize_ctx_t *ctx, qson_deser
  */
 int qson_deserialize_ctx_index(qson_deserialize_ctx_t ctx);
 
+/*
+ * Returns current state of ctx
+ */
+qson_deserialize_state qson_deserialize_ctx_state(qson_deserialize_ctx_t ctx);
+
 #ifdef __cplusplus
 }
 #endif
