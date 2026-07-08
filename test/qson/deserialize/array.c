@@ -9,11 +9,11 @@ bool test_qson_start_array() {
 
 	bool success = 1;
 	success &= qson_create_deserialize_ctx(&ctx, buffer, array_len(buffer)) == QSON_RESULT_OK;
-	success &= qson_start_array(&ctx) == QSON_RESULT_OK;
-	success &= ctx.state == QSON_DESERIALIZING_STATE_ARRAY;
+	success &= qson_start_array(ctx) == QSON_RESULT_OK;
+	success &= qson_deserialize_ctx_state(ctx) == QSON_DESERIALIZING_STATE_ARRAY;
 	success &= qson_create_deserialize_ctx(&ctx, buffer2, array_len(buffer)) == QSON_RESULT_OK;
-	success &= qson_start_array(&ctx) == QSON_RESULT_OK;
-	success &= ctx.state == QSON_DESERIALIZING_STATE_NONE;
+	success &= qson_start_array(ctx) == QSON_RESULT_OK;
+	success &= qson_deserialize_ctx_state(ctx) == QSON_DESERIALIZING_STATE_NONE;
 	test_result_log(success);
 	return success;
 }
@@ -28,8 +28,8 @@ bool test_qson_get_array_entry() {
 
 	bool success = 1;
 	success &= qson_create_deserialize_ctx(&ctx, buffer, array_len(buffer)) == QSON_RESULT_OK;
-	success &= qson_start_array(&ctx) == QSON_RESULT_OK;
-	success &= qson_get_array_entry(&ctx, &value_type) == QSON_RESULT_OK;
+	success &= qson_start_array(ctx) == QSON_RESULT_OK;
+	success &= qson_get_array_entry(ctx, &value_type) == QSON_RESULT_OK;
 	test_result_log(success);
 	return success;
 }
@@ -45,9 +45,9 @@ bool test_qson_get_array_entry_value_string() {
 
 	bool success = 1;
 	success &= qson_create_deserialize_ctx(&ctx, buffer, array_len(buffer)) == QSON_RESULT_OK;
-	success &= qson_start_array(&ctx) == QSON_RESULT_OK;
-	success &= qson_get_array_entry(&ctx, &value_type) == QSON_RESULT_OK;
-	success &= qson_get_array_entry_value_string(&ctx, value, &value_size, &has_next) == QSON_RESULT_OK;
+	success &= qson_start_array(ctx) == QSON_RESULT_OK;
+	success &= qson_get_array_entry(ctx, &value_type) == QSON_RESULT_OK;
+	success &= qson_get_array_entry_value_string(ctx, value, &value_size, &has_next) == QSON_RESULT_OK;
 	success &= value_size == 13;
 	success &= strcmp(value, "string value") == 0;
 	success &= !has_next;
@@ -65,17 +65,17 @@ bool test_qson_get_array_entry_value_bool() {
 
 	bool success = 1;
 	success &= qson_create_deserialize_ctx(&ctx, buffer, array_len(buffer)) == QSON_RESULT_OK;
-	success &= qson_start_array(&ctx) == QSON_RESULT_OK;
+	success &= qson_start_array(ctx) == QSON_RESULT_OK;
 
 	// First entry
-	success &= qson_get_array_entry(&ctx, &value_type) == QSON_RESULT_OK;
-	success &= qson_get_array_entry_value_bool(&ctx, &value, &has_next) == QSON_RESULT_OK;
+	success &= qson_get_array_entry(ctx, &value_type) == QSON_RESULT_OK;
+	success &= qson_get_array_entry_value_bool(ctx, &value, &has_next) == QSON_RESULT_OK;
 	success &= value;
 	success &= has_next;
 
 	// Second entry
-	success &= qson_get_array_entry(&ctx, &value_type) == QSON_RESULT_OK;
-	success &= qson_get_array_entry_value_bool(&ctx, &value, &has_next) == QSON_RESULT_OK;
+	success &= qson_get_array_entry(ctx, &value_type) == QSON_RESULT_OK;
+	success &= qson_get_array_entry_value_bool(ctx, &value, &has_next) == QSON_RESULT_OK;
 	success &= !value;
 	success &= !has_next;
 
@@ -92,9 +92,9 @@ bool test_qson_get_array_entry_value_null() {
 
 	bool success = 1;
 	success &= qson_create_deserialize_ctx(&ctx, buffer, array_len(buffer)) == QSON_RESULT_OK;
-	success &= qson_start_array(&ctx) == QSON_RESULT_OK;
-	success &= qson_get_array_entry(&ctx, &value_type) == QSON_RESULT_OK;
-	success &= qson_get_array_entry_value_null(&ctx, &has_next) == QSON_RESULT_OK;
+	success &= qson_start_array(ctx) == QSON_RESULT_OK;
+	success &= qson_get_array_entry(ctx, &value_type) == QSON_RESULT_OK;
+	success &= qson_get_array_entry_value_null(ctx, &has_next) == QSON_RESULT_OK;
 	success &= !has_next;
 	test_result_log(success);
 	return success;
@@ -110,9 +110,9 @@ bool test_qson_get_array_entry_value_number() {
 
 	bool success = 1;
 	success &= qson_create_deserialize_ctx(&ctx, buffer, array_len(buffer)) == QSON_RESULT_OK;
-	success &= qson_start_array(&ctx) == QSON_RESULT_OK;
-	success &= qson_get_array_entry(&ctx, &value_type) == QSON_RESULT_OK;
-	success &= qson_get_array_entry_value_number(&ctx, &value, &has_next) == QSON_RESULT_OK;
+	success &= qson_start_array(ctx) == QSON_RESULT_OK;
+	success &= qson_get_array_entry(ctx, &value_type) == QSON_RESULT_OK;
+	success &= qson_get_array_entry_value_number(ctx, &value, &has_next) == QSON_RESULT_OK;
 	success &= value == 100;
 	success &= !has_next;
 	test_result_log(success);
@@ -133,31 +133,30 @@ bool test_qson_get_array_entry_value_sub_ctx() {
 
 	bool success = 1;
 	success &= qson_create_deserialize_ctx(&ctx, buffer, array_len(buffer)) == QSON_RESULT_OK;
-	success &= qson_start_array(&ctx) == QSON_RESULT_OK;
-	success &= qson_get_array_entry(&ctx, &value_type) == QSON_RESULT_OK;
-	success &= qson_get_array_entry_value_sub_ctx(&ctx, &sub_ctx) == QSON_RESULT_OK;
+	success &= qson_start_array(ctx) == QSON_RESULT_OK;
+	success &= qson_get_array_entry(ctx, &value_type) == QSON_RESULT_OK;
+	success &= qson_get_array_entry_value_sub_ctx(ctx, &sub_ctx) == QSON_RESULT_OK;
 
-	success &= qson_start_array(&sub_ctx) == QSON_RESULT_OK;
+	success &= qson_start_array(sub_ctx) == QSON_RESULT_OK;
 	value_type = QSON_TYPE_STRING;
-	success &= qson_get_array_entry(&sub_ctx, &value_type) == QSON_RESULT_OK;
-	success &= qson_get_array_entry_value_string(&sub_ctx, value, &value_size, &has_next) == QSON_RESULT_OK;
+	success &= qson_get_array_entry(sub_ctx, &value_type) == QSON_RESULT_OK;
+	success &= qson_get_array_entry_value_string(sub_ctx, value, &value_size, &has_next) == QSON_RESULT_OK;
 	success &= strcmp(value, "]\"]") == 0;
 	success &= value_size == 4;
 	success &= has_next;
 
 	value_type = QSON_TYPE_ARRAY;
-	success &= qson_get_array_entry(&sub_ctx, &value_type) == QSON_RESULT_OK;
-	success &= qson_get_array_entry_value_sub_ctx(&sub_ctx, &sub_ctx2) == QSON_RESULT_OK;
-	success &= qson_start_array(&sub_ctx2) == QSON_RESULT_OK;
-
+	success &= qson_get_array_entry(sub_ctx, &value_type) == QSON_RESULT_OK;
+	success &= qson_get_array_entry_value_sub_ctx(sub_ctx, &sub_ctx2) == QSON_RESULT_OK;
+	success &= qson_start_array(sub_ctx2) == QSON_RESULT_OK;
 	value_type = QSON_TYPE_BOOL;
-	success &= qson_get_array_entry(&sub_ctx2, &value_type) == QSON_RESULT_OK;
-	success &= qson_get_array_entry_value_bool(&sub_ctx2, &bvalue, &has_next) == QSON_RESULT_OK;
+	success &= qson_get_array_entry(sub_ctx2, &value_type) == QSON_RESULT_OK;
+	success &= qson_get_array_entry_value_bool(sub_ctx2, &bvalue, &has_next) == QSON_RESULT_OK;
 	success &= bvalue;
 	success &= !has_next;
-	success &= qson_get_array_entry_value_sub_ctx_end(&sub_ctx, &sub_ctx2, &has_next) == QSON_RESULT_OK;
+	success &= qson_get_array_entry_value_sub_ctx_end(sub_ctx, sub_ctx2, &has_next) == QSON_RESULT_OK;
 	success &= !has_next;
-	success &= qson_get_array_entry_value_sub_ctx_end(&ctx, &sub_ctx, &has_next) == QSON_RESULT_OK;
+	success &= qson_get_array_entry_value_sub_ctx_end(ctx, sub_ctx, &has_next) == QSON_RESULT_OK;
 	success &= !has_next;
 
 	test_result_log(success);
