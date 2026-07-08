@@ -84,6 +84,11 @@ qson_result qson_create_sub_deserialize_ctx(qson_deserialize_ctx_t *ctx, qson_de
  */
 qson_result qson_end_sub_deserialize_ctx(qson_deserialize_ctx_t *ctx, qson_deserialize_ctx_t *sub_ctx);
 
+/*
+ * Returns current index of ctx
+ */
+int qson_deserialize_ctx_index(qson_deserialize_ctx_t ctx);
+
 #ifdef __cplusplus
 }
 #endif

@@ -101,3 +101,7 @@ qson_result qson_end_sub_deserialize_ctx(qson_deserialize_ctx_t *ctx, qson_deser
 	return QSON_RESULT_OK;
 }
 
+int qson_deserialize_ctx_index(qson_deserialize_ctx_t ctx) {
+	return ((struct qson_deserialize_ctx *) ctx)->index;
+}
+
