@@ -20,13 +20,7 @@ typedef enum {
 /*
  * Context for deserilizing a json
  */
-typedef struct {
-	char *buffer;	// Buffer which contains the json
-	int size;	// Size of the buffer
-	int index;	// Current index in buffer
-	qson_deserialize_state state;	// Current state of deserialization
-	char flags;	// flags for current ctx
-} qson_deserialize_ctx_t;
+typedef void* qson_deserialize_ctx_t;
 
 #define QSON_DESERIALIZE_CTX_FLAG_IS_SUBCTX	1	// Indicates current ctx is subctx of another ctx
 

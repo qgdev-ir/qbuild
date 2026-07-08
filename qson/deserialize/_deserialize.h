@@ -11,6 +11,14 @@
 extern "C" {
 #endif
 
+struct qson_deserialize_ctx {
+	char *buffer;	// Buffer which contains the json
+	int size;	// Size of the buffer
+	int index;	// Current index in buffer
+	qson_deserialize_state state;	// Current state of deserialization
+	char flags;	// flags for current ctx
+};
+
 #define qson_ctx_has_size(ctx, required_size) (ctx->size - ctx->index - 1) < required_size || ctx->buffer[ctx->index + required_size] == '\0'
 #define qson_ctx_size_check(ctx, required_size) \
 	do { \
