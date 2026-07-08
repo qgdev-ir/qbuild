@@ -7,8 +7,8 @@ bool test_qson_skip_white_spaces() {
 
 	bool success = 1;
 	success &= qson_create_deserialize_ctx(&ctx, buffer, array_len(buffer)) == QSON_RESULT_OK;
-	success &= qson_skip_white_spaces(&ctx) == QSON_RESULT_OK;
-	success &= ctx.index == 4;
+	success &= qson_skip_white_spaces(ctx) == QSON_RESULT_OK;
+	success &= qson_deserialize_ctx_index(ctx) == 4;
 	test_result_log(success);
 	return success;
 }
@@ -20,12 +20,12 @@ bool test_qson_skip_white_spacesـunexpected_eof() {
 
 	bool success = 1;
 	success &= qson_create_deserialize_ctx(&ctx, buffer, array_len(buffer)) == QSON_RESULT_OK;
-	success &= qson_skip_white_spaces(&ctx) == QSON_RESULT_UNEXPECTED_EOF;
+	success &= qson_skip_white_spaces(ctx) == QSON_RESULT_UNEXPECTED_EOF;
 	test_result_log(success);
 	return success;
 }
 
-static qson_result _test_qson_ctx_size_check(qson_deserialize_ctx_t *ctx) {
+static qson_result _test_qson_ctx_size_check(struct qson_deserialize_ctx *ctx) {
 	qson_ctx_size_check(ctx, 1);
 	return QSON_RESULT_OK;
 }
@@ -33,12 +33,12 @@ static qson_result _test_qson_ctx_size_check(qson_deserialize_ctx_t *ctx) {
 bool test_qson_ctx_size_check() {
 	test_run_log("qson_ctx_size_check");
 	char buffer[] = "testing";
-	qson_deserialize_ctx_t ctx;
+	struct qson_deserialize_ctx *ctx;
 
 	bool success = 1;
-	success &= qson_create_deserialize_ctx(&ctx, buffer, 4) == QSON_RESULT_OK;
-	ctx.index = 3;
-	success &= _test_qson_ctx_size_check(&ctx) == QSON_RESULT_UNEXPECTED_EOF;
+	success &= qson_create_deserialize_ctx((void**) &ctx, buffer, 4) == QSON_RESULT_OK;
+	ctx->index = 3;
+	success &= _test_qson_ctx_size_check(ctx) == QSON_RESULT_UNEXPECTED_EOF;
 	test_result_log(success);
 	return success;
 
@@ -51,8 +51,8 @@ bool test_qson_skip_white_spacesـline_comment() {
 
 	bool success = 1;
 	success &= qson_create_deserialize_ctx(&ctx, buffer, array_len(buffer)) == QSON_RESULT_OK;
-	success &= qson_skip_white_spaces(&ctx) == QSON_RESULT_OK;
-	success &= ctx.index == 18;
+	success &= qson_skip_white_spaces(ctx) == QSON_RESULT_OK;
+	success &= qson_deserialize_ctx_index(ctx) == 18;
 	test_result_log(success);
 	return success;
 }
@@ -64,8 +64,8 @@ bool test_qson_skip_white_spacesـarea_comment() {
 
 	bool success = 1;
 	success &= qson_create_deserialize_ctx(&ctx, buffer, array_len(buffer)) == QSON_RESULT_OK;
-	success &= qson_skip_white_spaces(&ctx) == QSON_RESULT_OK;
-	success &= ctx.index == 20;
+	success &= qson_skip_white_spaces(ctx) == QSON_RESULT_OK;
+	success &= qson_deserialize_ctx_index(ctx) == 20;
 	test_result_log(success);
 	return success;
 }
