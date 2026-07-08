@@ -2,15 +2,15 @@
 #include <qson/qson.h>
 #include "_deserialize.h"
 
-inline static qson_result handle_escape(qson_deserialize_ctx_t *ctx, char *buffer, int *sizep, int *ip) {
+inline static qson_result handle_escape(struct qson_deserialize_ctx *c, char *buffer, int *sizep, int *ip) {
 	int size = *sizep;
 	int i = *ip;
-	char escaped = ctx->buffer[++ctx->index];
+	char escaped = c->buffer[++c->index];
 
 	switch (escaped) {
 	case 'u':
 		unsigned int codepoint;
-		if (sscanf(ctx->buffer + ++ctx->index, "%4x", &codepoint) != 1) return QSON_RESULT_INVALID_CHAR;
+		if (sscanf(c->buffer + ++c->index, "%4x", &codepoint) != 1) return QSON_RESULT_INVALID_CHAR;
 		if (codepoint <= 0x7F) {
 			buffer[i] = (unsigned char) codepoint;
 		} else if (codepoint <= 0x7FF) {
@@ -24,7 +24,7 @@ inline static qson_result handle_escape(qson_deserialize_ctx_t *ctx, char *buffe
 			buffer[++i] = 0x80 | ((codepoint >> 6) & 0x3F);
 			buffer[++i] = 0x80 | (codepoint & 0x3F);
 		}
-		ctx->index += 3;
+		c->index += 3;
 		break;
 	case 'b': buffer[i] = '\b'; break;
 	case 'f': buffer[i] = '\f'; break;
@@ -38,29 +38,30 @@ inline static qson_result handle_escape(qson_deserialize_ctx_t *ctx, char *buffe
 	return QSON_RESULT_OK;
 }
 
-qson_result qson_read_string(qson_deserialize_ctx_t *ctx, char *buffer, int *sizep) {
-	if (ctx->buffer[ctx->index] != QSON_QUOTATION_MARK) return QSON_RESULT_INVALID_CHAR;
-	qson_ctx_skip(ctx, 1);
+qson_result qson_read_string(qson_deserialize_ctx_t ctx, char *buffer, int *sizep) {
+	struct qson_deserialize_ctx *c = ctx;
+	if (c->buffer[c->index] != QSON_QUOTATION_MARK) return QSON_RESULT_INVALID_CHAR;
+	qson_ctx_skip(c, 1);
 
 	int size = *sizep;
 	int i = 0;
 	while (i < size) {
-		char chr = ctx->buffer[ctx->index];
+		char chr = c->buffer[c->index];
 		switch (chr) {
 		case QSON_QUOTATION_MARK:
 			buffer[i] = '\0';
 			*sizep = ++i;
-			ctx->index++;
+			c->index++;
 			return QSON_RESULT_OK;
 		case QSON_STRING_ESCAPE_CHAR:
-			qson_result res = handle_escape(ctx, buffer, sizep, &i);
+			qson_result res = handle_escape(c, buffer, sizep, &i);
 			if (res != QSON_RESULT_OK) return res;
 			break;
 		default:
 			if (chr < 32 || 126 < chr) return QSON_RESULT_INVALID_CHAR;
 			buffer[i] = chr;
 		}
-		qson_ctx_skip(ctx, 1);
+		qson_ctx_skip(c, 1);
 		i++;
 	}
 	return QSON_RESULT_BUFFER_TOO_SMALL;
