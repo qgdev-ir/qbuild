@@ -18,13 +18,7 @@ typedef enum {
 /*
  * Context for serilizing a json
  */
-typedef struct {
-	char *buffer;	// Buffer which json should be writen in
-	int size;	// Size of the buffer
-	int index;	// Current index in buffer
-	qson_serialize_state state;	// Current state of serialization
-	char flags;	// Flags for current ctx
-} qson_serialize_ctx_t;
+typedef void* qson_serialize_ctx_t;
 
 #define QSON_SERIALIZE_CTX_FLAG_IS_SUBCTX	1	// Indicates current ctx is subctx of another ctx
 

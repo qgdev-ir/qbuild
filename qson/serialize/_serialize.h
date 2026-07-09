@@ -11,6 +11,14 @@
 extern "C" {
 #endif
 
+struct qson_serialize_ctx {
+	char *buffer;	// Buffer which json should be writen in
+	int size;	// Size of the buffer
+	int index;	// Current index in buffer
+	qson_serialize_state state;	// Current state of serialization
+	char flags;	// Flags for current ctx
+};
+
 #define qson_ctx_has_size(ctx, required_size) (ctx->size - ctx->index - 1) < required_size
 #define qson_ctx_size_check(ctx, required_size) \
 	do { \
