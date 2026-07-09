@@ -6,6 +6,7 @@
 #define _qson_serialize__serialize_h_
 
 #include <qson/_qson.h>
+#include <stdlib.h>
 
 #ifdef __cplusplus
 extern "C" {
