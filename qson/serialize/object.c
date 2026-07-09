@@ -72,3 +72,9 @@ qson_result qson_write_object_entry_subctx_end(qson_serialize_ctx_t *ctx, qson_s
 	return QSON_RESULT_OK;
 }
 
+qson_result qson_serialize_object_end(qson_serialize_ctx_t *ctx) {
+	if (ctx->state != QSON_SERIALIZE_STATE_OBJECT) return QSON_RESULT_INVALID_STATE;
+	qson_run(_handle_has_next(ctx, false));
+	return QSON_RESULT_OK;
+}
+

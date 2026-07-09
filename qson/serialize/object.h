@@ -58,6 +58,13 @@ qson_result qson_write_object_entry_subctx(qson_serialize_ctx_t *ctx, char *key,
  */
 qson_result qson_write_object_entry_subctx_end(qson_serialize_ctx_t *ctx, qson_serialize_ctx_t *sub_ctx, bool has_next);
 
+/*
+ * End the object
+ * Sets state to NONE
+ * Requires state OBJECT
+ */
+qson_result qson_serialize_object_end(qson_serialize_ctx_t *ctx);
+
 #ifdef __cplusplus
 }
 #endif

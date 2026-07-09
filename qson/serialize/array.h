@@ -57,6 +57,13 @@ qson_result qson_write_array_entry_subctx(qson_serialize_ctx_t *ctx, qson_serial
  */
 qson_result qson_write_array_entry_subctx_end(qson_serialize_ctx_t *ctx, qson_serialize_ctx_t *sub_ctx, bool has_next);
 
+/*
+ * End the array
+ * Sets state to NONE
+ * Requires state ARRAY
+ */
+qson_result qson_serialize_array_end(qson_serialize_ctx_t *ctx);
+
 #ifdef __cplusplus
 }
 #endif
