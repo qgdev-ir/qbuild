@@ -2,8 +2,6 @@
 #define _test_test_h_
 
 #include <stdio.h>
-#include <qson/qson.h>
-#include <qson/deserialize/_deserialize.h>
 
 #ifdef __cplusplus
 extern "C" {
