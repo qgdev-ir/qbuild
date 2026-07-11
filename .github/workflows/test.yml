@@ -14,6 +14,16 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v5
 
+      - name: Gheckout qson
+        uses: actions/checkout@v5
+        with:
+          repository: qgdev-ir/qson
+          path: qson
+
+      - name: Install qson
+        run: make install
+        working-directory: qson
+
       - name: Compile
         run: make
 
