@@ -1,6 +1,7 @@
 #ifndef _test_test_h_
 #define _test_test_h_
 
+#include <stdbool.h>
 #include <stdio.h>
 
 #ifdef __cplusplus
