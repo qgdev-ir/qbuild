@@ -21,7 +21,7 @@ jobs:
           path: qson
 
       - name: Install qson
-        run: make install
+        run: sudo make install
         working-directory: qson
 
       - name: Compile
