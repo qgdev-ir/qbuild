@@ -215,3 +215,56 @@ inline static struct node* _rbt_get_successor(struct node *n) {
 	return s;
 }
 
+/*
+ * Fixes double black after removal
+ */
+static inline void _rbt_fix_double_black(struct rbtree *t, struct node *n) {
+	if (n == t->root) return;
+	struct node *p = n->parent;
+	struct node *s = n == p->left ? p->right : p->left;
+	if (s == NULL) {
+		_rbt_fix_double_black(t, p);
+	} else {
+		if (IS_RED(s)) {
+			p->red = true;
+			s->red = false;
+			if (s == p->left)
+				_rbt_right_rotate(t, p);
+			else
+				_rbt_left_rotate(t, p);
+			_rbt_fix_double_black(t, n);
+		} else {
+			if (IS_RED(s->left) || IS_RED(s->right)) {
+				if (IS_RED(s->left)) {
+					if (s == p->left) {
+						s->left->red = s->red;
+						s->red = p->red;
+						_rbt_right_rotate(t, p);
+					} else {
+						s->left->red = p->red;
+						_rbt_right_rotate(t, s);
+						_rbt_left_rotate(t, p);
+					}
+				} else {
+					if (s == p->left) {
+						s->right->red = p->red;
+						_rbt_left_rotate(t, s);
+						_rbt_right_rotate(t, p);
+					} else {
+						s->right->red = s->red;
+						s->red = p->red;
+						_rbt_left_rotate(t, p);
+					}
+				}
+				p->red = false;
+			} else {
+				s->red = true;
+				if (!IS_RED(p))
+					_rbt_fix_double_black(t, p);
+				else
+					p->red = false;
+			}
+		}
+	}
+}
+
