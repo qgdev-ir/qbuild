@@ -335,3 +335,55 @@ static inline struct node* _rbt_set_value(struct node *v, struct node *u) {
 	return v;
 }
 
+/*
+ * Removes given node from the tree
+ */
+static inline void _rbt_remove_node(struct rbtree *t, struct node *v) {
+	struct node *u = _rbt_get_successor(v);
+	bool uv_black = !IS_RED(u) && !IS_RED(v);
+	struct node *p = v->parent;
+
+	if (u == NULL) {
+		if (p == NULL) {
+			t->root = NULL;
+		} else {
+			if (uv_black) {
+				_rbt_fix_double_black(t, v);
+			} else {
+				struct node *s = v == p->right ? p->left : p->right;
+				if (s != NULL) {
+					s->red = true;
+				}
+			}
+
+			if (v == p->right)
+				p->right = NULL;
+			else
+				p->left = NULL;
+		}
+		free(v);
+		return;
+	}
+
+	if (v->left == NULL || v->right == NULL) {
+		if (p == NULL) {
+			t->root = u;
+			u->parent = NULL;
+			free(v);
+		} else {
+			if (v == p->left)
+				p->left = u;
+			else
+				p->right = u;
+			free(v);
+			u->parent = p;
+			if (uv_black) _rbt_fix_double_black(t, u);
+			else u->red = false;
+		}
+		return;
+	}
+
+	_rbt_swap_value(&v, &u);
+	_rbt_remove_node(t, u);
+}
+
