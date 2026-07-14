@@ -268,3 +268,22 @@ static inline void _rbt_fix_double_black(struct rbtree *t, struct node *n) {
 	}
 }
 
+/*
+ * Replace node n possition with s
+ * Doesnt copy value or free node n
+ */
+static inline void _rbt_replace_node_novalue(struct node *n, struct node *s) {
+	s->parent = n->parent;
+	s->left = n->left;
+	s->right = n->right;
+	s->red = n->red;
+
+	if (s->right != NULL) s->right->parent = s;
+	if (s->left != NULL) s->left->parent = s;
+
+	if (n->parent != NULL) {
+		if (n == n->parent->left) n->parent->left = s;
+		else n->parent->right = s;
+	}
+}
+
