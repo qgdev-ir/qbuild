@@ -25,5 +25,6 @@ typedef enum {
 #include "arraylist.h"
 #include "linkedlist.h"
 #include "rbtree.h"
+#include "hashmap.h"
 
 #endif
