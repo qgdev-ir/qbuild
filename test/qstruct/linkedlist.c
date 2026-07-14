@@ -111,6 +111,7 @@ bool test_qstruct_linkedlist_insert() {
 	success &= res_value == value2;
 	success &= qstruct_linkedlist_get(list, 2, &res_value) == QSTRUCT_RESULT_OK;
 	success &= res_value == value3;
+	success &= qstruct_linkedlist_destroy(list) == QSTRUCT_RESULT_OK;
 	test_result_log(success);
 	return success;
 
