@@ -325,3 +325,13 @@ static inline void _rbt_swap_value(struct node **v, struct node **u) {
 	}
 }
 
+/*
+ * Sets value of u to v
+ * And returns new v
+ */
+static inline struct node* _rbt_set_value(struct node *v, struct node *u) {
+	_rbt_resize_node_novalue(&v, u->value_size);
+	memcpy(v->value, u->value, v->value_size);
+	return v;
+}
+
