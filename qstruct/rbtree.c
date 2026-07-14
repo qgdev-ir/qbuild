@@ -115,6 +115,22 @@ _rbt_fix_add_recolor:
 	t->root->red = false;
 }
 
+/*
+ * Finds a node and return a pointer to it
+ * Returns NULL if node not found
+ */
+struct node *_rbt_find_node(struct rbtree *t, void *value) {
+	qstruct_rbtree_comparator_t comparator = t->comparator;
+	struct node *n = t->root;
+	while (n != NULL) {
+		int8_t cres = comparator(value, n->value);
+		if (cres == 0) break;
+		else if (cres < 0) n = n->right;
+		else n = n->left;
+	}
+	return n;
+}
+
 qstruct_result_t qstruct_rbtree_create(qstruct_rbtree_t *tree, qstruct_rbtree_comparator_t comparator) {
 	struct rbtree *t = malloc(sizeof(struct rbtree));
 	t->comparator = comparator;
@@ -175,15 +191,7 @@ qstruct_result_t qstruct_rbtree_get(qstruct_rbtree_t tree, void *value, size_t *
 
 qstruct_result_t qstruct_rbtree_getp(qstruct_rbtree_t tree, void **value, size_t *value_size) {
 	struct rbtree *t = tree;
-	qstruct_rbtree_comparator_t comparator = t->comparator;
-
-	struct node *n = t->root;
-	while (n != NULL) {
-		int8_t cres = comparator(*value, n->value);
-		if (cres == 0) break;
-		else if (cres < 0) n = n->right;
-		else n = n->left;
-	}
+	struct node *n = _rbt_find_node(t, *value);
 	if (n == NULL) return QSTRUCT_RESULT_VALUE_NOT_FOUND;
 	*value_size = n->value_size;
 	*value = n->value;
@@ -192,15 +200,6 @@ qstruct_result_t qstruct_rbtree_getp(qstruct_rbtree_t tree, void **value, size_t
 
 bool qstruct_rbtree_has(qstruct_rbtree_t tree, void *value) {
 	struct rbtree *t = tree;
-	qstruct_rbtree_comparator_t comparator = t->comparator;
-
-	struct node *n = t->root;
-	while (n != NULL) {
-		int8_t cres = comparator(value, n->value);
-		if (cres == 0) break;
-		else if (cres < 0) n = n->right;
-		else n = n->left;
-	}
-	return n != NULL;
+	return _rbt_find_node(t, value) != NULL;
 }
 
