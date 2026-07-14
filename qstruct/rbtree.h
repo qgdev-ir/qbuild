@@ -55,6 +55,10 @@ qstruct_result_t qstruct_rbtree_getp(qstruct_rbtree_t tree, void **value, size_t
  */
 bool qstruct_rbtree_has(qstruct_rbtree_t tree, void *value);
 
+/*
+ * Removes given value from tree
+ * Time complexity: O(log n)
+ */
 qstruct_result_t qstruct_rbtree_remove(qstruct_rbtree_t tree, void *value);
 
 /*
