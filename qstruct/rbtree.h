@@ -51,6 +51,7 @@ qstruct_result_t qstruct_rbtree_getp(qstruct_rbtree_t tree, void **value, size_t
 
 /*
  * Checks if the value exists in tree
+ * Time complexity: O(log n)
  */
 bool qstruct_rbtree_has(qstruct_rbtree_t tree, void *value);
 
