@@ -45,10 +45,30 @@ bool test_qstruct_rbtree_has() {
 	return success;
 }
 
+bool test_qstruct_rbtree_remove() {
+	test_run_log("qstruct_rbtree_remove");
+	qstruct_rbtree_t tree;
+	size_t value_size = sizeof(int);
+	int values[] = { 41, 38, 31, 12, 19, 8, 9, 24, 25, 45 };
+
+	bool success = 1;
+	success &= qstruct_rbtree_create(&tree, &_int32_comparator) == QSTRUCT_RESULT_OK;
+	for (int i = 0; i < array_len(values); i++) {
+		success &= qstruct_rbtree_add(tree, values + i, value_size) == QSTRUCT_RESULT_OK;
+	}
+	for (int i = 0; i < array_len(values); i++) {
+		success &= qstruct_rbtree_remove(tree, values + i) == QSTRUCT_RESULT_OK;
+		success &= !qstruct_rbtree_has(tree, values + i);
+	}
+	test_result_log(success);
+	return success;
+}
+
 bool test_qstruct_rbtree() {
 	bool success = 1;
 	success &= test_qstruct_rbtree_add_get();
 	success &= test_qstruct_rbtree_has();
+	success &= test_qstruct_rbtree_remove();
 	return success;
 }
 
