@@ -300,3 +300,28 @@ static inline void _rbt_resize_node_novalue(struct node **n, size_t size) {
 	*n = ln;
 }
 
+/*
+ * Swap values of given nodes
+ */
+static inline void _rbt_swap_value(struct node **v, struct node **u) {
+	struct node* lv = *v;
+	struct node* lu = *u;
+	if (lv->value_size == lu->value_size) {
+		char temp[lv->value_size];
+		memcpy(temp, lv->value, lv->value_size);
+		memcpy(lv->value, lu->value, lv->value_size);
+		memcpy(lu->value, temp, lu->value_size);
+	} else {
+		struct node* nv = malloc(sizeof(struct node) + lu->value_size);
+		struct node* nu = malloc(sizeof(struct node) + lv->value_size);
+		memcpy(nv->value, lu->value, nv->value_size);
+		memcpy(nu->value, lv->value, nu->value_size);
+		_rbt_replace_node_novalue(lv, nv);
+		_rbt_replace_node_novalue(lu, nu);
+		free(lv);
+		free(lu);
+		*v = nv;
+		*u = nu;
+	}
+}
+
