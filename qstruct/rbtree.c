@@ -203,3 +203,15 @@ bool qstruct_rbtree_has(qstruct_rbtree_t tree, void *value) {
 	return _rbt_find_node(t, value) != NULL;
 }
 
+/*
+ * Finds successor of the node
+ */
+inline static struct node* _rbt_get_successor(struct node *n) {
+	if (n->left == NULL && n->right == NULL) return NULL;
+	if (n->left != NULL && n->right == NULL) return n->left;
+	if (n->left == NULL && n->right != NULL) return n->right;
+	struct node *s = n->right;
+	while (s->left != NULL) s = s->left;
+	return s;
+}
+
