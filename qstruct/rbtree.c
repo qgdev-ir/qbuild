@@ -387,3 +387,11 @@ static inline void _rbt_remove_node(struct rbtree *t, struct node *v) {
 	_rbt_remove_node(t, u);
 }
 
+qstruct_result_t qstruct_rbtree_remove(qstruct_rbtree_t tree, void *value) {
+	struct rbtree *t = tree;
+	struct node *n = _rbt_find_node(t, value);
+	if (n == NULL) return QSTRUCT_RESULT_VALUE_NOT_FOUND;
+	_rbt_remove_node(t, n);
+	return QSTRUCT_RESULT_OK;
+}
+
