@@ -99,6 +99,7 @@ bool test_qstruct_arraylist_set() {
 	success &= qstruct_arraylist_length(list) == 1;
 	success &= qstruct_arraylist_get(list, &return_val, 0) == QSTRUCT_RESULT_OK;
 	success &= return_val == value2;
+	success &= qstruct_arraylist_destroy(list) == QSTRUCT_RESULT_OK;
 	test_result_log(success);
 	return success;
 }
@@ -120,6 +121,7 @@ bool test_qstruct_arraylist_insert() {
 	success &= return_val == value2;
 	success &= qstruct_arraylist_get(list, &return_val, 1) == QSTRUCT_RESULT_OK;
 	success &= return_val == value;
+	success &= qstruct_arraylist_destroy(list) == QSTRUCT_RESULT_OK;
 	test_result_log(success);
 	return success;
 }
