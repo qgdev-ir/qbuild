@@ -4,6 +4,11 @@
 extern "C" {
 #endif
 
+/*
+ * A pointer to actual hashmap
+ */
+typedef void* qstruct_hashmap_t;
+
 #ifdef __cplusplus
 }
 #endif
