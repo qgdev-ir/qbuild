@@ -395,3 +395,13 @@ qstruct_result_t qstruct_rbtree_remove(qstruct_rbtree_t tree, void *value) {
 	return QSTRUCT_RESULT_OK;
 }
 
+/*
+ * Destroy given node and all of its children recurivly
+ */
+static inline void _rbt_destroy(struct node *n) {
+	if (n == NULL) return;
+	_rbt_destroy(n->right);
+	_rbt_destroy(n->left);
+	free(n);
+}
+
