@@ -54,7 +54,7 @@ qstruct_result_t qstruct_arraylist_remove(qstruct_arraylist_t arraylist, size_t 
 	struct arraylist *al = (struct arraylist*) arraylist;
 	if (index >= al->length) return QSTRUCT_RESULT_INDEX_OUTOF_BOUND;
 	void *itemptr = al->array + index * al->value_size;
-	memmove(itemptr, itemptr + al->value_size, (al->length * al->value_size) - (index * al->value_size));
+	memmove(itemptr, itemptr + al->value_size, (al->length - index - 1) * al->value_size);
 	al->length--;
 	return QSTRUCT_RESULT_OK;
 }
