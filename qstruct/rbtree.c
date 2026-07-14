@@ -405,3 +405,10 @@ static inline void _rbt_destroy(struct node *n) {
 	free(n);
 }
 
+qstruct_result_t qstruct_rbtree_destroy(qstruct_rbtree_t tree) {
+	struct rbtree *t = tree;
+	_rbt_destroy(t->root);
+	free(t);
+	return QSTRUCT_RESULT_OK;
+}
+

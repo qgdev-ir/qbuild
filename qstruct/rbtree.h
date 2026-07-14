@@ -56,6 +56,12 @@ bool qstruct_rbtree_has(qstruct_rbtree_t tree, void *value);
 
 qstruct_result_t qstruct_rbtree_remove(qstruct_rbtree_t tree, void *value);
 
+/*
+ * Destroys the tree
+ * Time complexity: O(n)
+ */
+qstruct_result_t qstruct_rbtree_destroy(qstruct_rbtree_t tree);
+
 #ifdef __cplusplus
 }
 #endif
