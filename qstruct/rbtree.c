@@ -287,3 +287,16 @@ static inline void _rbt_replace_node_novalue(struct node *n, struct node *s) {
 	}
 }
 
+/*
+ * Resize node but doesnt copy value to new created node
+ */
+static inline void _rbt_resize_node_novalue(struct node **n, size_t size) {
+	struct node *ln = *n;
+	if (ln->value_size == size) return;
+	struct node *nln = malloc(sizeof(struct node) + size);
+	_rbt_replace_node_novalue(ln, nln);
+	free(ln);
+	nln->value_size = size;
+	*n = ln;
+}
+
