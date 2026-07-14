@@ -26,6 +26,7 @@ bool test_qstruct_rbtree_add_get() {
 	}
 	res_value = 0; // A value that dosent exists
 	success &= qstruct_rbtree_get(tree, &res_value, &value_size) == QSTRUCT_RESULT_VALUE_NOT_FOUND;
+	success &= qstruct_rbtree_destroy(tree) == QSTRUCT_RESULT_OK;
 	test_result_log(success);
 	return success;
 }
@@ -41,6 +42,7 @@ bool test_qstruct_rbtree_has() {
 	success &= !qstruct_rbtree_has(tree, &value);
 	success &= qstruct_rbtree_add(tree, &value, value_size) == QSTRUCT_RESULT_OK;
 	success &= qstruct_rbtree_has(tree, &value);
+	success &= qstruct_rbtree_destroy(tree) == QSTRUCT_RESULT_OK;
 	test_result_log(success);
 	return success;
 }
@@ -60,6 +62,7 @@ bool test_qstruct_rbtree_remove() {
 		success &= qstruct_rbtree_remove(tree, values + i) == QSTRUCT_RESULT_OK;
 		success &= !qstruct_rbtree_has(tree, values + i);
 	}
+	success &= qstruct_rbtree_destroy(tree) == QSTRUCT_RESULT_OK;
 	test_result_log(success);
 	return success;
 }
