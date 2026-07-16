@@ -17,6 +17,12 @@ typedef void* qstruct_hashmap_t;
  */
 typedef long (*qstruct_hashmap_hasher_t)(char *x, size_t size, long seed);
 
+/*
+ * Creates a hashmap
+ * Time complexity: O(1)
+ */
+qstruct_result_t qstruct_hashmap_create(qstruct_hashmap_t *hashmap, qstruct_rbtree_comparator_t comparator, size_t capacity, double max_loadfactor, qstruct_hashmap_hasher_t hasher, long seed);
+
 #ifdef __cplusplus
 }
 #endif
