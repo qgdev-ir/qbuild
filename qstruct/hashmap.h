@@ -12,6 +12,11 @@ extern "C" {
  */
 typedef void* qstruct_hashmap_t;
 
+/*
+ * Hash the given buffer
+ */
+typedef long (*qstruct_hashmap_hasher_t)(char *x, size_t size, long seed);
+
 #ifdef __cplusplus
 }
 #endif
