@@ -29,3 +29,17 @@ qstruct_result_t qstruct_hashmap_create(qstruct_hashmap_t *hashmap, qstruct_rbtr
 	return QSTRUCT_RESULT_OK;
 }
 
+qstruct_result_t qstruct_hashmap_destroy(qstruct_hashmap_t hashmap) {
+	struct hashmap *hm = hashmap;
+	qstruct_rbtree_t *buckets = hm->buckets;
+
+	for (int i = 0; i < hm->capacity; i++) {
+		qstruct_rbtree_t *bucket = buckets[i];
+		if (bucket != NULL) qstruct_rbtree_destroy(bucket);
+	}
+
+	free(buckets);
+	free(hm);
+	return QSTRUCT_RESULT_OK;
+}
+
