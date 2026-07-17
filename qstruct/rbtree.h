@@ -13,6 +13,11 @@ extern "C" {
 typedef void* qstruct_rbtree_t;
 
 /*
+ * An iterator for the tree
+ */
+typedef void* qstruct_rbtree_iterator_t;
+
+/*
  * Compares to values and returns a number as result:
  * -1: x is smaller than y
  * 0: values are equal
@@ -72,6 +77,43 @@ qstruct_result_t qstruct_rbtree_destroy(qstruct_rbtree_t tree);
  * Time complexity: O(n)
  */
 size_t qstruct_rbtree_length(qstruct_rbtree_t tree);
+
+/*
+ * Return all values as an array
+ * Time complexity: O(n)
+ */
+qstruct_result_t qstruct_rbtree_iterator_create(qstruct_rbtree_t tree, qstruct_rbtree_iterator_t *iterator);
+
+/*
+ * If has next goes to next item and return true
+ * else return false
+ * Time complexity: O(1)
+ */
+bool qstruct_rbtree_iterator_next(qstruct_rbtree_iterator_t iterator);
+
+/*
+ * Return size of the current value
+ * Time complexity: O(1)
+ */
+size_t qstruct_rbtree_iterator_current_size(qstruct_rbtree_iterator_t iterator);
+
+/*
+ * Get value of current value and store it in given buffer
+ * Time complexity: O(1)
+ */
+qstruct_result_t qstruct_rbtree_iterator_current_value(qstruct_rbtree_iterator_t iterator, void *buffer);
+
+/*
+ * Get pointer to value of current value
+ * Time complexity: O(1)
+ */
+qstruct_result_t qstruct_rbtree_iterator_current_valuep(qstruct_rbtree_iterator_t iterator, void **buffer);
+
+/*
+ * Destroys the iterator
+ * Time complexity: O(1)
+ */
+qstruct_result_t qstruct_rbtree_iterator_destroy(qstruct_rbtree_iterator_t iterator);
 
 #ifdef __cplusplus
 }

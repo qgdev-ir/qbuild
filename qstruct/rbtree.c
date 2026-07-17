@@ -18,6 +18,13 @@ struct node {
 	char value[];
 };
 
+struct iterator {
+	struct rbtree *tree;
+	size_t size;
+	int index;
+	struct node *nodes[];
+};
+
 /*
  * Performes a right rotate
  */
@@ -419,5 +426,59 @@ qstruct_result_t qstruct_rbtree_destroy(qstruct_rbtree_t tree) {
 size_t qstruct_rbtree_length(qstruct_rbtree_t tree) {
 	struct rbtree *t = tree;
 	return t->length;
+}
+
+/*
+ * Add node and all of its children to iterator
+ * (make sure iterator has enough capacity)
+ */
+static inline void _rbt_iter_add_node(struct iterator *it, struct node *n) {
+	if (n == NULL) return;
+	it->nodes[it->size++] = n;
+	_rbt_iter_add_node(it, n->left);
+	_rbt_iter_add_node(it, n->right);
+}
+
+qstruct_result_t qstruct_rbtree_iterator_create(qstruct_rbtree_t tree, qstruct_rbtree_iterator_t *iterator) {
+	struct rbtree *t = tree;
+	struct iterator *it = malloc(sizeof(struct iterator) + sizeof(struct node*) * t->length);
+	it->tree = t;
+	it->size = 0;
+	it->index = 0;
+	_rbt_iter_add_node(it, t->root);
+	*iterator = it;
+	return QSTRUCT_RESULT_OK;
+}
+
+bool qstruct_rbtree_iterator_next(qstruct_rbtree_iterator_t iterator) {
+	struct iterator *it = iterator;
+	if (it->index + 1 >= it->size) return false;
+	it->index++;
+	return true;
+}
+
+size_t qstruct_rbtree_iterator_current_size(qstruct_rbtree_iterator_t iterator) {
+	struct iterator *it = iterator;
+	struct node *node = it->nodes[it->index];
+	return node->value_size;
+}
+
+qstruct_result_t qstruct_rbtree_iterator_current_value(qstruct_rbtree_iterator_t iterator, void *buffer) {
+	struct iterator *it = iterator;
+	struct node *node = it->nodes[it->index];
+	memcpy(buffer, node->value, node->value_size);
+	return QSTRUCT_RESULT_OK;
+}
+
+qstruct_result_t qstruct_rbtree_iterator_current_valuep(qstruct_rbtree_iterator_t iterator, void **buffer) {
+	struct iterator *it = iterator;
+	struct node *node = it->nodes[it->index];
+	*buffer = node->value;
+	return QSTRUCT_RESULT_OK;
+}
+
+qstruct_result_t qstruct_rbtree_iterator_destroy(qstruct_rbtree_iterator_t iterator) {
+	free(iterator);
+	return QSTRUCT_RESULT_OK;
 }
 
