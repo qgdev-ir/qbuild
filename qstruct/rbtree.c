@@ -463,3 +463,10 @@ size_t qstruct_rbtree_iterator_current_size(qstruct_rbtree_iterator_t iterator) 
 	return node->value_size;
 }
 
+qstruct_result_t qstruct_rbtree_iterator_current_value(qstruct_rbtree_iterator_t iterator, void *buffer) {
+	struct iterator *it = iterator;
+	struct node *node = it->nodes[it->index];
+	memcpy(buffer, node->value, node->value_size);
+	return QSTRUCT_RESULT_OK;
+}
+
