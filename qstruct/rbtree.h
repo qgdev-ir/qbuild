@@ -13,6 +13,11 @@ extern "C" {
 typedef void* qstruct_rbtree_t;
 
 /*
+ * An iterator for the tree
+ */
+typedef void* qstruct_rbtree_iterator_t;
+
+/*
  * Compares to values and returns a number as result:
  * -1: x is smaller than y
  * 0: values are equal
