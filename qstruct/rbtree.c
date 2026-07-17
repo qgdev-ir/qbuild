@@ -6,6 +6,7 @@
 struct rbtree {
 	qstruct_rbtree_comparator_t comparator;
 	struct node *root;
+	size_t length;
 };
 
 struct node {
