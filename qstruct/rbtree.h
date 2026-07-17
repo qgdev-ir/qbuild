@@ -67,6 +67,12 @@ qstruct_result_t qstruct_rbtree_remove(qstruct_rbtree_t tree, void *value);
  */
 qstruct_result_t qstruct_rbtree_destroy(qstruct_rbtree_t tree);
 
+/*
+ * Returns length of the tree
+ * Time complexity: O(n)
+ */
+size_t qstruct_rbtree_length(qstruct_rbtree_t tree);
+
 #ifdef __cplusplus
 }
 #endif

@@ -416,3 +416,8 @@ qstruct_result_t qstruct_rbtree_destroy(qstruct_rbtree_t tree) {
 	return QSTRUCT_RESULT_OK;
 }
 
+size_t qstruct_rbtree_length(qstruct_rbtree_t tree) {
+	struct rbtree *t = tree;
+	return t->length;
+}
+
