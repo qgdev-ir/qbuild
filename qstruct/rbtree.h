@@ -78,6 +78,12 @@ qstruct_result_t qstruct_rbtree_destroy(qstruct_rbtree_t tree);
  */
 size_t qstruct_rbtree_length(qstruct_rbtree_t tree);
 
+/*
+ * Return all values as an array
+ * Time complexity: O(n)
+ */
+qstruct_result_t qstruct_rbtree_iterator_create(qstruct_rbtree_t tree, qstruct_rbtree_iterator_t *iterator);
+
 #ifdef __cplusplus
 }
 #endif

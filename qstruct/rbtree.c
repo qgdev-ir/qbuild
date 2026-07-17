@@ -439,3 +439,14 @@ static inline void _rbt_iter_add_node(struct iterator *it, struct node *n) {
 	_rbt_iter_add_node(it, n->right);
 }
 
+qstruct_result_t qstruct_rbtree_iterator_create(qstruct_rbtree_t tree, qstruct_rbtree_iterator_t *iterator) {
+	struct rbtree *t = tree;
+	struct iterator *it = malloc(sizeof(struct iterator) + sizeof(struct node*) * t->length);
+	it->tree = t;
+	it->size = 0;
+	it->index = 0;
+	_rbt_iter_add_node(it, t->root);
+	*iterator = it;
+	return QSTRUCT_RESULT_OK;
+}
+
