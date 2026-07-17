@@ -136,6 +136,7 @@ qstruct_result_t qstruct_rbtree_create(qstruct_rbtree_t *tree, qstruct_rbtree_co
 	struct rbtree *t = malloc(sizeof(struct rbtree));
 	t->comparator = comparator;
 	t->root = NULL;
+	t->length = 0;
 	*tree = t;
 	return QSTRUCT_RESULT_OK;
 }
@@ -178,6 +179,7 @@ qstruct_result_t qstruct_rbtree_add(qstruct_rbtree_t tree, void *value, size_t v
 	}
 
 	_rbt_fix_add(t, new_node);
+	t->length++;
 	return QSTRUCT_RESULT_OK;
 }
 
@@ -393,6 +395,7 @@ qstruct_result_t qstruct_rbtree_remove(qstruct_rbtree_t tree, void *value) {
 	struct node *n = _rbt_find_node(t, value);
 	if (n == NULL) return QSTRUCT_RESULT_VALUE_NOT_FOUND;
 	_rbt_remove_node(t, n);
+	t->length--;
 	return QSTRUCT_RESULT_OK;
 }
 
