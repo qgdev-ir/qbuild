@@ -18,6 +18,13 @@ struct node {
 	char value[];
 };
 
+struct iterator {
+	struct rbtree *tree;
+	size_t size;
+	int index;
+	struct node *nodes[];
+};
+
 /*
  * Performes a right rotate
  */
