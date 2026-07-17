@@ -457,3 +457,9 @@ bool qstruct_rbtree_iterator_next(qstruct_rbtree_iterator_t iterator) {
 	return true;
 }
 
+size_t qstruct_rbtree_iterator_current_size(qstruct_rbtree_iterator_t iterator) {
+	struct iterator *it = iterator;
+	struct node *node = it->nodes[it->index];
+	return node->value_size;
+}
+

@@ -91,6 +91,12 @@ qstruct_result_t qstruct_rbtree_iterator_create(qstruct_rbtree_t tree, qstruct_r
  */
 bool qstruct_rbtree_iterator_next(qstruct_rbtree_iterator_t iterator);
 
+/*
+ * Return size of the current value
+ * Time complexity: O(1)
+ */
+size_t qstruct_rbtree_iterator_current_size(qstruct_rbtree_iterator_t iterator);
+
 #ifdef __cplusplus
 }
 #endif
