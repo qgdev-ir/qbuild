@@ -428,3 +428,14 @@ size_t qstruct_rbtree_length(qstruct_rbtree_t tree) {
 	return t->length;
 }
 
+/*
+ * Add node and all of its children to iterator
+ * (make sure iterator has enough capacity)
+ */
+static inline void _rbt_iter_add_node(struct iterator *it, struct node *n) {
+	if (n == NULL) return;
+	it->nodes[it->size++] = n;
+	_rbt_iter_add_node(it, n->left);
+	_rbt_iter_add_node(it, n->right);
+}
+
