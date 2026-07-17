@@ -69,11 +69,40 @@ bool test_qstruct_rbtree_remove() {
 	return success;
 }
 
+bool test_qstruct_rbtree_iterator() {
+	test_run_log("qstruct_rbtree_iterator");
+	qstruct_rbtree_t tree;
+	qstruct_rbtree_iterator_t it;
+	int values[] = { 41, 38, 31, 12, 19, 8, 9, 24, 25, 45 };
+	size_t value_size = sizeof(int);
+	int res_value;
+
+	bool success = 1;
+	success &= qstruct_rbtree_create(&tree, &_int32_comparator) == QSTRUCT_RESULT_OK;
+	for (int i = 0; i < array_len(values); i++) {
+		success &= qstruct_rbtree_add(tree, values + i, value_size) == QSTRUCT_RESULT_OK;
+	}
+	success &= qstruct_rbtree_iterator_create(tree, &it) == QSTRUCT_RESULT_OK;
+
+	do {
+		success &= qstruct_rbtree_iterator_current_value(it, &res_value) == QSTRUCT_RESULT_OK;
+		bool found = 0;
+		for (int i = 0; i < array_len(values) && !found; i++) if (values[i] == res_value) found = true;
+		success &= found;
+	} while (qstruct_rbtree_iterator_next(it));
+
+	success &= qstruct_rbtree_iterator_destroy(it) == QSTRUCT_RESULT_OK;
+	success &= qstruct_rbtree_destroy(tree) == QSTRUCT_RESULT_OK;
+	test_result_log(success);
+	return success;
+}
+
 bool test_qstruct_rbtree() {
 	bool success = 1;
 	success &= test_qstruct_rbtree_add_get();
 	success &= test_qstruct_rbtree_has();
 	success &= test_qstruct_rbtree_remove();
+	success &= test_qstruct_rbtree_iterator();
 	return success;
 }
 
