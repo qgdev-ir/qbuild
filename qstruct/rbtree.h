@@ -109,6 +109,12 @@ qstruct_result_t qstruct_rbtree_iterator_current_value(qstruct_rbtree_iterator_t
  */
 qstruct_result_t qstruct_rbtree_iterator_current_valuep(qstruct_rbtree_iterator_t iterator, void **buffer);
 
+/*
+ * Destroys the iterator
+ * Time complexity: O(1)
+ */
+qstruct_result_t qstruct_rbtree_iterator_destroy(qstruct_rbtree_iterator_t iterator);
+
 #ifdef __cplusplus
 }
 #endif

@@ -477,3 +477,8 @@ qstruct_result_t qstruct_rbtree_iterator_current_valuep(qstruct_rbtree_iterator_
 	return QSTRUCT_RESULT_OK;
 }
 
+qstruct_result_t qstruct_rbtree_iterator_destroy(qstruct_rbtree_iterator_t iterator) {
+	free(iterator);
+	return QSTRUCT_RESULT_OK;
+}
+
