@@ -450,3 +450,10 @@ qstruct_result_t qstruct_rbtree_iterator_create(qstruct_rbtree_t tree, qstruct_r
 	return QSTRUCT_RESULT_OK;
 }
 
+bool qstruct_rbtree_iterator_next(qstruct_rbtree_iterator_t iterator) {
+	struct iterator *it = iterator;
+	if (it->index + 1 >= it->size) return false;
+	it->index++;
+	return true;
+}
+
