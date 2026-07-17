@@ -103,6 +103,12 @@ size_t qstruct_rbtree_iterator_current_size(qstruct_rbtree_iterator_t iterator);
  */
 qstruct_result_t qstruct_rbtree_iterator_current_value(qstruct_rbtree_iterator_t iterator, void *buffer);
 
+/*
+ * Get pointer to value of current value
+ * Time complexity: O(1)
+ */
+qstruct_result_t qstruct_rbtree_iterator_current_valuep(qstruct_rbtree_iterator_t iterator, void **buffer);
+
 #ifdef __cplusplus
 }
 #endif

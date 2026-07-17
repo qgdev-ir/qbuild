@@ -470,3 +470,10 @@ qstruct_result_t qstruct_rbtree_iterator_current_value(qstruct_rbtree_iterator_t
 	return QSTRUCT_RESULT_OK;
 }
 
+qstruct_result_t qstruct_rbtree_iterator_current_valuep(qstruct_rbtree_iterator_t iterator, void **buffer) {
+	struct iterator *it = iterator;
+	struct node *node = it->nodes[it->index];
+	*buffer = node->value;
+	return QSTRUCT_RESULT_OK;
+}
+
