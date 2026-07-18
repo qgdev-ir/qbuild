@@ -31,8 +31,23 @@ bool test_qstruct_hashmap_add_get() {
 	return success;
 }
 
+bool test_qstruct_hashmap_has() {
+	test_run_log("qstruct_hashmap_has");
+	qstruct_hashmap_t map;
+
+	bool success = 1;
+	success &= qstruct_hashmap_create(&map, &_comparator, 0, 0, &_hasher, 0) == QSTRUCT_RESULT_OK;
+	success &= qstruct_hashmap_add(map, "sik", 4, "k", 2) == QSTRUCT_RESULT_OK;
+	success &= qstruct_hashmap_has(map, "sik", 4);
+	success &= !qstruct_hashmap_has(map, "kir", 4);
+	success &= qstruct_hashmap_destroy(map) == QSTRUCT_RESULT_OK;
+	test_result_log(success);
+	return success;
+}
+
 bool test_qstruct_hashmap() {
 	bool success = 1;
 	success &= test_qstruct_hashmap_add_get();
+	success &= test_qstruct_hashmap_has();
 	return success;
 }
