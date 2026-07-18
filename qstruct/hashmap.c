@@ -118,7 +118,17 @@ qstruct_result_t qstruct_hashmap_destroy(qstruct_hashmap_t hashmap) {
 
 	for (int i = 0; i < hm->capacity; i++) {
 		qstruct_rbtree_t *bucket = buckets[i];
-		if (bucket != NULL) qstruct_rbtree_destroy(bucket);
+		if (bucket != NULL) {
+			qstruct_rbtree_iterator_t it;
+			qstruct_run(qstruct_rbtree_iterator_create(bucket, &it));
+			do {
+				struct entry *e;
+				qstruct_run(qstruct_rbtree_iterator_current_valuep(it, (void **) &e));
+				free(e->value);
+			} while (qstruct_rbtree_iterator_next(it));
+			qstruct_run(qstruct_rbtree_iterator_destroy(it));
+			qstruct_run(qstruct_rbtree_destroy(bucket));
+		}
 	}
 
 	free(buckets);
