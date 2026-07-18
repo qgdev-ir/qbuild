@@ -1,5 +1,10 @@
 #include <qstruct/_qstruct.h>
 
+/*
+ * Detects which bucket the key should be in
+ */
+#define HM_BUCKET_INDEX(k, ks, hm) (hm->hasher(k, ks, hm->seed) & (hm->capacity - 1 ))
+
 struct hashmap {
 	size_t length;			// How much is current array filled
 	qstruct_rbtree_t *buckets;	// Buckets
@@ -9,6 +14,84 @@ struct hashmap {
 	qstruct_hashmap_hasher_t hasher;	// Hash function
 	long seed;				// Seed for hash function
 };
+
+struct entry {
+	struct hashmap *map;
+	char *value;
+	size_t value_size;
+	size_t key_size;
+	uint8_t key[];
+};
+
+/*
+ * Compares two entries
+ */
+static int8_t _hm_entry_comparator(char *x, char *y) {
+	struct entry *e1 = (void *) x;
+	struct entry *e2 = (void *) y;
+	return e1->map->comparator(e1->key, e2->key);
+}
+
+/*
+ * Get bucket for given entry
+ * Creates the bucket if doesnt exists
+ */
+static inline qstruct_result_t _hm_get_bucket(struct hashmap *hm, qstruct_rbtree_t *b, struct entry *e) {
+	int bucket_index = HM_BUCKET_INDEX(e->key, e->key_size, hm);
+	qstruct_rbtree_t bucket = hm->buckets[bucket_index];
+	if (bucket == NULL) {
+		qstruct_run(qstruct_rbtree_create(&bucket, &_hm_entry_comparator));
+		hm->buckets[bucket_index] = bucket;
+	}
+	*b = bucket;
+	return QSTRUCT_RESULT_OK;
+}
+
+/*
+ * Add entry to the buckets
+ * In this function load factor is not checked
+ */
+static inline qstruct_result_t _hm_put(struct hashmap *hm, struct entry *e) {
+	qstruct_rbtree_t b;
+	qstruct_run(_hm_get_bucket(hm, &b, e));
+	qstruct_run(qstruct_rbtree_add(b, e, sizeof(struct entry) + e->key_size));
+	return QSTRUCT_RESULT_OK;
+}
+
+/*
+ * Make sure load factor is below max load factor
+ * If load factor is above max load it will doubles the buckets size
+ */
+static inline qstruct_result_t _hm_ensure_loadfactor(struct hashmap *hm) {
+	if (hm->length / hm->capacity >= hm->max_loadfactor) {
+		qstruct_rbtree_t *obuckets = hm->buckets;
+		size_t ocapacity = hm->capacity;
+
+		size_t ncapacity = hm->capacity * 2;
+		qstruct_rbtree_t *buckets = calloc(ncapacity, sizeof(qstruct_rbtree_t));
+		hm->buckets = buckets;
+		hm->capacity = ncapacity;
+
+		qstruct_rbtree_iterator_t it;
+		for (int i = 0; i < ocapacity; i++) {
+			qstruct_rbtree_t *ob = obuckets[i];
+			if (ob != NULL) {
+				qstruct_run(qstruct_rbtree_iterator_create(ob, &it));
+				do {
+					struct entry *e;
+					size_t e_size = qstruct_rbtree_iterator_current_size(it);
+					qstruct_run(qstruct_rbtree_iterator_current_valuep(it, (void **) &e));
+					qstruct_run(_hm_put(hm, e));
+				} while (qstruct_rbtree_iterator_next(it));
+				qstruct_run(qstruct_rbtree_destroy(ob));
+			}
+		}
+		free(obuckets);
+	}
+
+
+	return QSTRUCT_RESULT_OK;
+}
 
 qstruct_result_t qstruct_hashmap_create(qstruct_hashmap_t *hashmap, qstruct_rbtree_comparator_t comparator, size_t capacity, double max_loadfactor, qstruct_hashmap_hasher_t hasher, long seed) {
 	if (capacity == 0) capacity = QSTRUCT_HASHMAP_DEFAULT_CAPACITY;
@@ -35,11 +118,76 @@ qstruct_result_t qstruct_hashmap_destroy(qstruct_hashmap_t hashmap) {
 
 	for (int i = 0; i < hm->capacity; i++) {
 		qstruct_rbtree_t *bucket = buckets[i];
-		if (bucket != NULL) qstruct_rbtree_destroy(bucket);
+		if (bucket != NULL) {
+			qstruct_rbtree_iterator_t it;
+			qstruct_run(qstruct_rbtree_iterator_create(bucket, &it));
+			do {
+				struct entry *e;
+				qstruct_run(qstruct_rbtree_iterator_current_valuep(it, (void **) &e));
+				free(e->value);
+			} while (qstruct_rbtree_iterator_next(it));
+			qstruct_run(qstruct_rbtree_iterator_destroy(it));
+			qstruct_run(qstruct_rbtree_destroy(bucket));
+		}
 	}
 
 	free(buckets);
 	free(hm);
+	return QSTRUCT_RESULT_OK;
+}
+
+qstruct_result_t qstruct_hashmap_add(qstruct_hashmap_t hashmap, void *key, size_t key_size, void *value, size_t value_size) {
+	struct hashmap *hm = hashmap;
+	qstruct_run(_hm_ensure_loadfactor(hashmap));
+
+	struct entry *e = malloc(sizeof(struct entry) + key_size);
+	char *e_val = malloc(value_size);
+
+	e->map = hm;
+	e->value = e_val;
+	e->value_size = value_size;
+	e->key_size = key_size;
+
+	memcpy(e->key, key, key_size);
+	memcpy(e->value, value, value_size);
+
+	qstruct_run(_hm_put(hm, e));
+	free(e);
+	hm->length++;
+	return QSTRUCT_RESULT_OK;
+}
+
+qstruct_result_t qstruct_hashmap_get(qstruct_hashmap_t hashmap, void *key, size_t key_size, void *value, size_t *value_size) {
+	struct hashmap *hm =  hashmap;
+	void *src;
+	size_t rvalue_size;
+	qstruct_run(qstruct_hashmap_getp(hashmap, key, key_size, &src, &rvalue_size));
+
+	if (*value_size == 0) *value_size = rvalue_size;
+	if (value != NULL) memcpy(value, src, *value_size);
+	return QSTRUCT_RESULT_OK;
+}
+
+qstruct_result_t qstruct_hashmap_getp(qstruct_hashmap_t hashmap, void *key, size_t key_size, void **value, size_t *value_size) {
+	struct hashmap *hm =  hashmap;
+	qstruct_rbtree_t bucket = hm->buckets[HM_BUCKET_INDEX(key, key_size, hm)];
+	if (bucket == NULL) return QSTRUCT_RESULT_KEY_NOT_FOUND;
+
+	struct entry *tempe = malloc(sizeof(struct entry) + key_size);
+	tempe->map = hm;
+	tempe->key_size = key_size;
+	memcpy(tempe->key, key, key_size);
+
+	struct entry *e = tempe;
+	size_t esize;
+
+	qstruct_result_t res = qstruct_rbtree_getp(bucket, (void **) &e, &esize);
+	if (res == QSTRUCT_RESULT_VALUE_NOT_FOUND) return QSTRUCT_RESULT_KEY_NOT_FOUND;
+	else if (res != QSTRUCT_RESULT_OK) return res;
+
+	*value = e->value;
+	*value_size = e->value_size;
+	free(tempe);
 	return QSTRUCT_RESULT_OK;
 }
 
