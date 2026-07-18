@@ -56,6 +56,12 @@ qstruct_result_t qstruct_hashmap_get(qstruct_hashmap_t hashmap, void *key, size_
  */
 qstruct_result_t qstruct_hashmap_getp(qstruct_hashmap_t hashmap, void *key, size_t key_size, void **value, size_t *value_size);
 
+/*
+ * Checks if key exists in the map
+ * Time complexity: O(1) or O(log n) in a bad day
+ */
+bool qstruct_hashmap_has(qstruct_hashmap_t hashmap, void *key, size_t key_size);
+
 #ifdef __cplusplus
 }
 #endif
