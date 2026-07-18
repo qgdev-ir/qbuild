@@ -35,6 +35,15 @@ qstruct_result_t qstruct_hashmap_destroy(qstruct_hashmap_t hashmap);
  */
 qstruct_result_t qstruct_hashmap_add(qstruct_hashmap_t hashmap, void *key, size_t key_size, void *value, size_t value_size);
 
+/*
+ * Get value by key
+ * if value is a null pointer only value_size is set
+ * function will use value_size as size of value pointer given
+ * if value_size is zero function will set it automatically
+ * Time complexity: O(1) or O(log n) in a bad day
+ */
+qstruct_result_t qstruct_hashmap_get(qstruct_hashmap_t hashmap, void *key, size_t key_size, void *value, size_t *value_size);
+
 #ifdef __cplusplus
 }
 #endif

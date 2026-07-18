@@ -157,3 +157,14 @@ qstruct_result_t qstruct_hashmap_add(qstruct_hashmap_t hashmap, void *key, size_
 	return QSTRUCT_RESULT_OK;
 }
 
+qstruct_result_t qstruct_hashmap_get(qstruct_hashmap_t hashmap, void *key, size_t key_size, void *value, size_t *value_size) {
+	struct hashmap *hm =  hashmap;
+	void *src;
+	size_t rvalue_size;
+	qstruct_run(qstruct_hashmap_getp(hashmap, key, key_size, &src, &rvalue_size));
+
+	if (*value_size == 0) *value_size = rvalue_size;
+	if (value != NULL) memcpy(value, src, *value_size);
+	return QSTRUCT_RESULT_OK;
+}
+
