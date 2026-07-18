@@ -136,3 +136,24 @@ qstruct_result_t qstruct_hashmap_destroy(qstruct_hashmap_t hashmap) {
 	return QSTRUCT_RESULT_OK;
 }
 
+qstruct_result_t qstruct_hashmap_add(qstruct_hashmap_t hashmap, void *key, size_t key_size, void *value, size_t value_size) {
+	struct hashmap *hm = hashmap;
+	qstruct_run(_hm_ensure_loadfactor(hashmap));
+
+	struct entry *e = malloc(sizeof(struct entry) + key_size);
+	char *e_val = malloc(value_size);
+
+	e->map = hm;
+	e->value = e_val;
+	e->value_size = value_size;
+	e->key_size = key_size;
+
+	memcpy(e->key, key, key_size);
+	memcpy(e->value, value, value_size);
+
+	qstruct_run(_hm_put(hm, e));
+	free(e);
+	hm->length++;
+	return QSTRUCT_RESULT_OK;
+}
+

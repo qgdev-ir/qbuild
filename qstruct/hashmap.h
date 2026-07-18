@@ -29,6 +29,12 @@ qstruct_result_t qstruct_hashmap_create(qstruct_hashmap_t *hashmap, qstruct_rbtr
  */
 qstruct_result_t qstruct_hashmap_destroy(qstruct_hashmap_t hashmap);
 
+/*
+ * Add key and value to the tree
+ * Time complexity: O(1) or O(log n) in a bad day
+ */
+qstruct_result_t qstruct_hashmap_add(qstruct_hashmap_t hashmap, void *key, size_t key_size, void *value, size_t value_size);
+
 #ifdef __cplusplus
 }
 #endif
