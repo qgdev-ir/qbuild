@@ -1,5 +1,10 @@
 #include <qstruct/_qstruct.h>
 
+/*
+ * Detects which bucket the key should be in
+ */
+#define HM_BUCKET_INDEX(k, ks, hm) (hm->hasher(k, ks, hm->seed) & (hm->capacity - 1 ))
+
 struct hashmap {
 	size_t length;			// How much is current array filled
 	qstruct_rbtree_t *buckets;	// Buckets
