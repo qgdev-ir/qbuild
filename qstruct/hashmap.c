@@ -200,3 +200,9 @@ qstruct_result_t qstruct_hashmap_getp(qstruct_hashmap_t hashmap, void *key, size
 	return QSTRUCT_RESULT_OK;
 }
 
+bool qstruct_hashmap_has(qstruct_hashmap_t hashmap, void *key, size_t key_size) {
+	struct hashmap *hm = hashmap;
+	struct entry *e;
+	return _hm_get(hm, &e, key, key_size) == QSTRUCT_RESULT_OK;
+}
+
