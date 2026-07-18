@@ -58,6 +58,41 @@ static inline qstruct_result_t _hm_put(struct hashmap *hm, struct entry *e) {
 	return QSTRUCT_RESULT_OK;
 }
 
+/*
+ * Make sure load factor is below max load factor
+ * If load factor is above max load it will doubles the buckets size
+ */
+static inline qstruct_result_t _hm_ensure_loadfactor(struct hashmap *hm) {
+	if (hm->length / hm->capacity >= hm->max_loadfactor) {
+		qstruct_rbtree_t *obuckets = hm->buckets;
+		size_t ocapacity = hm->capacity;
+
+		size_t ncapacity = hm->capacity * 2;
+		qstruct_rbtree_t *buckets = calloc(ncapacity, sizeof(qstruct_rbtree_t));
+		hm->buckets = buckets;
+		hm->capacity = ncapacity;
+
+		qstruct_rbtree_iterator_t it;
+		for (int i = 0; i < ocapacity; i++) {
+			qstruct_rbtree_t *ob = obuckets[i];
+			if (ob != NULL) {
+				qstruct_run(qstruct_rbtree_iterator_create(ob, &it));
+				do {
+					struct entry *e;
+					size_t e_size = qstruct_rbtree_iterator_current_size(it);
+					qstruct_run(qstruct_rbtree_iterator_current_valuep(it, (void **) &e));
+					qstruct_run(_hm_put(hm, e));
+				} while (qstruct_rbtree_iterator_next(it));
+				qstruct_run(qstruct_rbtree_destroy(ob));
+			}
+		}
+		free(obuckets);
+	}
+
+
+	return QSTRUCT_RESULT_OK;
+}
+
 qstruct_result_t qstruct_hashmap_create(qstruct_hashmap_t *hashmap, qstruct_rbtree_comparator_t comparator, size_t capacity, double max_loadfactor, qstruct_hashmap_hasher_t hasher, long seed) {
 	if (capacity == 0) capacity = QSTRUCT_HASHMAP_DEFAULT_CAPACITY;
 	if (max_loadfactor == 0) max_loadfactor = QSTRUCT_HASHMAP_DEFAULT_MAX_LOADFACTOR;
