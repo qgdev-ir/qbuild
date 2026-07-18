@@ -45,9 +45,27 @@ bool test_qstruct_hashmap_has() {
 	return success;
 }
 
+bool test_qstruct_hashmap_remove() {
+	test_run_log("qstruct_hashmap_remove");
+	qstruct_hashmap_t map;
+	char res[2];
+	size_t res_size = array_len(res);
+
+	bool success = 1;
+	success &= qstruct_hashmap_create(&map, &_comparator, 0, 0, &_hasher, 0) == QSTRUCT_RESULT_OK;
+	success &= qstruct_hashmap_add(map, "sik", 4, "k", 2) == QSTRUCT_RESULT_OK;
+	success &= qstruct_hashmap_has(map, "sik", 4);
+	success &= qstruct_hashmap_remove(map, "sik", 4) == QSTRUCT_RESULT_OK;
+	success &= !qstruct_hashmap_has(map, "sik", 4);
+	success &= qstruct_hashmap_destroy(map) == QSTRUCT_RESULT_OK;
+	test_result_log(success);
+	return success;
+}
+
 bool test_qstruct_hashmap() {
 	bool success = 1;
 	success &= test_qstruct_hashmap_add_get();
 	success &= test_qstruct_hashmap_has();
+	success &= test_qstruct_hashmap_remove();
 	return success;
 }
