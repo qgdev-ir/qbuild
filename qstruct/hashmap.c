@@ -10,6 +10,14 @@ struct hashmap {
 	long seed;				// Seed for hash function
 };
 
+struct entry {
+	struct hashmap *map;
+	char *value;
+	size_t value_size;
+	size_t key_size;
+	uint8_t key[];
+};
+
 qstruct_result_t qstruct_hashmap_create(qstruct_hashmap_t *hashmap, qstruct_rbtree_comparator_t comparator, size_t capacity, double max_loadfactor, qstruct_hashmap_hasher_t hasher, long seed) {
 	if (capacity == 0) capacity = QSTRUCT_HASHMAP_DEFAULT_CAPACITY;
 	if (max_loadfactor == 0) max_loadfactor = QSTRUCT_HASHMAP_DEFAULT_MAX_LOADFACTOR;
