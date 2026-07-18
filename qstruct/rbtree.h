@@ -85,6 +85,7 @@ size_t qstruct_rbtree_length(qstruct_rbtree_t tree);
 qstruct_result_t qstruct_rbtree_iterator_create(qstruct_rbtree_t tree, qstruct_rbtree_iterator_t *iterator);
 
 /*
+ * NOTICE: you have to run next on first time
  * If has next goes to next item and return true
  * else return false
  * Time complexity: O(1)

@@ -444,7 +444,7 @@ qstruct_result_t qstruct_rbtree_iterator_create(qstruct_rbtree_t tree, qstruct_r
 	struct iterator *it = malloc(sizeof(struct iterator) + sizeof(struct node*) * t->length);
 	it->tree = t;
 	it->size = 0;
-	it->index = 0;
+	it->index = -1;
 	_rbt_iter_add_node(it, t->root);
 	*iterator = it;
 	return QSTRUCT_RESULT_OK;

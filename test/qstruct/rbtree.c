@@ -84,12 +84,12 @@ bool test_qstruct_rbtree_iterator() {
 	}
 	success &= qstruct_rbtree_iterator_create(tree, &it) == QSTRUCT_RESULT_OK;
 
-	do {
+	while (qstruct_rbtree_iterator_next(it)) {
 		success &= qstruct_rbtree_iterator_current_value(it, &res_value) == QSTRUCT_RESULT_OK;
 		bool found = 0;
 		for (int i = 0; i < array_len(values) && !found; i++) if (values[i] == res_value) found = true;
 		success &= found;
-	} while (qstruct_rbtree_iterator_next(it));
+	}
 
 	success &= qstruct_rbtree_iterator_destroy(it) == QSTRUCT_RESULT_OK;
 	success &= qstruct_rbtree_destroy(tree) == QSTRUCT_RESULT_OK;
