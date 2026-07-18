@@ -62,6 +62,12 @@ qstruct_result_t qstruct_hashmap_getp(qstruct_hashmap_t hashmap, void *key, size
  */
 bool qstruct_hashmap_has(qstruct_hashmap_t hashmap, void *key, size_t key_size);
 
+/*
+ * Removes given key from map
+ * Time complexity: O(1) or O(log n) in a bad day
+ */
+qstruct_result_t qstruct_hashmap_remove(qstruct_hashmap_t hashmap, void *key, size_t key_size);
+
 #ifdef __cplusplus
 }
 #endif
