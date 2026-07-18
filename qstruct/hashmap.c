@@ -93,6 +93,29 @@ static inline qstruct_result_t _hm_ensure_loadfactor(struct hashmap *hm) {
 	return QSTRUCT_RESULT_OK;
 }
 
+/*
+ * Finds and returns entry of the given key
+ */
+static inline qstruct_result_t _hm_get(struct hashmap *hm, struct entry **e, char *key, size_t key_size) {
+	qstruct_rbtree_t bucket = hm->buckets[HM_BUCKET_INDEX(key, key_size, hm)];
+	if (bucket == NULL) return QSTRUCT_RESULT_KEY_NOT_FOUND;
+
+	struct entry *tempe = malloc(sizeof(struct entry) + key_size);
+	tempe->map = hm;
+	tempe->key_size = key_size;
+	memcpy(tempe->key, key, key_size);
+
+	*e = tempe;
+	size_t esize;
+
+	qstruct_result_t res = qstruct_rbtree_getp(bucket, (void **) e, &esize);
+	if (res == QSTRUCT_RESULT_VALUE_NOT_FOUND) return QSTRUCT_RESULT_KEY_NOT_FOUND;
+	else if (res != QSTRUCT_RESULT_OK) return res;
+
+	free(tempe);
+	return QSTRUCT_RESULT_OK;
+}
+
 qstruct_result_t qstruct_hashmap_create(qstruct_hashmap_t *hashmap, qstruct_rbtree_comparator_t comparator, size_t capacity, double max_loadfactor, qstruct_hashmap_hasher_t hasher, long seed) {
 	if (capacity == 0) capacity = QSTRUCT_HASHMAP_DEFAULT_CAPACITY;
 	if (max_loadfactor == 0) max_loadfactor = QSTRUCT_HASHMAP_DEFAULT_MAX_LOADFACTOR;
@@ -170,24 +193,10 @@ qstruct_result_t qstruct_hashmap_get(qstruct_hashmap_t hashmap, void *key, size_
 
 qstruct_result_t qstruct_hashmap_getp(qstruct_hashmap_t hashmap, void *key, size_t key_size, void **value, size_t *value_size) {
 	struct hashmap *hm =  hashmap;
-	qstruct_rbtree_t bucket = hm->buckets[HM_BUCKET_INDEX(key, key_size, hm)];
-	if (bucket == NULL) return QSTRUCT_RESULT_KEY_NOT_FOUND;
-
-	struct entry *tempe = malloc(sizeof(struct entry) + key_size);
-	tempe->map = hm;
-	tempe->key_size = key_size;
-	memcpy(tempe->key, key, key_size);
-
-	struct entry *e = tempe;
-	size_t esize;
-
-	qstruct_result_t res = qstruct_rbtree_getp(bucket, (void **) &e, &esize);
-	if (res == QSTRUCT_RESULT_VALUE_NOT_FOUND) return QSTRUCT_RESULT_KEY_NOT_FOUND;
-	else if (res != QSTRUCT_RESULT_OK) return res;
-
+	struct entry *e;
+	qstruct_run(_hm_get(hm, &e, key, key_size));
 	*value = e->value;
 	*value_size = e->value_size;
-	free(tempe);
 	return QSTRUCT_RESULT_OK;
 }
 
