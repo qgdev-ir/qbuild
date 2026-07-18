@@ -4,6 +4,12 @@
 extern "C" {
 #endif
 
+/*
+ * NOTICE: The bad day condition mentioned in time complexity informations
+ *         is directly effected by hash collisions
+ *         and can be effected by max loadfactor, hasher and initial capacity
+ */
+
 #define QSTRUCT_HASHMAP_DEFAULT_CAPACITY	16
 #define QSTRUCT_HASHMAP_DEFAULT_MAX_LOADFACTOR	0.5
 
