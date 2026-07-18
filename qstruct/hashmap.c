@@ -32,6 +32,21 @@ static int8_t _hm_entry_comparator(char *x, char *y) {
 	return e1->map->comparator(e1->key, e2->key);
 }
 
+/*
+ * Get bucket for given entry
+ * Creates the bucket if doesnt exists
+ */
+static inline qstruct_result_t _hm_get_bucket(struct hashmap *hm, qstruct_rbtree_t *b, struct entry *e) {
+	int bucket_index = HM_BUCKET_INDEX(e->key, e->key_size, hm);
+	qstruct_rbtree_t bucket = hm->buckets[bucket_index];
+	if (bucket == NULL) {
+		qstruct_run(qstruct_rbtree_create(&bucket, &_hm_entry_comparator));
+		hm->buckets[bucket_index] = bucket;
+	}
+	*b = bucket;
+	return QSTRUCT_RESULT_OK;
+}
+
 qstruct_result_t qstruct_hashmap_create(qstruct_hashmap_t *hashmap, qstruct_rbtree_comparator_t comparator, size_t capacity, double max_loadfactor, qstruct_hashmap_hasher_t hasher, long seed) {
 	if (capacity == 0) capacity = QSTRUCT_HASHMAP_DEFAULT_CAPACITY;
 	if (max_loadfactor == 0) max_loadfactor = QSTRUCT_HASHMAP_DEFAULT_MAX_LOADFACTOR;
