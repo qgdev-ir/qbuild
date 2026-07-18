@@ -206,3 +206,19 @@ bool qstruct_hashmap_has(qstruct_hashmap_t hashmap, void *key, size_t key_size) 
 	return _hm_get(hm, &e, key, key_size) == QSTRUCT_RESULT_OK;
 }
 
+qstruct_result_t qstruct_hashmap_remove(qstruct_hashmap_t hashmap, void *key, size_t key_size) {
+	struct hashmap *hm =  hashmap;
+	struct entry *e;
+	qstruct_run(_hm_get(hm, &e, key, key_size));
+	long bucket_index = HM_BUCKET_INDEX(key, key_size, hm);
+	qstruct_rbtree_t bucket = hm->buckets[bucket_index];
+	free(e->value);
+	qstruct_run(qstruct_rbtree_remove(bucket, e));
+	if (qstruct_rbtree_length(bucket) == 0) {
+		qstruct_run(qstruct_rbtree_destroy(bucket));
+		hm->buckets[bucket_index] = NULL;
+	}
+	hm->length--;
+	return QSTRUCT_RESULT_OK;
+}
+
