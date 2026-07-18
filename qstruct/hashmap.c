@@ -23,6 +23,15 @@ struct entry {
 	uint8_t key[];
 };
 
+/*
+ * Compares two entries
+ */
+static int8_t _hm_entry_comparator(char *x, char *y) {
+	struct entry *e1 = (void *) x;
+	struct entry *e2 = (void *) y;
+	return e1->map->comparator(e1->key, e2->key);
+}
+
 qstruct_result_t qstruct_hashmap_create(qstruct_hashmap_t *hashmap, qstruct_rbtree_comparator_t comparator, size_t capacity, double max_loadfactor, qstruct_hashmap_hasher_t hasher, long seed) {
 	if (capacity == 0) capacity = QSTRUCT_HASHMAP_DEFAULT_CAPACITY;
 	if (max_loadfactor == 0) max_loadfactor = QSTRUCT_HASHMAP_DEFAULT_MAX_LOADFACTOR;
