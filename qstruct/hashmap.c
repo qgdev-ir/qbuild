@@ -77,12 +77,12 @@ static inline qstruct_result_t _hm_ensure_loadfactor(struct hashmap *hm) {
 			qstruct_rbtree_t *ob = obuckets[i];
 			if (ob != NULL) {
 				qstruct_run(qstruct_rbtree_iterator_create(ob, &it));
-				do {
+				while (qstruct_rbtree_iterator_next(it)) {
 					struct entry *e;
 					size_t e_size = qstruct_rbtree_iterator_current_size(it);
 					qstruct_run(qstruct_rbtree_iterator_current_valuep(it, (void **) &e));
 					qstruct_run(_hm_put(hm, e));
-				} while (qstruct_rbtree_iterator_next(it));
+				}
 				qstruct_run(qstruct_rbtree_destroy(ob));
 			}
 		}
@@ -144,11 +144,11 @@ qstruct_result_t qstruct_hashmap_destroy(qstruct_hashmap_t hashmap) {
 		if (bucket != NULL) {
 			qstruct_rbtree_iterator_t it;
 			qstruct_run(qstruct_rbtree_iterator_create(bucket, &it));
-			do {
+			while (qstruct_rbtree_iterator_next(it)) {
 				struct entry *e;
 				qstruct_run(qstruct_rbtree_iterator_current_valuep(it, (void **) &e));
 				free(e->value);
-			} while (qstruct_rbtree_iterator_next(it));
+			}
 			qstruct_run(qstruct_rbtree_iterator_destroy(it));
 			qstruct_run(qstruct_rbtree_destroy(bucket));
 		}
