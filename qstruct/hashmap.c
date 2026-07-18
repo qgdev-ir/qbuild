@@ -168,3 +168,26 @@ qstruct_result_t qstruct_hashmap_get(qstruct_hashmap_t hashmap, void *key, size_
 	return QSTRUCT_RESULT_OK;
 }
 
+qstruct_result_t qstruct_hashmap_getp(qstruct_hashmap_t hashmap, void *key, size_t key_size, void **value, size_t *value_size) {
+	struct hashmap *hm =  hashmap;
+	qstruct_rbtree_t bucket = hm->buckets[HM_BUCKET_INDEX(key, key_size, hm)];
+	if (bucket == NULL) return QSTRUCT_RESULT_KEY_NOT_FOUND;
+
+	struct entry *tempe = malloc(sizeof(struct entry) + key_size);
+	tempe->map = hm;
+	tempe->key_size = key_size;
+	memcpy(tempe->key, key, key_size);
+
+	struct entry *e = tempe;
+	size_t esize;
+
+	qstruct_result_t res = qstruct_rbtree_getp(bucket, (void **) &e, &esize);
+	if (res == QSTRUCT_RESULT_VALUE_NOT_FOUND) return QSTRUCT_RESULT_KEY_NOT_FOUND;
+	else if (res != QSTRUCT_RESULT_OK) return res;
+
+	*value = e->value;
+	*value_size = e->value_size;
+	free(tempe);
+	return QSTRUCT_RESULT_OK;
+}
+
