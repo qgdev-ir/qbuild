@@ -47,6 +47,17 @@ static inline qstruct_result_t _hm_get_bucket(struct hashmap *hm, qstruct_rbtree
 	return QSTRUCT_RESULT_OK;
 }
 
+/*
+ * Add entry to the buckets
+ * In this function load factor is not checked
+ */
+static inline qstruct_result_t _hm_put(struct hashmap *hm, struct entry *e) {
+	qstruct_rbtree_t b;
+	qstruct_run(_hm_get_bucket(hm, &b, e));
+	qstruct_run(qstruct_rbtree_add(b, e, sizeof(struct entry) + e->key_size));
+	return QSTRUCT_RESULT_OK;
+}
+
 qstruct_result_t qstruct_hashmap_create(qstruct_hashmap_t *hashmap, qstruct_rbtree_comparator_t comparator, size_t capacity, double max_loadfactor, qstruct_hashmap_hasher_t hasher, long seed) {
 	if (capacity == 0) capacity = QSTRUCT_HASHMAP_DEFAULT_CAPACITY;
 	if (max_loadfactor == 0) max_loadfactor = QSTRUCT_HASHMAP_DEFAULT_MAX_LOADFACTOR;
