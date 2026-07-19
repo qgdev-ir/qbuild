@@ -23,6 +23,13 @@ struct entry {
 	uint8_t key[];
 };
 
+struct iterator {
+	struct hashmap *map;
+	size_t size;
+	int index;
+	struct entry *entries[];
+};
+
 /*
  * Compares two entries
  */
@@ -219,6 +226,35 @@ qstruct_result_t qstruct_hashmap_remove(qstruct_hashmap_t hashmap, void *key, si
 		hm->buckets[bucket_index] = NULL;
 	}
 	hm->length--;
+	return QSTRUCT_RESULT_OK;
+}
+
+qstruct_result_t qstruct_hashmap_iterator_create(qstruct_hashmap_t tree, qstruct_hashmap_iterator_t *iterator) {
+	struct hashmap *hm = tree;
+	struct iterator *it = malloc(sizeof(struct iterator) + sizeof(struct entry*) * hm->length);
+	it->map = hm;
+	it->size = 0;
+	it->index = -1;
+
+	for (int i = 0; i < hm->capacity; i++) {
+		qstruct_rbtree_t b = hm->buckets[i];
+		if (b != NULL) {
+			qstruct_rbtree_iterator_t it2;
+			qstruct_run(qstruct_rbtree_iterator_create(b, &it2));
+			while (qstruct_rbtree_iterator_next(it2)) {
+				struct entry **e = &it->entries[it->size++];
+				qstruct_run(qstruct_rbtree_iterator_current_valuep(it2, (void**) e));
+			}
+			qstruct_run(qstruct_rbtree_iterator_destroy(it2));
+		}
+	}
+
+	*iterator = it;
+	return QSTRUCT_RESULT_OK;
+}
+
+qstruct_result_t qstruct_hashmap_iterator_destroy(qstruct_hashmap_iterator_t iterator) {
+	free(iterator);
 	return QSTRUCT_RESULT_OK;
 }
 

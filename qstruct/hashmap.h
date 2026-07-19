@@ -19,6 +19,11 @@ extern "C" {
 typedef void* qstruct_hashmap_t;
 
 /*
+ * An iterator for the map
+ */
+typedef void* qstruct_hashmap_iterator_t;
+
+/*
  * Hash the given buffer
  */
 typedef long (*qstruct_hashmap_hasher_t)(char *x, size_t size, long seed);
@@ -67,6 +72,18 @@ bool qstruct_hashmap_has(qstruct_hashmap_t hashmap, void *key, size_t key_size);
  * Time complexity: O(1) or O(log n) in a bad day
  */
 qstruct_result_t qstruct_hashmap_remove(qstruct_hashmap_t hashmap, void *key, size_t key_size);
+
+/*
+ * Creates an iterator for the map
+ * Time complexity: O(n)
+ */
+qstruct_result_t qstruct_hashmap_iterator_create(qstruct_hashmap_t tree, qstruct_hashmap_iterator_t *iterator);
+
+/*
+ * Destroys the iterator
+ * Time complexity: O(1)
+ */
+qstruct_result_t qstruct_hashmap_iterator_destroy(qstruct_hashmap_iterator_t iterator);
 
 #ifdef __cplusplus
 }
