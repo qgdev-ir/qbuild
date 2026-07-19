@@ -105,6 +105,13 @@ size_t qstruct_hashmap_iterator_current_key_size(qstruct_hashmap_iterator_t iter
  */
 qstruct_result_t qstruct_hashmap_iterator_current_key_get(qstruct_hashmap_iterator_t iterator, void *key);
 
+/*
+ * NOTICE: Changing key value will break the map
+ * Gets key of current entry as pointer
+ * Time complexity: O(1)
+ */
+qstruct_result_t qstruct_hashmap_iterator_current_key_getp(qstruct_hashmap_iterator_t iterator, void **key);
+
 #ifdef __cplusplus
 }
 #endif
