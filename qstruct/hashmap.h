@@ -85,6 +85,14 @@ qstruct_result_t qstruct_hashmap_iterator_create(qstruct_hashmap_t tree, qstruct
  */
 qstruct_result_t qstruct_hashmap_iterator_destroy(qstruct_hashmap_iterator_t iterator);
 
+/*
+ * NOTICE: you have to run next on first time
+ * If has next goes to next item and return true
+ * else return false
+ * Time complexity: O(1)
+ */
+bool qstruct_hashmap_iterator_next(qstruct_hashmap_iterator_t iterator);
+
 #ifdef __cplusplus
 }
 #endif
