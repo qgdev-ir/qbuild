@@ -93,6 +93,12 @@ qstruct_result_t qstruct_hashmap_iterator_destroy(qstruct_hashmap_iterator_t ite
  */
 bool qstruct_hashmap_iterator_next(qstruct_hashmap_iterator_t iterator);
 
+/*
+ * Returns size of current entry key
+ * Time complexity: O(1)
+ */
+size_t qstruct_hashmap_iterator_current_key_size(qstruct_hashmap_iterator_t iterator);
+
 #ifdef __cplusplus
 }
 #endif
