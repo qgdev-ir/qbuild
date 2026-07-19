@@ -73,6 +73,12 @@ bool qstruct_hashmap_has(qstruct_hashmap_t hashmap, void *key, size_t key_size);
  */
 qstruct_result_t qstruct_hashmap_remove(qstruct_hashmap_t hashmap, void *key, size_t key_size);
 
+/*
+ * Creates an iterator for the map
+ * Time complexity: O(n)
+ */
+qstruct_result_t qstruct_hashmap_iterator_create(qstruct_hashmap_t tree, qstruct_hashmap_iterator_t *iterator);
+
 #ifdef __cplusplus
 }
 #endif
