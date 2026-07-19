@@ -19,6 +19,11 @@ extern "C" {
 typedef void* qstruct_hashmap_t;
 
 /*
+ * An iterator for the map
+ */
+typedef void* qstruct_hashmap_iterator_t;
+
+/*
  * Hash the given buffer
  */
 typedef long (*qstruct_hashmap_hasher_t)(char *x, size_t size, long seed);
