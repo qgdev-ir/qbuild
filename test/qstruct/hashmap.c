@@ -62,10 +62,31 @@ bool test_qstruct_hashmap_remove() {
 	return success;
 }
 
+bool test_qstruct_hashmap_iterator() {
+	test_run_log("qstruct_hashmap_iterator");
+	qstruct_hashmap_t map;
+	qstruct_hashmap_iterator_t it;
+	char res[2];
+	size_t res_size = array_len(res);
+	char values[4][5] = { "sik1", "sik2", "sik3", "sik4" };
+
+	bool success = 1;
+	success &= qstruct_hashmap_create(&map, &_comparator, 0, 0, &_hasher, 0) == QSTRUCT_RESULT_OK;
+	for (int i = 0; i <= array_len(values); i++) {
+		success &= qstruct_hashmap_add(map, values[i], 5, "k", 2) == QSTRUCT_RESULT_OK;
+	}
+	success &= qstruct_hashmap_iterator_create(map, &it) == QSTRUCT_RESULT_OK;
+	success &= qstruct_hashmap_iterator_destroy(it) == QSTRUCT_RESULT_OK;
+	success &= qstruct_hashmap_destroy(map) == QSTRUCT_RESULT_OK;
+	test_result_log(success);
+	return success;
+}
+
 bool test_qstruct_hashmap() {
 	bool success = 1;
 	success &= test_qstruct_hashmap_add_get();
 	success &= test_qstruct_hashmap_has();
 	success &= test_qstruct_hashmap_remove();
+	success &= test_qstruct_hashmap_iterator();
 	return success;
 }
