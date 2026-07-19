@@ -253,3 +253,8 @@ qstruct_result_t qstruct_hashmap_iterator_create(qstruct_hashmap_t tree, qstruct
 	return QSTRUCT_RESULT_OK;
 }
 
+qstruct_result_t qstruct_hashmap_iterator_destroy(qstruct_hashmap_iterator_t iterator) {
+	free(iterator);
+	return QSTRUCT_RESULT_OK;
+}
+

@@ -79,6 +79,12 @@ qstruct_result_t qstruct_hashmap_remove(qstruct_hashmap_t hashmap, void *key, si
  */
 qstruct_result_t qstruct_hashmap_iterator_create(qstruct_hashmap_t tree, qstruct_hashmap_iterator_t *iterator);
 
+/*
+ * Destroys the iterator
+ * Time complexity: O(1)
+ */
+qstruct_result_t qstruct_hashmap_iterator_destroy(qstruct_hashmap_iterator_t iterator);
+
 #ifdef __cplusplus
 }
 #endif
