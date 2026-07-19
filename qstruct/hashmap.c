@@ -258,3 +258,10 @@ qstruct_result_t qstruct_hashmap_iterator_destroy(qstruct_hashmap_iterator_t ite
 	return QSTRUCT_RESULT_OK;
 }
 
+bool qstruct_hashmap_iterator_next(qstruct_hashmap_iterator_t iterator) {
+	struct iterator *it = iterator;
+	if (it->index + 1 >= it->size) return false;
+	it->index++;
+	return true;
+}
+
