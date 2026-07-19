@@ -68,6 +68,7 @@ bool test_qstruct_hashmap_iterator() {
 	qstruct_hashmap_iterator_t it;
 	char values[4][5] = { "sik1", "sik2", "sik3", "sik4" };
 	char key[5];
+	char value[2];
 
 	bool success = 1;
 	success &= qstruct_hashmap_create(&map, &_comparator, 0, 0, &_hasher, 0) == QSTRUCT_RESULT_OK;
@@ -82,6 +83,8 @@ bool test_qstruct_hashmap_iterator() {
 		for (int i = 0; i < array_len(values) && !found; i++)
 			if (strcmp(key, values[i]) == 0)
 				found = true;
+		success &= qstruct_hashmap_iterator_current_value_get(it, value) == QSTRUCT_RESULT_OK;
+		success &= strcmp(value, "k") == 0;
 	}
 	success &= qstruct_hashmap_iterator_destroy(it) == QSTRUCT_RESULT_OK;
 	success &= qstruct_hashmap_destroy(map) == QSTRUCT_RESULT_OK;
