@@ -23,6 +23,13 @@ struct entry {
 	uint8_t key[];
 };
 
+struct iterator {
+	struct hashmap *map;
+	size_t size;
+	int index;
+	struct entry *entries[];
+};
+
 /*
  * Compares two entries
  */
