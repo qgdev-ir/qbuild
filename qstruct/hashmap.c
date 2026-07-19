@@ -271,3 +271,10 @@ size_t qstruct_hashmap_iterator_current_key_size(qstruct_hashmap_iterator_t iter
 	return e->key_size;
 }
 
+qstruct_result_t qstruct_hashmap_iterator_current_key_get(qstruct_hashmap_iterator_t iterator, void *key) {
+	struct iterator *it = iterator;
+	struct entry *e = it->entries[it->index];
+	memcpy(key, e->key, e->key_size);
+	return QSTRUCT_RESULT_OK;
+}
+
