@@ -242,7 +242,7 @@ qstruct_result_t qstruct_hashmap_iterator_create(qstruct_hashmap_t tree, qstruct
 			qstruct_rbtree_iterator_t it2;
 			qstruct_run(qstruct_rbtree_iterator_create(b, &it2));
 			while (qstruct_rbtree_iterator_next(it2)) {
-				struct entry **e = it->entries + it->size++ * sizeof(struct entry *);
+				struct entry **e = &it->entries[it->size++];
 				qstruct_run(qstruct_rbtree_iterator_current_valuep(it2, (void**) e));
 			}
 			qstruct_run(qstruct_rbtree_iterator_destroy(it2));

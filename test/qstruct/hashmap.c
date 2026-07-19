@@ -72,7 +72,7 @@ bool test_qstruct_hashmap_iterator() {
 
 	bool success = 1;
 	success &= qstruct_hashmap_create(&map, &_comparator, 0, 0, &_hasher, 0) == QSTRUCT_RESULT_OK;
-	for (int i = 0; i <= array_len(values); i++) {
+	for (int i = 0; i < array_len(values); i++) {
 		success &= qstruct_hashmap_add(map, values[i], 5, "k", 2) == QSTRUCT_RESULT_OK;
 	}
 	success &= qstruct_hashmap_iterator_create(map, &it) == QSTRUCT_RESULT_OK;
