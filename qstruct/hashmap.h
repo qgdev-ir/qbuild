@@ -112,6 +112,12 @@ qstruct_result_t qstruct_hashmap_iterator_current_key_get(qstruct_hashmap_iterat
  */
 qstruct_result_t qstruct_hashmap_iterator_current_key_getp(qstruct_hashmap_iterator_t iterator, void **key);
 
+/*
+ * Returns size of current entry value
+ * Time complexity: O(1)
+ */
+size_t qstruct_hashmap_iterator_current_value_size(qstruct_hashmap_iterator_t iterator);
+
 #ifdef __cplusplus
 }
 #endif

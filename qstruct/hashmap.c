@@ -285,3 +285,9 @@ qstruct_result_t qstruct_hashmap_iterator_current_key_getp(qstruct_hashmap_itera
 	return QSTRUCT_RESULT_OK;
 }
 
+size_t qstruct_hashmap_iterator_current_value_size(qstruct_hashmap_iterator_t iterator) {
+	struct iterator *it = iterator;
+	struct entry *e = it->entries[it->index];
+	return e->value_size;
+}
+
