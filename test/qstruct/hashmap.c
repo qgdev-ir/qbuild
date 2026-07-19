@@ -76,6 +76,8 @@ bool test_qstruct_hashmap_iterator() {
 		success &= qstruct_hashmap_add(map, values[i], 5, "k", 2) == QSTRUCT_RESULT_OK;
 	}
 	success &= qstruct_hashmap_iterator_create(map, &it) == QSTRUCT_RESULT_OK;
+	while (qstruct_hashmap_iterator_next(it)) {
+	}
 	success &= qstruct_hashmap_iterator_destroy(it) == QSTRUCT_RESULT_OK;
 	success &= qstruct_hashmap_destroy(map) == QSTRUCT_RESULT_OK;
 	test_result_log(success);
