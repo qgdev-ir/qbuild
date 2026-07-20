@@ -5,7 +5,7 @@ $(BUILD_DIR)/obj/test/%.c.o: test/%.c
 	mkdir -p $(@D)
 	gcc $(GCC_FLAGS) -c $< -o $@
 
-$(BUILD_DIR)/test: $(TEST_OBJECTS) | $(BUILD_DIR)/libqson.a
+$(BUILD_DIR)/test: $(TEST_OBJECTS)
 	$(info > Linking $@)
 	gcc $(GCC_FLAGS) -pie $^ -o $@ -lqson -lqstruct -lxxhash
 

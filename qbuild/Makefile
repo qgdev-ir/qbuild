@@ -5,7 +5,7 @@ $(BUILD_DIR)/obj/qbuild/%.c.o: qbuild/%.c
 	mkdir -p $(@D)
 	gcc $(GCC_FLAGS) -c $< -o $@
 
-$(BUILD_DIR)/qbuild: $(QBUILD_OBJECTS) | $(BUILD_DIR)/libqson.a $(BUILD_DIR)/libqstruct.a
+$(BUILD_DIR)/qbuild: $(QBUILD_OBJECTS) | $(BUILD_DIR)/libqstruct.a
 	$(info > Linking $@)
 	gcc $(GCC_FLAGS) -pie $^ -o $@ -lqson -lqstruct
 

@@ -19,6 +19,16 @@ jobs:
           sudo apt update
           sudo apt install -y libxxhash-dev
 
+      - name: Gheckout qson
+        uses: actions/checkout@v5
+        with:
+          repository: qgdev-ir/qson
+          path: qson
+
+      - name: Install qson
+        run: sudo make install
+        working-directory: qson
+
       - name: Compile
         run: make
 
