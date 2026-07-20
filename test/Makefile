@@ -7,7 +7,7 @@ $(BUILD_DIR)/obj/test/%.c.o: test/%.c
 
 $(BUILD_DIR)/test: $(TEST_OBJECTS)
 	$(info > Linking $@)
-	gcc $(GCC_FLAGS) -pie $^ -o $@ -lqson -lqstruct -lxxhash
+	gcc $(GCC_FLAGS) -pie $^ -o $@
 
 BUILD_TARGETS += $(BUILD_DIR)/test
 

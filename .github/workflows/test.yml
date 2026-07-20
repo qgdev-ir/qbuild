@@ -14,11 +14,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v5
 
-      - name: Install dependencies
-        run: |
-          sudo apt update
-          sudo apt install -y libxxhash-dev
-
       - name: Gheckout qson
         uses: actions/checkout@v5
         with:
@@ -28,6 +23,16 @@ jobs:
       - name: Install qson
         run: sudo make install
         working-directory: qson
+
+      - name: Gheckout qstruct
+        uses: actions/checkout@v5
+        with:
+          repository: qgdev-ir/qstruct
+          path: qstruct
+
+      - name: Install qstruct
+        run: sudo make install
+        working-directory: qstruct
 
       - name: Compile
         run: make

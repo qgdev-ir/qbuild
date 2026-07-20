@@ -9,7 +9,6 @@ BUILD_DIR := build
 export LD_LIBRARY_PATH := $(BUILD_DIR)
 GCC_FLAGS := -O1 -fPIC -L$(BUILD_DIR) -I.
 
-include qstruct/Makefile
 include qbuild/Makefile
 include test/Makefile
 
