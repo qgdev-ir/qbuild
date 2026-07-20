@@ -26,6 +26,7 @@ bool test_qstruct_hashmap_add_get() {
 	success &= strcmp(res, "k") == 0;
 	success &= qstruct_hashmap_get(map, "kir", 4, res, &res_size) == QSTRUCT_RESULT_OK;
 	success &= strcmp(res, "s") == 0;
+	success &= qstruct_hashmap_length(map) == 2;
 	success &= qstruct_hashmap_destroy(map) == QSTRUCT_RESULT_OK;
 	test_result_log(success);
 	return success;
@@ -57,6 +58,7 @@ bool test_qstruct_hashmap_remove() {
 	success &= qstruct_hashmap_has(map, "sik", 4);
 	success &= qstruct_hashmap_remove(map, "sik", 4) == QSTRUCT_RESULT_OK;
 	success &= !qstruct_hashmap_has(map, "sik", 4);
+	success &= qstruct_hashmap_length(map) == 0;
 	success &= qstruct_hashmap_destroy(map) == QSTRUCT_RESULT_OK;
 	test_result_log(success);
 	return success;
