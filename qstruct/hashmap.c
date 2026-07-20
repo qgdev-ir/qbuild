@@ -229,6 +229,10 @@ qstruct_result_t qstruct_hashmap_remove(qstruct_hashmap_t hashmap, void *key, si
 	return QSTRUCT_RESULT_OK;
 }
 
+size_t qstruct_hashmap_length(qstruct_hashmap_t hashmap) {
+	return ((struct hashmap *) hashmap)->length;
+}
+
 qstruct_result_t qstruct_hashmap_iterator_create(qstruct_hashmap_t tree, qstruct_hashmap_iterator_t *iterator) {
 	struct hashmap *hm = tree;
 	struct iterator *it = malloc(sizeof(struct iterator) + sizeof(struct entry*) * hm->length);
