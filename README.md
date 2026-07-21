@@ -13,3 +13,6 @@ so these are steps:
 2. starting
    - [x] select or create a JSON processor (created module qson to serialize/deserialize json)
    - [x] create a module to hold basic data structures including `arraylist`, `linkedlist`, `hashmap`, etc. (created module qstruct)
+
+# Documentation
+- [Docs](doc/index.md): Start from root of docs
