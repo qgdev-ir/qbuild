@@ -5,9 +5,9 @@ $(BUILD_DIR)/obj/qbuild/%.c.o: qbuild/%.c
 	mkdir -p $(@D)
 	gcc $(GCC_FLAGS) -c $< -o $@
 
-$(BUILD_DIR)/qbuild: $(QBUILD_OBJECTS)
+$(BUILD_DIR)/libqbuild.so: $(QBUILD_OBJECTS)
 	$(info > Linking $@)
-	gcc $(GCC_FLAGS) -pie $^ -o $@ -lqson -lqstruct
+	gcc $(GCC_FLAGS) --shared $^ -o $@ -lqson -lqstruct
 
-BUILD_TARGETS += $(BUILD_DIR)/qbuild
+BUILD_TARGETS += $(BUILD_DIR)/libqbuild.so
 
