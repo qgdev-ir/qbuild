@@ -14,5 +14,9 @@ so these are steps:
    - [x] select or create a JSON processor (created module qson to serialize/deserialize json)
    - [x] create a module to hold basic data structures including `arraylist`, `linkedlist`, `hashmap`, etc. (created module qstruct)
 
+# Dependencies
+- [qson](https://github.com/qgdev-ir/qson): To process JSON files
+- [qstruct](https://github.com/qgdev-ir/qstruct): For basic data structures
+
 # Documentation
 - [Docs](doc/index.md): Start from root of docs
