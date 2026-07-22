@@ -5,9 +5,9 @@ $(BUILD_DIR)/obj/test/%.c.o: test/%.c
 	mkdir -p $(@D)
 	gcc $(GCC_FLAGS) -c $< -o $@
 
-$(BUILD_DIR)/test: $(TEST_OBJECTS)
+$(BUILD_DIR)/test: $(TEST_OBJECTS) | $(BUILD_DIR)/libqbuild.so
 	$(info > Linking $@)
-	gcc $(GCC_FLAGS) -pie $^ -o $@
+	gcc $(GCC_FLAGS) -pie $^ -o $@ -lqbuild
 
 BUILD_TARGETS += $(BUILD_DIR)/test
 
