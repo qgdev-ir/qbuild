@@ -1,0 +1,13 @@
+#ifndef _qson_qson_h_
+#define _qson_qson_h_
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif
+
