@@ -11,6 +11,11 @@
 extern "C" {
 #endif
 
+#define qson_deserialize_run(call) do { \
+		qson_result_t res = call; \
+		if (res != QSON_RESULT_OK) return QBUILD_RESULT_JSON_DESERIALIZE_FAILED; \
+	} while (0);
+
 #ifdef __cplusplus
 }
 #endif
