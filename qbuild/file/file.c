@@ -47,6 +47,6 @@ qbuild_result_t qbuild_file_read_all(char *file, char **buffer, size_t *size) {
 	fclose(fp);
 	*buffer = b;
 	*size = s;
-	return QSON_RESULT_OK;
+	return QBUILD_RESULT_OK;
 }
 
