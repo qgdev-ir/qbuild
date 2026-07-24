@@ -28,3 +28,13 @@ char *qbuild_file_pathcat(int count, ...) {
 	return p;
 }
 
+/*
+ * Calculates size of the file
+ */
+static inline size_t _qbuild_file_size(FILE *fp) {
+	fseek(fp, 0L, SEEK_END);
+	size_t res = ftell(fp);
+	rewind(fp);
+	return res;
+}
+
