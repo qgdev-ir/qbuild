@@ -12,6 +12,13 @@
 extern "C" {
 #endif
 
+/*
+ * Concatenate given paths
+ * For example input is (2, "test", "file.txt") output will be "test/file.txt"
+ * NOTE: Caller should free the returned buffer
+ */
+char *qbuild_file_pathcat(int count, ...);
+
 #ifdef __cplusplus
 }
 #endif
