@@ -1,6 +1,8 @@
 #ifndef _qbuild_qbuild_h_
 #define _qbuild_qbuild_h_
 
+#include <stddef.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif
