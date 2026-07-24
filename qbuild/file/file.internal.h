@@ -19,6 +19,14 @@ extern "C" {
  */
 char *qbuild_file_pathcat(int count, ...);
 
+/*
+ * Reads file
+ * Creates buffer and writes file content to it
+ * Sets size to buffer size
+ * NOTE: caller should free buffer after use
+ */
+qbuild_result_t qbuild_file_read_all(char *file, char **buffer, size_t *size);
+
 #ifdef __cplusplus
 }
 #endif

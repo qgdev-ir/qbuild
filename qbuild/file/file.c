@@ -38,3 +38,15 @@ static inline size_t _qbuild_file_size(FILE *fp) {
 	return res;
 }
 
+qbuild_result_t qbuild_file_read_all(char *file, char **buffer, size_t *size) {
+	FILE *fp = fopen(file, "r");
+	if (!fp) return QBUILD_RESULT_FILE_NOT_FOUND;
+	size_t s = _qbuild_file_size(fp);
+	char *b = malloc(s);
+	fread(b, sizeof(char), s, fp);
+	fclose(fp);
+	*buffer = b;
+	*size = s;
+	return QSON_RESULT_OK;
+}
+
