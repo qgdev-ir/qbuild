@@ -38,3 +38,15 @@ inline static qbuild_result_t _load_project_info(struct qbuild_project *p) {
 	return QBUILD_RESULT_OK;
 }
 
+qbuild_result_t qbuild_project_load(qbuild_project_t *project, char *dir) {
+	struct qbuild_project *p = malloc(sizeof(struct qbuild_project));
+
+	char *ndir = malloc(strlen(dir) + 1);
+	strcpy(ndir, dir);
+	p->dir = ndir;
+
+	qbuild_run(_load_project_info(p));
+	*project = p;
+	return QBUILD_RESULT_OK;
+}
+

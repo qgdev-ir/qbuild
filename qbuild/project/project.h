@@ -10,6 +10,11 @@ extern "C" {
  */
 typedef void* qbuild_project_t;
 
+/*
+ * Loads project at given directory
+ */
+qbuild_result_t qbuild_project_load(qbuild_project_t *project, char *dir);
+
 #ifdef __cplusplus
 }
 #endif
