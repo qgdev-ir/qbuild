@@ -5,6 +5,11 @@
 extern "C" {
 #endif
 
+/*
+ * Pointer to actual project object
+ */
+typedef void* qbuild_project_t;
+
 #ifdef __cplusplus
 }
 #endif
