@@ -50,3 +50,10 @@ qbuild_result_t qbuild_project_load(qbuild_project_t *project, char *dir) {
 	return QBUILD_RESULT_OK;
 }
 
+qbuild_result_t qbuild_project_destroy(qbuild_project_t project) {
+	struct qbuild_project *p = project;
+	free(p->dir);
+	free(p);
+	return QBUILD_RESULT_OK;
+}
+

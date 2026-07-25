@@ -15,6 +15,11 @@ typedef void* qbuild_project_t;
  */
 qbuild_result_t qbuild_project_load(qbuild_project_t *project, char *dir);
 
+/*
+ * Destroys the project object and free used memory
+ */
+qbuild_result_t qbuild_project_destroy(qbuild_project_t project);
+
 #ifdef __cplusplus
 }
 #endif
