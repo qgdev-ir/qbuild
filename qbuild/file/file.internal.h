@@ -8,6 +8,15 @@
 
 #include <qbuild/qbuild.internal.h>
 
+/*
+ * Set path separator based on the platform
+ */
+#if defined(_WIN32) || defined(_WIN64)
+#define QBUILD_FILE_PATH_SEPARATOR ';'
+#else
+#define QBUILD_FILE_PATH_SEPARATOR ':'
+#endif
+
 #ifdef __cplusplus
 extern "C" {
 #endif
