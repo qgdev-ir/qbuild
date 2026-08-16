@@ -36,6 +36,13 @@ char *qbuild_file_pathcat(int count, ...);
  */
 qbuild_result_t qbuild_file_read_all(char *file, char **buffer, size_t *size);
 
+/*
+ * Separates multiple paths from a string
+ * Paths must be separeted with platform path separetor (unix-like: ':', window: ';')
+ * To free returned array simply free first element and then the array
+ */
+char **qbuild_file_path_separate(const char *src, size_t *sizep);
+
 #ifdef __cplusplus
 }
 #endif
