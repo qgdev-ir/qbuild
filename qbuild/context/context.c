@@ -12,3 +12,10 @@ qbuild_result_t qbuild_context_create(qbuild_context_t *ctx) {
 	return QBUILD_RESULT_OK;
 }
 
+qbuild_result_t qbuild_context_destroy(qbuild_context_t c) {
+	free(c->config_dirs[0]);
+	free(c->config_dirs);
+	free(c);
+	return QBUILD_RESULT_OK;
+}
+
