@@ -39,6 +39,12 @@ Architecture supported by qbuild
 |  x86_64   | yes  |   no   |
 |  aarch64  | yes  |   no   |
 
+## Host Platform Detection
+### Platform
+- Posix: [more info](posix.md)
+### Architecture
+Constant value set at compile time
+
 ## Implementation
 Not implemented
 
