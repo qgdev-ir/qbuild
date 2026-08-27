@@ -11,6 +11,11 @@
 extern "C" {
 #endif
 
+#define qstruct_run(call) do { \
+		qstruct_result_t res = call; \
+		if (res != QSTRUCT_RESULT_OK) return QBUILD_RESULT_DATASTRUCTURE_FAILED; \
+	} while (0);
+
 #ifdef __cplusplus
 }
 #endif
