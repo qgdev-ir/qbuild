@@ -8,6 +8,7 @@ This project is [qbuild](https://github.com/Mahisokhary/qbuild-og) but with C an
 # Dependencies
 - [qson](https://github.com/qgdev-ir/qson): To process JSON files
 - [qstruct](https://github.com/qgdev-ir/qstruct): For basic data structures
+- [qolman](https://github.com/qgdev-ir/qolman): For logging
 
 # Documentation
 - [Docs](doc/index.md): Start from root of docs
