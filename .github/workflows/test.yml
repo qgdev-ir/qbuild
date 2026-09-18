@@ -38,6 +38,17 @@ jobs:
         run: sudo make install
         working-directory: qstruct
 
+      - name: Gheckout qolman
+        uses: actions/checkout@v5
+        with:
+          repository: qgdev-ir/qolman
+          path: qolman
+          submodules: recursive
+
+      - name: Install qolman
+        run: sudo make install
+        working-directory: qolman
+
       - name: Compile
         run: make
 
