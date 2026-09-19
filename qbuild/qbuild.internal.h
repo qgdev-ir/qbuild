@@ -22,6 +22,7 @@ extern "C" {
 #include <qbuild/posix.internal.h>
 #include <qbuild/qson.internal.h>
 #include <qbuild/qstruct/qstruct.internal.h>
+#include <qbuild/qolman/qolman.internal.h>
 #include <qbuild/file/file.internal.h>
 #include <qbuild/string/string.internal.h>
 #include <qbuild/platform/platform.internal.h>
