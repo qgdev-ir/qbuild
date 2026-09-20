@@ -15,6 +15,8 @@ extern "C" {
 	if (res != QBUILD_RESULT_OK) return res; \
 	} while (0);
 
+#define qbuild_debug() (getenv("QBUILD_DEBUG"))
+
 #ifdef __cplusplus
 }
 #endif
