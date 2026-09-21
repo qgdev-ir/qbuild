@@ -13,6 +13,12 @@ extern "C" {
 
 #define qolman_run(call) if (call != QOLMAN_RESULT_OK) return QBUILD_RESULT_LOGGING_FAILED;
 
+#define log_trace(m, label, description) qolman_run(qolman_manager_handle_trace(m, 0, __func__, label, description))
+#define log_debug(m, label, description) qolman_run(qolman_manager_handle_debug(m, 0, __func__, label, description))
+#define log_info(m, label, description) qolman_run(qolman_manager_handle_info(m, 0, __func__, label, description))
+#define log_warning(m, label, description) qolman_run(qolman_manager_handle_warning(m, 0, __func__, label, description))
+#define log_error(m, label, description) qolman_run(qolman_manager_handle_error(m, 0, __func__, label, description))
+
 /*
  * Use qolman manager as qbuild log manager
  */
