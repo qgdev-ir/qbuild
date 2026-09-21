@@ -2,6 +2,7 @@
 
 qbuild_result_t qbuild_context_create(qbuild_context_t *ctx) {
 	qbuild_context_t c = malloc(sizeof (struct qbuild_context));
+	qbuild_run(qbuild_logman_create(&c->logman));
 
 	const char *config_dirs = getenv("QBUILD_CONTEXT_CONFIG_PATH");
 	if (!config_dirs) config_dirs = QBUILD_CONTEXT_CONFIG_PATH;
@@ -9,6 +10,7 @@ qbuild_result_t qbuild_context_create(qbuild_context_t *ctx) {
 	if (!c->config_dirs) return QBUILD_RESULT_CONTEXT_CREATE_FAILED;
 
 	*ctx = c;
+	log_debug(c->logman, "Initialized context", NULL);
 	return QBUILD_RESULT_OK;
 }
 
@@ -16,6 +18,8 @@ qbuild_result_t qbuild_context_destroy(qbuild_context_t c) {
 	free(c->config_dirs[0]);
 	free(c->config_dirs);
 	free(c);
+	log_debug(c->logman, "Destroyed context", NULL);
+	qbuild_run(qbuild_logman_destroy(c->logman));
 	return QBUILD_RESULT_OK;
 }
 
