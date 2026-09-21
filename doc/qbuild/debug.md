@@ -2,6 +2,6 @@
 Debug mode is activated by setting environment variable `QBUILD_DEBUG`
 
 ## Effects
-Nothing yet
+- log manager will log everything
 
 [back](../index.md)
