@@ -13,3 +13,12 @@ qbuild_result_t _qbuild_logman_create(qbuild_log_manager_t *m) {
 	return QBUILD_RESULT_OK;
 }
 
+qbuild_result_t _qbuild_logman_destroy(qbuild_log_manager_t m) {
+	size_t handlers_len;
+	qolman_handler_t *handlers = qolman_manager_handlers(m, &handlers_len);
+	for (int i = 0; i < handlers_len; i++)
+		qolman_run(qolman_handler_destroy(handlers[i]));
+	qolman_run(qolman_manager_destroy(m));
+	return QBUILD_RESULT_OK;
+}
+

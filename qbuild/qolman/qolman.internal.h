@@ -23,6 +23,11 @@ typedef qolman_manager_t qbuild_log_manager_t;
  */
 qbuild_result_t _qbuild_logman_create(qbuild_log_manager_t *m);
 
+/*
+ * Destroys the given log manager
+ */
+qbuild_result_t _qbuild_logman_destroy(qbuild_log_manager_t m);
+
 #ifdef __cplusplus
 }
 #endif
