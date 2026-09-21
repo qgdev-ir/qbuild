@@ -2,7 +2,7 @@
 #include <qbuild/qbuild.internal.h>
 
 bool test_qbuild_context_create_destroy() {
-	test_run_log("qbuild_context_create_destroy");
+	test_run_log();
 	qbuild_context_t ctx;
 
 	bool success = 1;

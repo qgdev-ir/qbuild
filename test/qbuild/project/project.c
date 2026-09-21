@@ -3,7 +3,7 @@
 #include <string.h>
 
 bool test_qbuild_project_load() {
-	test_run_log("qbuild_project_load");
+	test_run_log();
 	qbuild_project_t p;
 
 	bool success = true;
