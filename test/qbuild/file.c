@@ -2,7 +2,7 @@
 #include <qbuild/qbuild.internal.h>
 
 bool test_qbuild_file_path_seperate() {
-	test_run_log("qbuild_file_path_seperate");
+	test_run_log();
 	const char sample[] = "test1.txt:test2.txt:test3.txt:test4.txt:test5.txt";
 	size_t size;
 	char **res;
@@ -20,7 +20,7 @@ bool test_qbuild_file_path_seperate() {
 }
 
 bool test_qbuild_file_exists() {
-	test_run_log("qbuild_file_exists");
+	test_run_log();
 
 	bool success = 1;
 	success &= qbuild_file_exists("Makefile");

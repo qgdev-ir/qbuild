@@ -2,7 +2,7 @@
 #include <qbuild/qbuild.internal.h>
 
 bool test_qbuild_string_lower() {
-	test_run_log("qbuild_string_lower");
+	test_run_log();
 	char upper[] = "ASDfdsg/%_+";
 	char lower[] = "asdfdsg/%_+";
 

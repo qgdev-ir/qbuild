@@ -2,7 +2,7 @@
 #include <qbuild/qbuild.internal.h>
 
 bool test_qbuild_platform_host_name() {
-	test_run_log("qbuild_platform_host_name");
+	test_run_log();
 	char *host = qbuild_platform_host_name();
 
 	bool success = true;

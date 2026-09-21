@@ -9,8 +9,8 @@ extern "C" {
 #endif
 
 #define array_len(a) (sizeof(a) / sizeof(a[0]))
-#define test_run_log(m) printf("[*] Running test %s: ", m)
-#define test_result_log(s) printf("%s\n", s ? "passed" : "failed")
+#define test_run_log() printf("[*] Running %s\n", __func__)
+#define test_result_log(s) printf("[%c] %s\n",  s ? '+' : '-', s ? "passed" : "failed")
 
 #ifdef __cplusplus
 }
