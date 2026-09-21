@@ -11,6 +11,8 @@
 extern "C" {
 #endif
 
+#define qolman_run(call) if (call != QOLMAN_RESULT_OK) return QBUILD_RESULT_LOGGING_FAILED;
+
 #ifdef __cplusplus
 }
 #endif
