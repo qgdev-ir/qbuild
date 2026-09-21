@@ -13,6 +13,11 @@ extern "C" {
 
 #define qolman_run(call) if (call != QOLMAN_RESULT_OK) return QBUILD_RESULT_LOGGING_FAILED;
 
+/*
+ * Use qolman manager as qbuild log manager
+ */
+typedef qolman_manager_t qbuild_log_manager_t;
+
 #ifdef __cplusplus
 }
 #endif
