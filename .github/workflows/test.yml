@@ -49,6 +49,11 @@ jobs:
         run: sudo make install
         working-directory: qolman
 
+      - name: Install dependencies
+        run: |
+          sudo apt update
+          sudo apt install -y libxxhash-dev
+
       - name: Compile
         run: make
 
