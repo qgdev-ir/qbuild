@@ -21,6 +21,11 @@ extern "C" {
  */
 int8_t _qstruct_comparator_string(char *x, char *y);
 
+/*
+ * Hasher function
+ */
+long _qstruct_hasher(char *x, size_t size, long seed);
+
 #ifdef __cplusplus
 }
 #endif
