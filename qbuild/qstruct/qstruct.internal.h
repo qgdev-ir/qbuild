@@ -16,6 +16,11 @@ extern "C" {
 		if (res != QSTRUCT_RESULT_OK) return QBUILD_RESULT_DATASTRUCTURE_FAILED; \
 	} while (0);
 
+/*
+ * Compares to strings
+ */
+int8_t _qstruct_comparator_string(char *x, char *y);
+
 #ifdef __cplusplus
 }
 #endif
