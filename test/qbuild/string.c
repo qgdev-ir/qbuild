@@ -13,9 +13,25 @@ bool test_qbuild_string_lower() {
 	return success;
 }
 
+bool test_qbuild_string_format() {
+	test_run_log();
+	char *fmt = "my name is %s";
+	char *fmt_param = "qoqnus";
+	char *expected_res = "my name is qoqnus";
+	char *res;
+
+	bool success = true;
+	res = qbuild_string_format(fmt, fmt_param);
+	success &= strcmp(expected_res, res) == 0;
+	free(res);
+	test_result_log(success);
+	return success;
+}
+
 bool test_qbuild_string() {
 	bool success = true;
 	success &= test_qbuild_string_lower();
+	success &= test_qbuild_string_format();
 	return success;
 }
 
