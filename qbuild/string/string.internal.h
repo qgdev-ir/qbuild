@@ -15,6 +15,12 @@ extern "C" {
  */
 void qbuild_string_lower(char *buf);
 
+/*
+ * Format given format string with given paramether and returns a buffer
+ * WARGNING: buffer should be freed by caller!
+ */
+char *qbuild_string_format(const char *fmt, ...);
+
 #ifdef __cplusplus
 }
 #endif
