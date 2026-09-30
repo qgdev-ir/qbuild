@@ -11,3 +11,9 @@ const static char *qbuild_result_strings[] = {
 	"QBUILD_RESULT_PLATFORM_DETECTION_FAILED",
 };
 
+const char *qbuild_result_string(qbuild_result_t res) {
+	if (res > (sizeof(qbuild_result_strings) / sizeof(qbuild_result_strings[0])))
+		return "UNKNOWN";
+	return qbuild_result_strings[res];
+}
+
