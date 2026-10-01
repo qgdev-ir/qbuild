@@ -15,6 +15,7 @@ extern "C" {
 		success = false; \
 		goto cleaner; \
 	}
+#define test_run(success, cleaner, call) test(success, cleaner, call == QBUILD_RESULT_OK)
 
 #ifdef __cplusplus
 }
