@@ -11,6 +11,10 @@ extern "C" {
 #define array_len(a) (sizeof(a) / sizeof(a[0]))
 #define test_run_log() printf("[*] Running %s\n", __func__)
 #define test_result_log(s) printf("[%c] %s\n",  s ? '+' : '-', s ? "passed" : "failed")
+#define test(success, cleaner, t) if (!(t)) { \
+		success = false; \
+		goto cleaner; \
+	}
 
 #ifdef __cplusplus
 }
