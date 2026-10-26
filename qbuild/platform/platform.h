@@ -5,6 +5,8 @@
 extern "C" {
 #endif
 
+typedef struct qbuild_platform_context *qbuild_platform_context_t;
+
 /*
  * Pointer to actual platform
  */
