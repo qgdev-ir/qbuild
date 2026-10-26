@@ -15,6 +15,7 @@ typedef struct qbuild_platform *qbuild_platform_t;
 #endif
 
 #include "detector/detector.h"
+#include "provider/provider.h"
 
 #endif
 
