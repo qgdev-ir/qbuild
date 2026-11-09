@@ -23,3 +23,9 @@ char *qbuild_string_format(const char *fmt, ...) {
 	return buffer;
 }
 
+void qbuild_string_array_copy(size_t arr_size, char **arr, char **narr) {
+	for (int i = 0; i < arr_size; i++) {
+		narr[i] = strdup(arr[i]);
+	}
+}
+

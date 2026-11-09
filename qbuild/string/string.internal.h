@@ -21,6 +21,12 @@ void qbuild_string_lower(char *buf);
  */
 char *qbuild_string_format(const char *fmt, ...);
 
+/*
+ * Copies strings in first array to second array
+ * WARNING: Strings added to second array are duplicated and caller must free them
+ */
+void qbuild_string_array_copy(size_t arr_size, char **arr, char **narr);
+
 #ifdef __cplusplus
 }
 #endif
